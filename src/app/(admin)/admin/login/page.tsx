@@ -57,16 +57,16 @@ function AdminLoginForm() {
         onSubmit={handleSubmit(onSubmit)}
         className="w-full max-w-sm space-y-4 rounded-lg border border-gold/20 bg-card p-8"
       >
-        <h1 className="font-serif text-2xl text-white">Admin Sign In</h1>
+        <h1 className="font-display text-2xl text-foreground">Admin Sign In</h1>
 
         <div>
           <label className="mb-1 block text-sm text-secondary-text">Email</label>
           <input
             type="email"
             {...register("email")}
-            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white"
+            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground"
           />
-          {errors.email && <p className="mt-1 text-sm text-red-400">{errors.email.message}</p>}
+          {errors.email && <p className="mt-1 text-sm text-destructive">{errors.email.message}</p>}
         </div>
 
         <div>
@@ -74,17 +74,17 @@ function AdminLoginForm() {
           <input
             type="password"
             {...register("password")}
-            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white"
+            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground"
           />
-          {errors.password && <p className="mt-1 text-sm text-red-400">{errors.password.message}</p>}
+          {errors.password && <p className="mt-1 text-sm text-destructive">{errors.password.message}</p>}
         </div>
 
-        {serverError && <p className="text-sm text-red-400">{serverError}</p>}
+        {serverError && <p className="text-sm text-destructive">{serverError}</p>}
 
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full rounded bg-gold py-2 font-medium text-background disabled:opacity-50"
+          className="w-full rounded bg-gold py-2 font-medium text-gold-foreground disabled:opacity-50"
         >
           {isSubmitting ? "Signing in…" : "Sign In"}
         </button>

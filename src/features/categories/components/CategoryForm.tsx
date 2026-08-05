@@ -33,9 +33,9 @@ export function CategoryForm({ defaultValues, parentOptions, onSubmit, submitLab
         <label className="mb-1 block text-sm text-secondary-text">Name</label>
         <input
           {...register("name")}
-          className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white"
+          className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground"
         />
-        {errors.name && <p className="mt-1 text-sm text-red-400">{errors.name.message}</p>}
+        {errors.name && <p className="mt-1 text-sm text-destructive">{errors.name.message}</p>}
       </div>
 
       <div>
@@ -43,9 +43,9 @@ export function CategoryForm({ defaultValues, parentOptions, onSubmit, submitLab
         <input
           {...register("slug")}
           placeholder="rings"
-          className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white"
+          className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground"
         />
-        {errors.slug && <p className="mt-1 text-sm text-red-400">{errors.slug.message}</p>}
+        {errors.slug && <p className="mt-1 text-sm text-destructive">{errors.slug.message}</p>}
       </div>
 
       <div>
@@ -53,7 +53,7 @@ export function CategoryForm({ defaultValues, parentOptions, onSubmit, submitLab
         <textarea
           {...register("description")}
           rows={3}
-          className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white"
+          className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground"
         />
       </div>
 
@@ -61,7 +61,7 @@ export function CategoryForm({ defaultValues, parentOptions, onSubmit, submitLab
         <label className="mb-1 block text-sm text-secondary-text">Parent Category</label>
         <select
           {...register("parentId")}
-          className="w-full rounded border border-gold/20 bg-background px-3 py-2 text-white"
+          className="w-full rounded border border-gold/20 bg-background px-3 py-2 text-foreground"
         >
           <option value="">None (top level)</option>
           {parentOptions.map((p) => (
@@ -78,7 +78,7 @@ export function CategoryForm({ defaultValues, parentOptions, onSubmit, submitLab
           <input
             type="number"
             {...register("order", { valueAsNumber: true })}
-            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white"
+            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground"
           />
         </div>
         <div className="flex items-end gap-2 pb-2">
@@ -93,7 +93,7 @@ export function CategoryForm({ defaultValues, parentOptions, onSubmit, submitLab
         <label className="mb-1 block text-sm text-secondary-text">Meta Title</label>
         <input
           {...register("metaTitle")}
-          className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white"
+          className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground"
         />
       </div>
 
@@ -102,14 +102,14 @@ export function CategoryForm({ defaultValues, parentOptions, onSubmit, submitLab
         <textarea
           {...register("metaDescription")}
           rows={2}
-          className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white"
+          className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground"
         />
       </div>
 
       <button
         type="submit"
         disabled={isSubmitting}
-        className="rounded bg-gold px-6 py-2 font-medium text-background disabled:opacity-50"
+        className="rounded bg-gold px-6 py-2 font-medium text-gold-foreground disabled:opacity-50"
       >
         {isSubmitting ? "Saving…" : submitLabel}
       </button>

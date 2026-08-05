@@ -44,8 +44,8 @@ export default function AdminProductsPage() {
   return (
     <div className="p-4 sm:p-8">
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="font-serif text-2xl text-white">Products</h1>
-        <Link href="/admin/products/new" className="rounded bg-gold px-4 py-2 text-sm font-medium text-background">
+        <h1 className="font-display text-2xl text-foreground">Products</h1>
+        <Link href="/admin/products/new" className="rounded bg-gold px-4 py-2 text-sm font-medium text-gold-foreground">
           New Product
         </Link>
       </div>
@@ -57,7 +57,7 @@ export default function AdminProductsPage() {
           setSearch(e.target.value);
         }}
         placeholder="Search by name or SKU…"
-        className="mb-4 w-full max-w-sm rounded border border-gold/20 bg-transparent px-3 py-2 text-white"
+        className="mb-4 w-full max-w-sm rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground"
       />
 
       <div className="overflow-x-auto">
@@ -74,7 +74,7 @@ export default function AdminProductsPage() {
         </thead>
         <tbody>
           {products.map((p) => (
-            <tr key={p.id} className="border-b border-gold/5 text-white">
+            <tr key={p.id} className="border-b border-gold/5 text-foreground">
               <td className="py-2">{p.name}</td>
               <td className="py-2 text-secondary-text">{p.sku}</td>
               <td className="py-2">${p.price}</td>
@@ -84,7 +84,7 @@ export default function AdminProductsPage() {
                 <Link href={`/admin/products/${p.id}`} className="mr-4 text-gold hover:underline">
                   Edit
                 </Link>
-                <button onClick={() => handleDelete(p.id)} className="text-red-400 hover:underline">
+                <button onClick={() => handleDelete(p.id)} className="text-destructive hover:underline">
                   Delete
                 </button>
               </td>
@@ -108,7 +108,7 @@ export default function AdminProductsPage() {
               key={p}
               onClick={() => setPage(p)}
               className={`rounded px-3 py-1 text-sm ${
-                p === page ? "bg-gold text-background" : "border border-gold/20 text-white"
+                p === page ? "bg-gold text-gold-foreground" : "border border-gold/20 text-foreground"
               }`}
             >
               {p}

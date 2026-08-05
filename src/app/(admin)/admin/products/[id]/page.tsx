@@ -47,7 +47,7 @@ export default function EditProductPage() {
 
   return (
     <div className="p-4 sm:p-8">
-      <h1 className="mb-6 font-serif text-2xl text-white">Edit Product</h1>
+      <h1 className="mb-6 font-display text-2xl text-foreground">Edit Product</h1>
       <ProductForm defaultValues={initialValues} onSubmit={handleUpdate} submitLabel="Save Changes" />
     </div>
   );

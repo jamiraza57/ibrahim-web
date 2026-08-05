@@ -67,14 +67,14 @@ export default function AdminOrderDetailPage() {
   return (
     <div className="max-w-4xl p-4 sm:p-8">
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="font-serif text-2xl text-white">{order.orderNumber}</h1>
+        <h1 className="font-display text-2xl text-foreground">{order.orderNumber}</h1>
         <div className="flex gap-2">
           {NEXT_STATUS[order.status]?.map((next) => (
             <button
               key={next}
               disabled={updating}
               onClick={() => transitionTo(next)}
-              className="rounded bg-gold px-4 py-2 text-sm font-medium text-background disabled:opacity-50"
+              className="rounded bg-gold px-4 py-2 text-sm font-medium text-gold-foreground disabled:opacity-50"
             >
               Mark {next}
             </button>
@@ -84,13 +84,13 @@ export default function AdminOrderDetailPage() {
 
       <div className="grid gap-6 md:grid-cols-2">
         <div className="rounded border border-gold/20 bg-card p-6">
-          <h2 className="mb-3 font-serif text-lg text-white">Customer</h2>
-          <p className="text-white">{order.customer.name}</p>
+          <h2 className="mb-3 font-display text-lg text-foreground">Customer</h2>
+          <p className="text-foreground">{order.customer.name}</p>
           <p className="text-sm text-secondary-text">{order.customer.email}</p>
           <p className="text-sm text-secondary-text">{order.customer.phone}</p>
 
           <h3 className="mb-1 mt-4 text-sm text-secondary-text">Shipping Address</h3>
-          <p className="text-sm text-white">
+          <p className="text-sm text-foreground">
             {order.address.line1}
             {order.address.line2 ? `, ${order.address.line2}` : ""}, {order.address.city}
             {order.address.state ? `, ${order.address.state}` : ""} {order.address.postalCode},{" "}
@@ -100,10 +100,10 @@ export default function AdminOrderDetailPage() {
         </div>
 
         <div className="rounded border border-gold/20 bg-card p-6">
-          <h2 className="mb-3 font-serif text-lg text-white">Payment</h2>
-          <p className="text-sm text-white">Method: Cash on Delivery</p>
-          <p className="text-sm text-white">Status: {order.paymentStatus}</p>
-          {order.couponCode && <p className="text-sm text-white">Coupon: {order.couponCode}</p>}
+          <h2 className="mb-3 font-display text-lg text-foreground">Payment</h2>
+          <p className="text-sm text-foreground">Method: Cash on Delivery</p>
+          <p className="text-sm text-foreground">Status: {order.paymentStatus}</p>
+          {order.couponCode && <p className="text-sm text-foreground">Coupon: {order.couponCode}</p>}
 
           <div className="mt-4 space-y-1 border-t border-gold/10 pt-4 text-sm">
             <div className="flex justify-between text-secondary-text">
@@ -118,7 +118,7 @@ export default function AdminOrderDetailPage() {
               <span>Shipping</span>
               <span>${order.shipping}</span>
             </div>
-            <div className="flex justify-between font-medium text-white">
+            <div className="flex justify-between font-medium text-foreground">
               <span>Total</span>
               <span>${order.total}</span>
             </div>
@@ -127,12 +127,12 @@ export default function AdminOrderDetailPage() {
       </div>
 
       <div className="mt-6 rounded border border-gold/20 bg-card p-6">
-        <h2 className="mb-3 font-serif text-lg text-white">Items</h2>
+        <h2 className="mb-3 font-display text-lg text-foreground">Items</h2>
         <div className="overflow-x-auto">
         <table className="w-full text-left text-sm">
           <tbody>
             {order.items.map((item) => (
-              <tr key={item.id} className="border-b border-gold/5 text-white">
+              <tr key={item.id} className="border-b border-gold/5 text-foreground">
                 <td className="py-2">{item.name}</td>
                 <td className="py-2 text-secondary-text">× {item.quantity}</td>
                 <td className="py-2">${item.price}</td>
@@ -144,7 +144,7 @@ export default function AdminOrderDetailPage() {
       </div>
 
       <div className="mt-6 rounded border border-gold/20 bg-card p-6">
-        <h2 className="mb-3 font-serif text-lg text-white">Timeline</h2>
+        <h2 className="mb-3 font-display text-lg text-foreground">Timeline</h2>
         <ol className="space-y-3 border-l border-gold/20 pl-4">
           {order.history.map((h) => (
             <li key={h.id} className="text-sm">

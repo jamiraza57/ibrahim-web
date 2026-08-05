@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import { RevenueChart } from "@/features/analytics/components/RevenueChart";
 
 interface AnalyticsData {
   kpis: { revenue: number; orderCount: number; avgOrderValue: number; uniqueCustomers: number };
@@ -31,11 +31,14 @@ export default function AdminAnalyticsPage() {
   return (
     <div className="p-4 sm:p-8">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-        <h1 className="font-serif text-2xl text-white">Analytics</h1>
+        <div>
+          <span className="eyebrow">Insights</span>
+          <h1 className="mt-1 font-display text-2xl text-foreground">Analytics</h1>
+        </div>
         <select
           value={days}
           onChange={(e) => setDays(Number(e.target.value))}
-          className="rounded border border-gold/20 bg-background px-3 py-2 text-sm text-white"
+          className="rounded border border-gold/20 bg-background px-3 py-2 text-sm text-foreground focus:border-gold/50 focus:outline-none"
         >
           <option value={7}>Last 7 days</option>
           <option value={30}>Last 30 days</option>
@@ -45,39 +48,22 @@ export default function AdminAnalyticsPage() {
 
       <div className="mb-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
         {KPI_CARDS.map((card) => (
-          <div key={card.key} className="rounded border border-gold/20 bg-card p-4 sm:p-6">
+          <div key={card.key} className="lux-card rounded-lg p-4 sm:p-6">
             <p className="text-xs text-secondary-text sm:text-sm">{card.label}</p>
-            <p className="mt-1 font-serif text-xl text-gold sm:text-2xl">{card.format(data.kpis[card.key])}</p>
+            <p className="mt-1 font-display text-xl text-gold sm:text-2xl">{card.format(data.kpis[card.key])}</p>
           </div>
         ))}
       </div>
 
-      <div className="mb-8 rounded border border-gold/20 bg-card p-4 sm:p-6">
-        <h2 className="mb-4 font-serif text-lg text-white">Revenue Over Time</h2>
+      <div className="lux-card mb-8 rounded-lg p-4 sm:p-6">
+        <h2 className="mb-4 font-display text-lg text-foreground">Revenue Over Time</h2>
         <div className="h-64 w-full sm:h-80">
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={data.revenueOverTime}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(212,175,55,0.1)" />
-              <XAxis
-                dataKey="date"
-                stroke="#AFAFAF"
-                fontSize={12}
-                tickFormatter={(d: string) => d.slice(5)}
-                minTickGap={24}
-              />
-              <YAxis stroke="#AFAFAF" fontSize={12} />
-              <Tooltip
-                contentStyle={{ background: "#161616", border: "1px solid rgba(212,175,55,0.2)", borderRadius: 8 }}
-                labelStyle={{ color: "#FFFFFF" }}
-              />
-              <Line type="monotone" dataKey="revenue" stroke="#D4AF37" strokeWidth={2} dot={false} />
-            </LineChart>
-          </ResponsiveContainer>
+          <RevenueChart data={data.revenueOverTime} />
         </div>
       </div>
 
-      <div className="rounded border border-gold/20 bg-card p-4 sm:p-6">
-        <h2 className="mb-4 font-serif text-lg text-white">Top Products</h2>
+      <div className="lux-card rounded-lg p-4 sm:p-6">
+        <h2 className="mb-4 font-display text-lg text-foreground">Top Products</h2>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
             <thead>
@@ -89,7 +75,7 @@ export default function AdminAnalyticsPage() {
             </thead>
             <tbody>
               {data.topProducts.map((p) => (
-                <tr key={p.productId} className="border-b border-gold/5 text-white">
+                <tr key={p.productId} className="border-b border-gold/5 text-foreground">
                   <td className="py-2">{p.name}</td>
                   <td className="py-2">{p.unitsSold}</td>
                   <td className="py-2">${p.revenue.toLocaleString(undefined, { maximumFractionDigits: 2 })}</td>

@@ -103,19 +103,19 @@ export default function HomepageBuilderPage() {
   return (
     <div className="p-4 sm:p-8">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-        <h1 className="font-serif text-2xl text-white">Homepage Builder</h1>
+        <h1 className="font-display text-2xl text-foreground">Homepage Builder</h1>
         <button
           onClick={() => {
             setIsAdding((v) => !v);
             setDraftConfig({});
           }}
-          className="rounded bg-gold px-4 py-2 text-sm font-medium text-background"
+          className="rounded bg-gold px-4 py-2 text-sm font-medium text-gold-foreground"
         >
           {isAdding ? "Cancel" : "Add Section"}
         </button>
       </div>
 
-      {error && <p className="mb-4 text-sm text-red-400">{error}</p>}
+      {error && <p className="mb-4 text-sm text-destructive">{error}</p>}
 
       {isAdding && (
         <div className="mb-8 rounded border border-gold/20 bg-card p-4 sm:p-6">
@@ -125,7 +125,7 @@ export default function HomepageBuilderPage() {
               setNewType(e.target.value as HomepageSectionType);
               setDraftConfig({});
             }}
-            className="mb-4 w-full rounded border border-gold/20 bg-background px-3 py-2 text-white sm:w-64"
+            className="mb-4 w-full rounded border border-gold/20 bg-background px-3 py-2 text-foreground sm:w-64"
           >
             {TYPE_OPTIONS.map((t) => (
               <option key={t} value={t}>
@@ -134,7 +134,7 @@ export default function HomepageBuilderPage() {
             ))}
           </select>
           <SectionConfigForm type={newType} initialConfig={draftConfig} onChange={setDraftConfig} />
-          <button onClick={handleAdd} className="mt-4 rounded bg-gold px-6 py-2 text-sm font-medium text-background">
+          <button onClick={handleAdd} className="mt-4 rounded bg-gold px-6 py-2 text-sm font-medium text-gold-foreground">
             Add to Homepage
           </button>
         </div>
@@ -145,8 +145,8 @@ export default function HomepageBuilderPage() {
           <div key={section.id} className="rounded border border-gold/20 bg-card p-4 sm:p-6">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
-                <span className="font-serif text-white">{section.type.replace(/_/g, " ")}</span>
-                <span className={`ml-3 rounded-full px-2 py-0.5 text-xs ${section.isVisible ? "bg-gold/20 text-gold" : "bg-white/5 text-secondary-text"}`}>
+                <span className="font-display text-foreground">{section.type.replace(/_/g, " ")}</span>
+                <span className={`ml-3 rounded-full px-2 py-0.5 text-xs ${section.isVisible ? "bg-gold/20 text-gold" : "bg-surface-2 text-secondary-text"}`}>
                   {section.isVisible ? "Visible" : "Hidden"}
                 </span>
               </div>
@@ -169,7 +169,7 @@ export default function HomepageBuilderPage() {
                 >
                   {editingId === section.id ? "Close" : "Edit"}
                 </button>
-                <button onClick={() => handleDelete(section.id)} className="text-red-400 hover:underline">
+                <button onClick={() => handleDelete(section.id)} className="text-destructive hover:underline">
                   Delete
                 </button>
               </div>
@@ -178,7 +178,7 @@ export default function HomepageBuilderPage() {
             {editingId === section.id && (
               <div className="mt-4 border-t border-gold/10 pt-4">
                 <SectionConfigForm type={section.type} initialConfig={section.config} onChange={setDraftConfig} />
-                <button onClick={() => saveEdit(section)} className="mt-4 rounded bg-gold px-6 py-2 text-sm font-medium text-background">
+                <button onClick={() => saveEdit(section)} className="mt-4 rounded bg-gold px-6 py-2 text-sm font-medium text-gold-foreground">
                   Save Section
                 </button>
               </div>

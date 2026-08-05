@@ -65,10 +65,10 @@ export function ImageUploader({ folder = "products", onUploaded }: ImageUploader
         accept="image/*,video/*"
         onChange={handleFileChange}
         disabled={isUploading}
-        className="text-sm text-secondary-text file:mr-3 file:rounded file:border-0 file:bg-gold file:px-3 file:py-1.5 file:text-sm file:font-medium file:text-background"
+        className="text-sm text-secondary-text file:mr-3 file:rounded file:border-0 file:bg-gold file:px-3 file:py-1.5 file:text-sm file:font-medium file:text-gold-foreground"
       />
       {isUploading && <p className="mt-1 text-xs text-secondary-text">Uploading…</p>}
-      {error && <p className="mt-1 text-xs text-red-400">{error}</p>}
+      {error && <p className="mt-1 text-xs text-destructive">{error}</p>}
     </div>
   );
 }

@@ -49,17 +49,17 @@ export default function AnnouncementBarAdminPage() {
 
   return (
     <div className="max-w-lg p-4 sm:p-8">
-      <h1 className="mb-6 font-serif text-2xl text-white">Announcement Bar</h1>
+      <h1 className="mb-6 font-display text-2xl text-foreground">Announcement Bar</h1>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
           <label className="mb-1 block text-sm text-secondary-text">Text</label>
           <input
             {...register("text")}
-            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white"
+            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground"
             placeholder="Free shipping on all orders over $200"
           />
-          {errors.text && <p className="mt-1 text-sm text-red-400">{errors.text.message}</p>}
+          {errors.text && <p className="mt-1 text-sm text-destructive">{errors.text.message}</p>}
         </div>
 
         <div className="flex items-center gap-2">
@@ -84,7 +84,7 @@ export default function AnnouncementBarAdminPage() {
           <label className="mb-1 block text-sm text-secondary-text">Type</label>
           <select
             {...register("type")}
-            className="w-full rounded border border-gold/20 bg-background px-3 py-2 text-white"
+            className="w-full rounded border border-gold/20 bg-background px-3 py-2 text-foreground"
           >
             {TYPE_OPTIONS.map((opt) => (
               <option key={opt} value={opt}>
@@ -97,13 +97,13 @@ export default function AnnouncementBarAdminPage() {
         <button
           type="submit"
           disabled={status === "saving"}
-          className="rounded bg-gold px-6 py-2 font-medium text-background disabled:opacity-50"
+          className="rounded bg-gold px-6 py-2 font-medium text-gold-foreground disabled:opacity-50"
         >
           {status === "saving" ? "Saving…" : "Save"}
         </button>
 
         {status === "saved" && <p className="text-sm text-green-400">Saved.</p>}
-        {status === "error" && <p className="text-sm text-red-400">Something went wrong.</p>}
+        {status === "error" && <p className="text-sm text-destructive">Something went wrong.</p>}
       </form>
     </div>
   );

@@ -36,8 +36,8 @@ export default function EditCouponPage() {
 
   return (
     <div className="max-w-lg p-4 sm:p-8">
-      <h1 className="mb-6 font-serif text-2xl text-white">Edit Coupon</h1>
-      {error && <p className="mb-3 text-sm text-red-400">{error}</p>}
+      <h1 className="mb-6 font-display text-2xl text-foreground">Edit Coupon</h1>
+      {error && <p className="mb-3 text-sm text-destructive">{error}</p>}
       <CouponForm defaultValues={initialValues} onSubmit={handleUpdate} submitLabel="Save Changes" />
     </div>
   );

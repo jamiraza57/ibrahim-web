@@ -27,9 +27,9 @@ export function CouponForm({ defaultValues, onSubmit, submitLabel }: CouponFormP
         <input
           {...register("code")}
           placeholder="SUMMER25"
-          className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 uppercase text-white"
+          className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 uppercase text-foreground"
         />
-        {errors.code && <p className="mt-1 text-sm text-red-400">{errors.code.message}</p>}
+        {errors.code && <p className="mt-1 text-sm text-destructive">{errors.code.message}</p>}
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -37,7 +37,7 @@ export function CouponForm({ defaultValues, onSubmit, submitLabel }: CouponFormP
           <label className="mb-1 block text-sm text-secondary-text">Type</label>
           <select
             {...register("type")}
-            className="w-full rounded border border-gold/20 bg-background px-3 py-2 text-white"
+            className="w-full rounded border border-gold/20 bg-background px-3 py-2 text-foreground"
           >
             <option value="PERCENTAGE">Percentage</option>
             <option value="FIXED">Fixed Amount</option>
@@ -49,9 +49,9 @@ export function CouponForm({ defaultValues, onSubmit, submitLabel }: CouponFormP
             type="number"
             step="0.01"
             {...register("value", { valueAsNumber: true })}
-            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white"
+            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground"
           />
-          {errors.value && <p className="mt-1 text-sm text-red-400">{errors.value.message}</p>}
+          {errors.value && <p className="mt-1 text-sm text-destructive">{errors.value.message}</p>}
         </div>
       </div>
 
@@ -62,7 +62,7 @@ export function CouponForm({ defaultValues, onSubmit, submitLabel }: CouponFormP
             type="number"
             step="0.01"
             {...register("minPurchase", { valueAsNumber: true })}
-            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white"
+            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground"
           />
         </div>
         <div>
@@ -70,7 +70,7 @@ export function CouponForm({ defaultValues, onSubmit, submitLabel }: CouponFormP
           <input
             type="number"
             {...register("usageLimit", { valueAsNumber: true })}
-            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white"
+            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground"
           />
         </div>
       </div>
@@ -80,7 +80,7 @@ export function CouponForm({ defaultValues, onSubmit, submitLabel }: CouponFormP
         <input
           type="datetime-local"
           {...register("expiresAt")}
-          className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white"
+          className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground"
         />
       </div>
 
@@ -94,7 +94,7 @@ export function CouponForm({ defaultValues, onSubmit, submitLabel }: CouponFormP
       <button
         type="submit"
         disabled={isSubmitting}
-        className="rounded bg-gold px-6 py-2 font-medium text-background disabled:opacity-50"
+        className="rounded bg-gold px-6 py-2 font-medium text-gold-foreground disabled:opacity-50"
       >
         {isSubmitting ? "Saving…" : submitLabel}
       </button>

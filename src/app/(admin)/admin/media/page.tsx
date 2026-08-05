@@ -33,7 +33,7 @@ export default function AdminMediaLibraryPage() {
 
   return (
     <div className="p-4 sm:p-8">
-      <h1 className="mb-6 font-serif text-2xl text-white">Media Library</h1>
+      <h1 className="mb-6 font-display text-2xl text-foreground">Media Library</h1>
 
       <div className="mb-8">
         <ImageUploader folder="ibrahim/library" onUploaded={load} />
@@ -49,7 +49,7 @@ export default function AdminMediaLibraryPage() {
             )}
             <button
               onClick={() => handleDelete(asset.id)}
-              className="absolute right-1 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100"
+              className="absolute right-1 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-destructive text-xs text-foreground opacity-0 transition-opacity group-hover:opacity-100"
             >
               ×
             </button>

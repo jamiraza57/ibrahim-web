@@ -35,7 +35,7 @@ export function SectionConfigForm({ type, initialConfig, onChange }: SectionConf
     onChange(next);
   }
 
-  const inputClass = "w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white";
+  const inputClass = "w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground";
 
   if (type === "HERO") {
     return (
@@ -83,7 +83,7 @@ export function SectionConfigForm({ type, initialConfig, onChange }: SectionConf
               type="button"
               key={c.id}
               onClick={() => set("collectionIds", selected.includes(c.id) ? selected.filter((id) => id !== c.id) : [...selected, c.id])}
-              className={`rounded-full px-3 py-1 text-xs ${selected.includes(c.id) ? "bg-gold text-background" : "border border-gold/20 text-secondary-text"}`}
+              className={`rounded-full px-3 py-1 text-xs ${selected.includes(c.id) ? "bg-gold text-gold-foreground" : "border border-gold/20 text-secondary-text"}`}
             >
               {c.name}
             </button>

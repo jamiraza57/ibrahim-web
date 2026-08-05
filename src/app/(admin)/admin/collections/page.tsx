@@ -52,10 +52,10 @@ export default function AdminCollectionsPage() {
   return (
     <div className="p-4 sm:p-8">
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="font-serif text-2xl text-white">Collections</h1>
+        <h1 className="font-display text-2xl text-foreground">Collections</h1>
         <button
           onClick={() => setShowForm((v) => !v)}
-          className="rounded bg-gold px-4 py-2 text-sm font-medium text-background"
+          className="rounded bg-gold px-4 py-2 text-sm font-medium text-gold-foreground"
         >
           {showForm ? "Cancel" : "New Collection"}
         </button>
@@ -63,7 +63,7 @@ export default function AdminCollectionsPage() {
 
       {showForm && (
         <div className="mb-8 max-w-lg rounded border border-gold/20 bg-card p-6">
-          {error && <p className="mb-3 text-sm text-red-400">{error}</p>}
+          {error && <p className="mb-3 text-sm text-destructive">{error}</p>}
           <CollectionForm onSubmit={handleCreate} submitLabel="Create Collection" />
         </div>
       )}
@@ -80,7 +80,7 @@ export default function AdminCollectionsPage() {
         </thead>
         <tbody>
           {collections.map((c) => (
-            <tr key={c.id} className="border-b border-gold/5 text-white">
+            <tr key={c.id} className="border-b border-gold/5 text-foreground">
               <td className="py-2">{c.name}</td>
               <td className="py-2 text-secondary-text">{c.slug}</td>
               <td className="py-2">{c.status ? "Active" : "Hidden"}</td>
@@ -88,7 +88,7 @@ export default function AdminCollectionsPage() {
                 <Link href={`/admin/collections/${c.id}`} className="mr-4 text-gold hover:underline">
                   Edit
                 </Link>
-                <button onClick={() => handleDelete(c.id)} className="text-red-400 hover:underline">
+                <button onClick={() => handleDelete(c.id)} className="text-destructive hover:underline">
                   Delete
                 </button>
               </td>

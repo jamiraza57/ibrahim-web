@@ -34,22 +34,22 @@ function TestimonialForm({ onSubmit }: { onSubmit: (data: TestimonialInput) => P
       <input
         {...register("name")}
         placeholder="Customer name"
-        className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white"
+        className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground"
       />
-      {errors.name && <p className="text-sm text-red-400">{errors.name.message}</p>}
+      {errors.name && <p className="text-sm text-destructive">{errors.name.message}</p>}
 
       <textarea
         {...register("content")}
         rows={3}
         placeholder="Testimonial content"
-        className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white"
+        className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground"
       />
-      {errors.content && <p className="text-sm text-red-400">{errors.content.message}</p>}
+      {errors.content && <p className="text-sm text-destructive">{errors.content.message}</p>}
 
       <div className="flex items-center gap-4">
         <select
           {...register("rating", { valueAsNumber: true })}
-          className="rounded border border-gold/20 bg-background px-3 py-2 text-white"
+          className="rounded border border-gold/20 bg-background px-3 py-2 text-foreground"
         >
           {[1, 2, 3, 4, 5].map((r) => (
             <option key={r} value={r}>
@@ -63,7 +63,7 @@ function TestimonialForm({ onSubmit }: { onSubmit: (data: TestimonialInput) => P
         </label>
       </div>
 
-      <button type="submit" disabled={isSubmitting} className="rounded bg-gold px-4 py-2 text-sm font-medium text-background disabled:opacity-50">
+      <button type="submit" disabled={isSubmitting} className="rounded bg-gold px-4 py-2 text-sm font-medium text-gold-foreground disabled:opacity-50">
         {isSubmitting ? "Saving…" : "Add Testimonial"}
       </button>
     </form>
@@ -109,7 +109,7 @@ export default function AdminTestimonialsPage() {
 
   return (
     <div className="p-4 sm:p-8">
-      <h1 className="mb-6 font-serif text-2xl text-white">Testimonials</h1>
+      <h1 className="mb-6 font-display text-2xl text-foreground">Testimonials</h1>
 
       <div className="mb-8 max-w-lg rounded border border-gold/20 bg-card p-4 sm:p-6">
         <TestimonialForm onSubmit={handleCreate} />
@@ -119,14 +119,14 @@ export default function AdminTestimonialsPage() {
         {testimonials.map((t) => (
           <div key={t.id} className="flex flex-wrap items-center justify-between gap-3 rounded border border-gold/10 bg-card p-4">
             <div>
-              <p className="text-white">{t.name} — {"★".repeat(t.rating)}</p>
+              <p className="text-foreground">{t.name} — {"★".repeat(t.rating)}</p>
               <p className="text-sm text-secondary-text">{t.content}</p>
             </div>
             <div className="flex gap-3 text-sm">
               <button onClick={() => toggleVisibility(t)} className="text-gold hover:underline">
                 {t.isVisible ? "Hide" : "Show"}
               </button>
-              <button onClick={() => handleDelete(t.id)} className="text-red-400 hover:underline">
+              <button onClick={() => handleDelete(t.id)} className="text-destructive hover:underline">
                 Delete
               </button>
             </div>

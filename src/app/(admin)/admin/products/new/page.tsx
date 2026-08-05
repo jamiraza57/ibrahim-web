@@ -22,7 +22,7 @@ export default function NewProductPage() {
 
   return (
     <div className="p-4 sm:p-8">
-      <h1 className="mb-6 font-serif text-2xl text-white">New Product</h1>
+      <h1 className="mb-6 font-display text-2xl text-foreground">New Product</h1>
       <ProductForm onSubmit={handleCreate} submitLabel="Create Product" />
     </div>
   );

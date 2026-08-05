@@ -37,7 +37,7 @@ export default function AdminOrdersPage() {
 
   return (
     <div className="p-4 sm:p-8">
-      <h1 className="mb-6 font-serif text-2xl text-white">Orders</h1>
+      <h1 className="mb-6 font-display text-2xl text-foreground">Orders</h1>
 
       <div className="mb-4 flex gap-4">
         <input
@@ -47,7 +47,7 @@ export default function AdminOrdersPage() {
             setSearch(e.target.value);
           }}
           placeholder="Search by order #, email, phone…"
-          className="w-full max-w-sm rounded border border-gold/20 bg-transparent px-3 py-2 text-white"
+          className="w-full max-w-sm rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground"
         />
         <select
           value={status}
@@ -55,7 +55,7 @@ export default function AdminOrdersPage() {
             setPage(1);
             setStatus(e.target.value);
           }}
-          className="rounded border border-gold/20 bg-background px-3 py-2 text-white"
+          className="rounded border border-gold/20 bg-background px-3 py-2 text-foreground"
         >
           {STATUS_OPTIONS.map((s) => (
             <option key={s} value={s}>
@@ -79,7 +79,7 @@ export default function AdminOrdersPage() {
         </thead>
         <tbody>
           {orders.map((o) => (
-            <tr key={o.id} className="border-b border-gold/5 text-white">
+            <tr key={o.id} className="border-b border-gold/5 text-foreground">
               <td className="py-2">
                 <Link href={`/admin/orders/${o.id}`} className="text-gold hover:underline">
                   {o.orderNumber}
@@ -112,7 +112,7 @@ export default function AdminOrdersPage() {
             <button
               key={p}
               onClick={() => setPage(p)}
-              className={`rounded px-3 py-1 text-sm ${p === page ? "bg-gold text-background" : "border border-gold/20 text-white"}`}
+              className={`rounded px-3 py-1 text-sm ${p === page ? "bg-gold text-gold-foreground" : "border border-gold/20 text-foreground"}`}
             >
               {p}
             </button>

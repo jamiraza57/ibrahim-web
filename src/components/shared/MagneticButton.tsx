@@ -47,7 +47,7 @@ export function MagneticButton({
       animate={{ x: offset.x, y: offset.y }}
       transition={{ type: "spring", stiffness: 150, damping: 12, mass: 0.2 }}
       className={cn(
-        "relative rounded-full border border-gold/40 bg-transparent px-8 py-3 text-sm tracking-wide text-white transition-colors hover:bg-gold hover:text-background",
+        "relative rounded-full border border-gold/40 bg-transparent px-8 py-3 text-sm tracking-wide text-foreground transition-colors hover:bg-gold hover:text-gold-foreground",
         className
       )}
       {...props}

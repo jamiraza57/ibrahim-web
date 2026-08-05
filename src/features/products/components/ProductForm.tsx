@@ -86,34 +86,34 @@ export function ProductForm({ defaultValues, onSubmit, submitLabel }: ProductFor
 
   return (
     <form onSubmit={handleSubmit(submit)} className="max-w-3xl space-y-6">
-      {serverError && <p className="text-sm text-red-400">{serverError}</p>}
+      {serverError && <p className="text-sm text-destructive">{serverError}</p>}
 
       <section className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div className="col-span-2">
           <label className="mb-1 block text-sm text-secondary-text">Name</label>
           <input
             {...register("name")}
-            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white"
+            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground"
           />
-          {errors.name && <p className="mt-1 text-sm text-red-400">{errors.name.message}</p>}
+          {errors.name && <p className="mt-1 text-sm text-destructive">{errors.name.message}</p>}
         </div>
 
         <div>
           <label className="mb-1 block text-sm text-secondary-text">Slug</label>
           <input
             {...register("slug")}
-            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white"
+            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground"
           />
-          {errors.slug && <p className="mt-1 text-sm text-red-400">{errors.slug.message}</p>}
+          {errors.slug && <p className="mt-1 text-sm text-destructive">{errors.slug.message}</p>}
         </div>
 
         <div>
           <label className="mb-1 block text-sm text-secondary-text">SKU</label>
           <input
             {...register("sku")}
-            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white"
+            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground"
           />
-          {errors.sku && <p className="mt-1 text-sm text-red-400">{errors.sku.message}</p>}
+          {errors.sku && <p className="mt-1 text-sm text-destructive">{errors.sku.message}</p>}
         </div>
 
         <div className="col-span-2">
@@ -121,16 +121,16 @@ export function ProductForm({ defaultValues, onSubmit, submitLabel }: ProductFor
           <textarea
             {...register("description")}
             rows={4}
-            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white"
+            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground"
           />
-          {errors.description && <p className="mt-1 text-sm text-red-400">{errors.description.message}</p>}
+          {errors.description && <p className="mt-1 text-sm text-destructive">{errors.description.message}</p>}
         </div>
 
         <div className="col-span-2">
           <label className="mb-1 block text-sm text-secondary-text">Short Description</label>
           <input
             {...register("shortDescription")}
-            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white"
+            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground"
           />
         </div>
       </section>
@@ -142,9 +142,9 @@ export function ProductForm({ defaultValues, onSubmit, submitLabel }: ProductFor
             type="number"
             step="0.01"
             {...register("price", { valueAsNumber: true })}
-            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white"
+            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground"
           />
-          {errors.price && <p className="mt-1 text-sm text-red-400">{errors.price.message}</p>}
+          {errors.price && <p className="mt-1 text-sm text-destructive">{errors.price.message}</p>}
         </div>
         <div>
           <label className="mb-1 block text-sm text-secondary-text">Sale Price</label>
@@ -152,16 +152,16 @@ export function ProductForm({ defaultValues, onSubmit, submitLabel }: ProductFor
             type="number"
             step="0.01"
             {...register("salePrice", { valueAsNumber: true })}
-            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white"
+            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground"
           />
-          {errors.salePrice && <p className="mt-1 text-sm text-red-400">{errors.salePrice.message}</p>}
+          {errors.salePrice && <p className="mt-1 text-sm text-destructive">{errors.salePrice.message}</p>}
         </div>
         <div>
           <label className="mb-1 block text-sm text-secondary-text">Stock</label>
           <input
             type="number"
             {...register("stock", { valueAsNumber: true })}
-            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white"
+            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground"
           />
         </div>
       </section>
@@ -171,28 +171,28 @@ export function ProductForm({ defaultValues, onSubmit, submitLabel }: ProductFor
           <label className="mb-1 block text-sm text-secondary-text">Material</label>
           <input
             {...register("material")}
-            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white"
+            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground"
           />
         </div>
         <div>
           <label className="mb-1 block text-sm text-secondary-text">Purity</label>
           <input
             {...register("purity")}
-            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white"
+            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground"
           />
         </div>
         <div>
           <label className="mb-1 block text-sm text-secondary-text">Stone</label>
           <input
             {...register("stone")}
-            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white"
+            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground"
           />
         </div>
         <div>
           <label className="mb-1 block text-sm text-secondary-text">Color</label>
           <input
             {...register("color")}
-            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white"
+            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground"
           />
         </div>
       </section>
@@ -212,7 +212,7 @@ export function ProductForm({ defaultValues, onSubmit, submitLabel }: ProductFor
               <button
                 type="button"
                 onClick={() => removeImage(index)}
-                className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-xs text-white"
+                className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-destructive text-xs text-foreground"
               >
                 ×
               </button>
@@ -236,7 +236,7 @@ export function ProductForm({ defaultValues, onSubmit, submitLabel }: ProductFor
               onClick={() => toggleId("categoryIds", c.id)}
               className={`rounded-full px-3 py-1 text-xs ${
                 selectedCategoryIds.includes(c.id)
-                  ? "bg-gold text-background"
+                  ? "bg-gold text-gold-foreground"
                   : "border border-gold/20 text-secondary-text"
               }`}
             >
@@ -256,7 +256,7 @@ export function ProductForm({ defaultValues, onSubmit, submitLabel }: ProductFor
               onClick={() => toggleId("collectionIds", c.id)}
               className={`rounded-full px-3 py-1 text-xs ${
                 selectedCollectionIds.includes(c.id)
-                  ? "bg-gold text-background"
+                  ? "bg-gold text-gold-foreground"
                   : "border border-gold/20 text-secondary-text"
               }`}
             >
@@ -271,7 +271,7 @@ export function ProductForm({ defaultValues, onSubmit, submitLabel }: ProductFor
           <label className="mb-1 block text-sm text-secondary-text">Status</label>
           <select
             {...register("status")}
-            className="w-full rounded border border-gold/20 bg-background px-3 py-2 text-white"
+            className="w-full rounded border border-gold/20 bg-background px-3 py-2 text-foreground"
           >
             {STATUS_OPTIONS.map((s) => (
               <option key={s} value={s}>
@@ -285,7 +285,7 @@ export function ProductForm({ defaultValues, onSubmit, submitLabel }: ProductFor
           <input
             type="datetime-local"
             {...register("publishAt")}
-            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white"
+            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground"
           />
         </div>
       </section>
@@ -304,14 +304,14 @@ export function ProductForm({ defaultValues, onSubmit, submitLabel }: ProductFor
           <label className="mb-1 block text-sm text-secondary-text">Meta Title</label>
           <input
             {...register("metaTitle")}
-            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white"
+            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground"
           />
         </div>
         <div>
           <label className="mb-1 block text-sm text-secondary-text">Meta Description</label>
           <input
             {...register("metaDescription")}
-            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white"
+            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground"
           />
         </div>
       </section>
@@ -319,7 +319,7 @@ export function ProductForm({ defaultValues, onSubmit, submitLabel }: ProductFor
       <button
         type="submit"
         disabled={isSubmitting}
-        className="rounded bg-gold px-6 py-2 font-medium text-background disabled:opacity-50"
+        className="rounded bg-gold px-6 py-2 font-medium text-gold-foreground disabled:opacity-50"
       >
         {isSubmitting ? "Saving…" : submitLabel}
       </button>

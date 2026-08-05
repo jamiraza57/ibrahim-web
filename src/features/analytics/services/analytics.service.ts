@@ -94,3 +94,47 @@ export async function getTopProducts(limit = 5): Promise<TopProduct[]> {
     .sort((a, b) => b.unitsSold - a.unitsSold)
     .slice(0, limit);
 }
+
+export interface RecentOrder {
+  id: string;
+  orderNumber: string;
+  customerName: string;
+  status: string;
+  total: number;
+  createdAt: Date;
+}
+
+export async function getRecentOrders(limit = 5): Promise<RecentOrder[]> {
+  const orders = await prisma.order.findMany({
+    orderBy: { createdAt: "desc" },
+    take: limit,
+    include: { customer: { select: { name: true } } },
+  });
+
+  return orders.map((o) => ({
+    id: o.id,
+    orderNumber: o.orderNumber,
+    customerName: o.customer.name,
+    status: o.status,
+    total: o.total,
+    createdAt: o.createdAt,
+  }));
+}
+
+export interface LowStockProduct {
+  id: string;
+  name: string;
+  slug: string;
+  stock: number;
+}
+
+const LOW_STOCK_THRESHOLD = 8;
+
+export async function getLowStockProducts(limit = 5): Promise<LowStockProduct[]> {
+  return prisma.product.findMany({
+    where: { status: "PUBLISHED", stock: { lte: LOW_STOCK_THRESHOLD } },
+    orderBy: { stock: "asc" },
+    take: limit,
+    select: { id: true, name: true, slug: true, stock: true },
+  });
+}

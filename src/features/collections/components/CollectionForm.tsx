@@ -26,9 +26,9 @@ export function CollectionForm({ defaultValues, onSubmit, submitLabel }: Collect
         <label className="mb-1 block text-sm text-secondary-text">Name</label>
         <input
           {...register("name")}
-          className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white"
+          className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground"
         />
-        {errors.name && <p className="mt-1 text-sm text-red-400">{errors.name.message}</p>}
+        {errors.name && <p className="mt-1 text-sm text-destructive">{errors.name.message}</p>}
       </div>
 
       <div>
@@ -36,9 +36,9 @@ export function CollectionForm({ defaultValues, onSubmit, submitLabel }: Collect
         <input
           {...register("slug")}
           placeholder="new-arrivals"
-          className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white"
+          className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground"
         />
-        {errors.slug && <p className="mt-1 text-sm text-red-400">{errors.slug.message}</p>}
+        {errors.slug && <p className="mt-1 text-sm text-destructive">{errors.slug.message}</p>}
       </div>
 
       <div>
@@ -46,7 +46,7 @@ export function CollectionForm({ defaultValues, onSubmit, submitLabel }: Collect
         <textarea
           {...register("description")}
           rows={3}
-          className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white"
+          className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground"
         />
       </div>
 
@@ -55,7 +55,7 @@ export function CollectionForm({ defaultValues, onSubmit, submitLabel }: Collect
         <input
           {...register("bannerUrl")}
           placeholder="Uploaded via Media Library"
-          className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white"
+          className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground"
         />
       </div>
 
@@ -70,7 +70,7 @@ export function CollectionForm({ defaultValues, onSubmit, submitLabel }: Collect
         <label className="mb-1 block text-sm text-secondary-text">Meta Title</label>
         <input
           {...register("metaTitle")}
-          className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white"
+          className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground"
         />
       </div>
 
@@ -79,14 +79,14 @@ export function CollectionForm({ defaultValues, onSubmit, submitLabel }: Collect
         <textarea
           {...register("metaDescription")}
           rows={2}
-          className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white"
+          className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground"
         />
       </div>
 
       <button
         type="submit"
         disabled={isSubmitting}
-        className="rounded bg-gold px-6 py-2 font-medium text-background disabled:opacity-50"
+        className="rounded bg-gold px-6 py-2 font-medium text-gold-foreground disabled:opacity-50"
       >
         {isSubmitting ? "Saving…" : submitLabel}
       </button>
