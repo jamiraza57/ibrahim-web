@@ -19,6 +19,11 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "*.public.blob.vercel-storage.com",
       },
+      // Demo/seed imagery only — remove once real product photography is uploaded.
+      {
+        protocol: "https",
+        hostname: "picsum.photos",
+      },
     ],
   },
   experimental: {

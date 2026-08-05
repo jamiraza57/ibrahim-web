@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { objectIdSchema } from "@/lib/validation";
 
 export const productImageSchema = z.object({
   url: z.string().url(),
@@ -33,8 +34,8 @@ export const productSchema = z.object({
   isOnSale: z.boolean().default(false),
   metaTitle: z.string().max(160).optional().nullable(),
   metaDescription: z.string().max(300).optional().nullable(),
-  categoryIds: z.array(z.string().cuid()).default([]),
-  collectionIds: z.array(z.string().cuid()).default([]),
+  categoryIds: z.array(objectIdSchema).default([]),
+  collectionIds: z.array(objectIdSchema).default([]),
   images: z.array(productImageSchema).default([]),
 }).refine(
   (data) => !data.salePrice || data.salePrice < data.price,

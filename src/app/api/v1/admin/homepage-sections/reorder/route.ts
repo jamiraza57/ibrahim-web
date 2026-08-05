@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { swapSectionOrder } from "@/features/homepage/services/homepage-section.service";
+import { objectIdSchema } from "@/lib/validation";
 
-const reorderSchema = z.object({ idA: z.string().cuid(), idB: z.string().cuid() });
+const reorderSchema = z.object({ idA: objectIdSchema, idB: objectIdSchema });
 
 export async function POST(request: NextRequest) {
   let body: unknown;

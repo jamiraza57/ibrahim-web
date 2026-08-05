@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { objectIdSchema } from "@/lib/validation";
 
 export const checkoutSchema = z.object({
   customer: z.object({
@@ -18,7 +19,7 @@ export const checkoutSchema = z.object({
   items: z
     .array(
       z.object({
-        productId: z.string().cuid(),
+        productId: objectIdSchema,
         quantity: z.number().int().min(1),
       })
     )

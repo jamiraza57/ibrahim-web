@@ -35,34 +35,46 @@ export async function queryStorefrontProducts(filters: StorefrontProductFilters)
   const page = filters.page ?? 1;
   const pageSize = filters.pageSize ?? 24;
 
+  // MongoDB never wrote `publishAt` at all for products created without an
+  // explicit publish date, so it's unset rather than stored as null — Prisma's
+  // Mongo connector only matches bare `{ publishAt: null }` against fields
+  // explicitly set to null, not unset ones, so `isSet: false` is required too.
   const where: Prisma.ProductWhereInput = {
-    status: "PUBLISHED",
-    OR: [{ publishAt: null }, { publishAt: { lte: new Date() } }],
-    ...(filters.categorySlug ? { categories: { some: { category: { slug: filters.categorySlug } } } } : {}),
-    ...(filters.collectionSlug
-      ? { collections: { some: { collection: { slug: filters.collectionSlug } } } }
-      : {}),
-    ...(filters.material ? { material: filters.material } : {}),
-    ...(filters.stone ? { stone: filters.stone } : {}),
-    ...(filters.color ? { color: filters.color } : {}),
-    ...(filters.inStockOnly ? { stock: { gt: 0 } } : {}),
-    ...(filters.minPrice || filters.maxPrice
-      ? {
-          price: {
-            ...(filters.minPrice ? { gte: filters.minPrice } : {}),
-            ...(filters.maxPrice ? { lte: filters.maxPrice } : {}),
-          },
-        }
-      : {}),
-    ...(filters.search
-      ? {
-          OR: [
-            { name: { contains: filters.search, mode: "insensitive" } },
-            { description: { contains: filters.search, mode: "insensitive" } },
-            { material: { contains: filters.search, mode: "insensitive" } },
-          ],
-        }
-      : {}),
+    AND: [
+      {
+        status: "PUBLISHED",
+        OR: [{ publishAt: { isSet: false } }, { publishAt: null }, { publishAt: { lte: new Date() } }],
+      },
+      ...(filters.categorySlug ? [{ categories: { some: { category: { slug: filters.categorySlug } } } }] : []),
+      ...(filters.collectionSlug
+        ? [{ collections: { some: { collection: { slug: filters.collectionSlug } } } }]
+        : []),
+      ...(filters.material ? [{ material: filters.material }] : []),
+      ...(filters.stone ? [{ stone: filters.stone }] : []),
+      ...(filters.color ? [{ color: filters.color }] : []),
+      ...(filters.inStockOnly ? [{ stock: { gt: 0 } }] : []),
+      ...(filters.minPrice || filters.maxPrice
+        ? [
+            {
+              price: {
+                ...(filters.minPrice ? { gte: filters.minPrice } : {}),
+                ...(filters.maxPrice ? { lte: filters.maxPrice } : {}),
+              },
+            },
+          ]
+        : []),
+      ...(filters.search
+        ? [
+            {
+              OR: [
+                { name: { contains: filters.search, mode: "insensitive" as const } },
+                { description: { contains: filters.search, mode: "insensitive" as const } },
+                { material: { contains: filters.search, mode: "insensitive" as const } },
+              ],
+            },
+          ]
+        : []),
+    ],
   };
 
   const [items, total] = await Promise.all([
@@ -81,7 +93,11 @@ export async function queryStorefrontProducts(filters: StorefrontProductFilters)
 
 export async function getStorefrontProductBySlug(slug: string) {
   return prisma.product.findFirst({
-    where: { slug, status: "PUBLISHED", OR: [{ publishAt: null }, { publishAt: { lte: new Date() } }] },
+    where: {
+      slug,
+      status: "PUBLISHED",
+      OR: [{ publishAt: { isSet: false } }, { publishAt: null }, { publishAt: { lte: new Date() } }],
+    },
     include: {
       images: { orderBy: { position: "asc" } },
       categories: { include: { category: true } },

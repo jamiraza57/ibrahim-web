@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { objectIdSchema } from "@/lib/validation";
 
 export const heroConfigSchema = z.object({
   heading: z.string().min(1),
@@ -17,7 +18,7 @@ export const bannerConfigSchema = z.object({
 
 export const featuredCollectionsConfigSchema = z.object({
   heading: z.string().default("Shop by Collection"),
-  collectionIds: z.array(z.string().cuid()).min(1, "Pick at least one collection"),
+  collectionIds: z.array(objectIdSchema).min(1, "Pick at least one collection"),
 });
 
 export const featuredProductsConfigSchema = z.object({
