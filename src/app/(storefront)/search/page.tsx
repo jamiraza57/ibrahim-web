@@ -39,7 +39,7 @@ export default async function SearchPage({ searchParams }: PageProps) {
           name="q"
           defaultValue={sp.q ?? ""}
           placeholder="Search rings, necklaces, watches…"
-          className="w-full max-w-md rounded border border-gold/20 bg-transparent px-4 py-3 text-foreground placeholder:text-secondary-text/60 focus:border-gold/50 focus:outline-none"
+          className="w-full max-w-md rounded border border-gold/20 bg-transparent px-4 py-3 text-foreground placeholder:text-secondary-text/60 focus:border-gold/50 focus:outline-none focus:ring-2 focus:ring-gold/30"
         />
       </form>
 

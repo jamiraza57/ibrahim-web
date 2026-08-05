@@ -98,17 +98,17 @@ export default function CheckoutPage() {
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="col-span-2">
               <label className="mb-1 block text-sm text-secondary-text">Full Name</label>
-              <input {...register("name")} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground focus:border-gold/50 focus:outline-none" />
+              <input {...register("name")} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground focus:border-gold/50 focus:outline-none focus:ring-2 focus:ring-gold/30" />
               {errors.name && <p className="mt-1 text-sm text-destructive">{errors.name.message}</p>}
             </div>
             <div>
               <label className="mb-1 block text-sm text-secondary-text">Email</label>
-              <input {...register("email")} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground focus:border-gold/50 focus:outline-none" />
+              <input {...register("email")} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground focus:border-gold/50 focus:outline-none focus:ring-2 focus:ring-gold/30" />
               {errors.email && <p className="mt-1 text-sm text-destructive">{errors.email.message}</p>}
             </div>
             <div>
               <label className="mb-1 block text-sm text-secondary-text">Phone</label>
-              <input {...register("phone")} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground focus:border-gold/50 focus:outline-none" />
+              <input {...register("phone")} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground focus:border-gold/50 focus:outline-none focus:ring-2 focus:ring-gold/30" />
               {errors.phone && <p className="mt-1 text-sm text-destructive">{errors.phone.message}</p>}
             </div>
           </div>
@@ -117,36 +117,36 @@ export default function CheckoutPage() {
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="col-span-2">
               <label className="mb-1 block text-sm text-secondary-text">Address Line 1</label>
-              <input {...register("line1")} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground focus:border-gold/50 focus:outline-none" />
+              <input {...register("line1")} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground focus:border-gold/50 focus:outline-none focus:ring-2 focus:ring-gold/30" />
               {errors.line1 && <p className="mt-1 text-sm text-destructive">{errors.line1.message}</p>}
             </div>
             <div className="col-span-2">
               <label className="mb-1 block text-sm text-secondary-text">Address Line 2 (optional)</label>
-              <input {...register("line2")} placeholder="Apartment, suite, floor…" className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground focus:border-gold/50 focus:outline-none" />
+              <input {...register("line2")} placeholder="Apartment, suite, floor…" className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground focus:border-gold/50 focus:outline-none focus:ring-2 focus:ring-gold/30" />
             </div>
             <div>
               <label className="mb-1 block text-sm text-secondary-text">City</label>
-              <input {...register("city")} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground focus:border-gold/50 focus:outline-none" />
+              <input {...register("city")} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground focus:border-gold/50 focus:outline-none focus:ring-2 focus:ring-gold/30" />
               {errors.city && <p className="mt-1 text-sm text-destructive">{errors.city.message}</p>}
             </div>
             <div>
               <label className="mb-1 block text-sm text-secondary-text">State / Province</label>
-              <input {...register("state")} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground focus:border-gold/50 focus:outline-none" />
+              <input {...register("state")} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground focus:border-gold/50 focus:outline-none focus:ring-2 focus:ring-gold/30" />
               {errors.state && <p className="mt-1 text-sm text-destructive">{errors.state.message}</p>}
             </div>
             <div>
               <label className="mb-1 block text-sm text-secondary-text">Postal Code</label>
-              <input {...register("postalCode")} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground focus:border-gold/50 focus:outline-none" />
+              <input {...register("postalCode")} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground focus:border-gold/50 focus:outline-none focus:ring-2 focus:ring-gold/30" />
               {errors.postalCode && <p className="mt-1 text-sm text-destructive">{errors.postalCode.message}</p>}
             </div>
             <div>
               <label className="mb-1 block text-sm text-secondary-text">Country</label>
-              <input {...register("country")} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground focus:border-gold/50 focus:outline-none" />
+              <input {...register("country")} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground focus:border-gold/50 focus:outline-none focus:ring-2 focus:ring-gold/30" />
               {errors.country && <p className="mt-1 text-sm text-destructive">{errors.country.message}</p>}
             </div>
             <div className="col-span-2">
               <label className="mb-1 block text-sm text-secondary-text">Delivery Notes (optional)</label>
-              <textarea {...register("notes")} rows={2} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground focus:border-gold/50 focus:outline-none" />
+              <textarea {...register("notes")} rows={2} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground focus:border-gold/50 focus:outline-none focus:ring-2 focus:ring-gold/30" />
             </div>
           </div>
 
@@ -159,7 +159,7 @@ export default function CheckoutPage() {
           <input
             {...register("couponCode")}
             placeholder="Have a coupon code?"
-            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground focus:border-gold/50 focus:outline-none"
+            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground focus:border-gold/50 focus:outline-none focus:ring-2 focus:ring-gold/30"
           />
 
           {serverError && <p className="text-sm text-destructive">{serverError}</p>}

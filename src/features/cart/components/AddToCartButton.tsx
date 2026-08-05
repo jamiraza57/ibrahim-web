@@ -39,7 +39,7 @@ export function AddToCartButton({ productId, slug, name, price, image, inStock }
         min={1}
         value={quantity}
         onChange={(e) => setQuantity(Math.max(1, Number(e.target.value)))}
-        className="w-16 rounded border border-gold/20 bg-transparent px-2 py-3 text-center text-foreground focus:border-gold/50 focus:outline-none"
+        className="w-16 rounded border border-gold/20 bg-transparent px-2 py-3 text-center text-foreground focus:border-gold/50 focus:outline-none focus:ring-2 focus:ring-gold/30"
       />
       <MagneticButton onClick={handleAdd} data-cursor="hover">
         {added ? "Added ✓" : "Add to Cart"}
