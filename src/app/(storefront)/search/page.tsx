@@ -28,13 +28,18 @@ export default async function SearchPage({ searchParams }: PageProps) {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
+      <div className="mb-8 text-center sm:text-left">
+        <span className="eyebrow">Collection</span>
+        <h1 className="mt-2 font-display text-3xl sm:text-4xl">Shop</h1>
+      </div>
+
       <form className="mb-8">
         <input
           type="search"
           name="q"
           defaultValue={sp.q ?? ""}
           placeholder="Search rings, necklaces, watches…"
-          className="w-full max-w-md rounded border border-gold/20 bg-transparent px-4 py-3 text-white"
+          className="w-full max-w-md rounded border border-gold/20 bg-transparent px-4 py-3 text-foreground placeholder:text-secondary-text/60 focus:border-gold/50 focus:outline-none"
         />
       </form>
 

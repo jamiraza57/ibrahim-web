@@ -70,7 +70,8 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      <h1 className="mb-2 font-serif text-3xl text-white">{category.name}</h1>
+      <span className="eyebrow">Category</span>
+      <h1 className="mb-2 mt-2 font-display text-3xl">{category.name}</h1>
       {category.description && <p className="mb-8 max-w-2xl text-secondary-text">{category.description}</p>}
 
       <FilterBar facets={facets} />

@@ -20,21 +20,23 @@ export async function FeaturedProductsSection({
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
-      <RevealOnScroll>
-        <h2 className="mb-8 text-center font-serif text-2xl text-white sm:text-3xl">{config.heading}</h2>
-        <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-4">
-          {products.map((product) => (
+      <RevealOnScroll className="text-center">
+        <span className="eyebrow">Signature Pieces</span>
+        <h2 className="mb-8 mt-2 font-display text-2xl sm:text-3xl">{config.heading}</h2>
+      </RevealOnScroll>
+      <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-4">
+        {products.map((product, idx) => (
+          <RevealOnScroll key={product.id} delay={idx * 0.06}>
             <ProductCard
-              key={product.id}
               slug={product.slug}
               name={product.name}
               price={product.price.toString()}
               salePrice={product.salePrice?.toString()}
               thumbnailUrl={product.images.find((i) => i.isThumbnail)?.url ?? product.images[0]?.url}
             />
-          ))}
-        </div>
-      </RevealOnScroll>
+          </RevealOnScroll>
+        ))}
+      </div>
     </section>
   );
 }

@@ -18,14 +18,15 @@ export default async function OrderSuccessPage({ params }: PageProps) {
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 text-center">
-      <h1 className="mb-2 font-serif text-3xl text-gold">Order Confirmed</h1>
+      <span className="eyebrow">Confirmed</span>
+      <h1 className="mb-2 mt-2 font-display text-3xl text-gradient-gold">Order Confirmed</h1>
       <p className="mb-8 text-secondary-text">
-        Order <strong className="text-white">{order.orderNumber}</strong> has been placed. Pay in cash when it
+        Order <strong className="text-foreground">{order.orderNumber}</strong> has been placed. Pay in cash when it
         arrives.
       </p>
 
-      <div className="mx-auto max-w-md rounded border border-gold/20 bg-card p-6 text-left">
-        <h2 className="mb-3 font-serif text-lg text-white">Items</h2>
+      <div className="lux-card mx-auto max-w-md rounded-lg p-6 text-left">
+        <h2 className="mb-3 font-display text-lg">Items</h2>
         <ul className="space-y-2 text-sm">
           {order.items.map((item) => (
             <li key={item.id} className="flex justify-between text-secondary-text">
@@ -52,7 +53,7 @@ export default async function OrderSuccessPage({ params }: PageProps) {
             <span>Shipping</span>
             <span>{Number(order.shipping) === 0 ? "Free" : `$${order.shipping.toString()}`}</span>
           </div>
-          <div className="flex justify-between font-medium text-white">
+          <div className="flex justify-between font-medium text-foreground">
             <span>Total (Cash on Delivery)</span>
             <span>${order.total.toString()}</span>
           </div>

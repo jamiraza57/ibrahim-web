@@ -45,8 +45,10 @@ export function ProductGrid({ products, page, totalPages, basePath, searchParams
             <Link
               key={p}
               href={pageHref(p)}
-              className={`rounded px-3 py-1 text-sm ${
-                p === page ? "bg-gold text-background" : "border border-gold/20 text-white"
+              className={`rounded px-3 py-1 text-sm transition-colors ${
+                p === page
+                  ? "bg-gold text-gold-foreground"
+                  : "border border-gold/20 text-secondary-text hover:border-gold/50 hover:text-gold"
               }`}
             >
               {p}

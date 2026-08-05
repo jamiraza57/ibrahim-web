@@ -33,7 +33,7 @@ export function FilterBar({ facets }: FilterBarProps) {
       <select
         defaultValue={searchParams.get("sort") ?? "newest"}
         onChange={(e) => updateParam("sort", e.target.value)}
-        className="rounded border border-gold/20 bg-background px-3 py-2 text-sm text-white"
+        className="rounded border border-gold/20 bg-background px-3 py-2 text-sm text-foreground focus:border-gold/50 focus:outline-none"
       >
         {SORT_OPTIONS.map((opt) => (
           <option key={opt.value} value={opt.value}>
@@ -46,7 +46,7 @@ export function FilterBar({ facets }: FilterBarProps) {
         <select
           defaultValue={searchParams.get("material") ?? ""}
           onChange={(e) => updateParam("material", e.target.value)}
-          className="rounded border border-gold/20 bg-background px-3 py-2 text-sm text-white"
+          className="rounded border border-gold/20 bg-background px-3 py-2 text-sm text-foreground focus:border-gold/50 focus:outline-none"
         >
           <option value="">All Materials</option>
           {facets.materials.map((m) => (
@@ -61,7 +61,7 @@ export function FilterBar({ facets }: FilterBarProps) {
         <select
           defaultValue={searchParams.get("stone") ?? ""}
           onChange={(e) => updateParam("stone", e.target.value)}
-          className="rounded border border-gold/20 bg-background px-3 py-2 text-sm text-white"
+          className="rounded border border-gold/20 bg-background px-3 py-2 text-sm text-foreground focus:border-gold/50 focus:outline-none"
         >
           <option value="">All Stones</option>
           {facets.stones.map((s) => (
@@ -76,7 +76,7 @@ export function FilterBar({ facets }: FilterBarProps) {
         <select
           defaultValue={searchParams.get("color") ?? ""}
           onChange={(e) => updateParam("color", e.target.value)}
-          className="rounded border border-gold/20 bg-background px-3 py-2 text-sm text-white"
+          className="rounded border border-gold/20 bg-background px-3 py-2 text-sm text-foreground focus:border-gold/50 focus:outline-none"
         >
           <option value="">All Colors</option>
           {facets.colors.map((c) => (

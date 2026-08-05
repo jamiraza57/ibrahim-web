@@ -11,18 +11,19 @@ export async function TestimonialsSection() {
 
   return (
     <section className="mx-auto max-w-5xl px-4 py-14 sm:px-6">
-      <RevealOnScroll>
-        <h2 className="mb-8 text-center font-serif text-2xl text-white sm:text-3xl">What Our Clients Say</h2>
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
-          {testimonials.map((t) => (
-            <div key={t.id} className="rounded-lg border border-gold/10 bg-card p-6">
-              <div className="mb-2 text-gold">{"★".repeat(t.rating)}</div>
-              <p className="text-sm text-secondary-text">{t.content}</p>
-              <p className="mt-3 text-sm text-white">{t.name}</p>
-            </div>
-          ))}
-        </div>
+      <RevealOnScroll className="text-center">
+        <span className="eyebrow">Testimonials</span>
+        <h2 className="mb-8 mt-2 font-display text-2xl sm:text-3xl">What Our Clients Say</h2>
       </RevealOnScroll>
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+        {testimonials.map((t, i) => (
+          <RevealOnScroll key={t.id} delay={i * 0.08} className="lux-card rounded-lg p-6">
+            <div className="mb-2 text-gold">{"★".repeat(t.rating)}</div>
+            <p className="text-sm text-secondary-text">{t.content}</p>
+            <p className="mt-3 font-display text-sm">{t.name}</p>
+          </RevealOnScroll>
+        ))}
+      </div>
     </section>
   );
 }

@@ -41,34 +41,35 @@ export default function ContactPage() {
 
   return (
     <div className="mx-auto max-w-xl px-4 py-16 sm:px-6">
-      <h1 className="mb-2 font-serif text-3xl text-white sm:text-4xl">Get in Touch</h1>
+      <span className="eyebrow">Contact</span>
+      <h1 className="mb-2 mt-2 font-display text-3xl sm:text-4xl">Get in Touch</h1>
       <p className="mb-8 text-secondary-text">
         Questions about an order, a custom piece, or anything else — we usually reply within a day.
       </p>
 
       {status === "sent" ? (
-        <p className="rounded border border-gold/20 bg-card p-6 text-gold">
+        <p className="lux-card rounded-lg p-6 text-gold">
           Thanks — your message has been sent. We&apos;ll get back to you soon.
         </p>
       ) : (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
             <label className="mb-1 block text-sm text-secondary-text">Name</label>
-            <input {...register("name")} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white" />
-            {errors.name && <p className="mt-1 text-sm text-red-400">{errors.name.message}</p>}
+            <input {...register("name")} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground focus:border-gold/50 focus:outline-none" />
+            {errors.name && <p className="mt-1 text-sm text-destructive">{errors.name.message}</p>}
           </div>
           <div>
             <label className="mb-1 block text-sm text-secondary-text">Email</label>
-            <input {...register("email")} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white" />
-            {errors.email && <p className="mt-1 text-sm text-red-400">{errors.email.message}</p>}
+            <input {...register("email")} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground focus:border-gold/50 focus:outline-none" />
+            {errors.email && <p className="mt-1 text-sm text-destructive">{errors.email.message}</p>}
           </div>
           <div>
             <label className="mb-1 block text-sm text-secondary-text">Message</label>
-            <textarea {...register("message")} rows={5} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white" />
-            {errors.message && <p className="mt-1 text-sm text-red-400">{errors.message.message}</p>}
+            <textarea {...register("message")} rows={5} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground focus:border-gold/50 focus:outline-none" />
+            {errors.message && <p className="mt-1 text-sm text-destructive">{errors.message.message}</p>}
           </div>
 
-          {status === "error" && <p className="text-sm text-red-400">Something went wrong — please try again.</p>}
+          {status === "error" && <p className="text-sm text-destructive">Something went wrong — please try again.</p>}
 
           <MagneticButton type="submit" disabled={status === "sending"}>
             {status === "sending" ? "Sending…" : "Send Message"}

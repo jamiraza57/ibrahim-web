@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { MagneticButton } from "@/components/shared/MagneticButton";
 import { JewelryShowcase } from "@/components/three/JewelryShowcase";
+import { RevealOnScroll } from "@/components/shared/RevealOnScroll";
 import type { z } from "zod";
 import type { heroConfigSchema } from "../schemas/homepage-section.schema";
 
@@ -18,17 +19,16 @@ export function HeroSection({ config }: { config: z.infer<typeof heroConfigSchem
           className="object-cover opacity-30"
         />
       )}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/40" />
 
       {/* Soft radial glow behind the 3D piece so it doesn't float on flat black */}
-      <div
-        className="pointer-events-none absolute right-0 top-1/2 h-[600px] w-[600px] -translate-y-1/2 translate-x-1/4 rounded-full opacity-30 blur-3xl md:translate-x-0"
-        style={{ background: "radial-gradient(circle, #D4AF37 0%, transparent 70%)" }}
-      />
+      <div className="pointer-events-none absolute right-0 top-1/2 h-[600px] w-[600px] -translate-y-1/2 translate-x-1/4 rounded-full bg-gold opacity-20 blur-3xl md:translate-x-0" />
 
       <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-8 md:grid-cols-2 md:gap-12">
-        <div className="text-center md:text-left">
-          <h1 className="bg-gradient-to-r from-white via-gold to-white bg-[length:200%_auto] bg-clip-text font-serif text-4xl leading-tight text-transparent [animation:shine_6s_linear_infinite] sm:text-5xl md:text-6xl">
-            {config.heading}
+        <RevealOnScroll className="text-center md:text-left">
+          <span className="eyebrow">Ibrahim Fine Jewelry</span>
+          <h1 className="mt-3 font-display text-4xl leading-tight sm:text-5xl md:text-6xl">
+            <span className="text-gradient-gold">{config.heading}</span>
           </h1>
           {config.subheading && (
             <p className="mx-auto mt-5 max-w-md text-secondary-text sm:text-lg md:mx-0">{config.subheading}</p>
@@ -38,7 +38,7 @@ export function HeroSection({ config }: { config: z.infer<typeof heroConfigSchem
               <MagneticButton>{config.ctaLabel}</MagneticButton>
             </Link>
           )}
-        </div>
+        </RevealOnScroll>
 
         {/* The 3D piece is the centerpiece on desktop; shorter and simplified on mobile
             so it doesn't dominate a small viewport or tax lower-powered phones as hard. */}
@@ -46,12 +46,6 @@ export function HeroSection({ config }: { config: z.infer<typeof heroConfigSchem
           <JewelryShowcase />
         </div>
       </div>
-
-      <style>{`
-        @keyframes shine {
-          to { background-position: 200% center; }
-        }
-      `}</style>
     </section>
   );
 }

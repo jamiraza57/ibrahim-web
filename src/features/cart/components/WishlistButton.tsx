@@ -12,7 +12,7 @@ export function WishlistButton({ productId }: { productId: string }) {
       data-cursor="hover"
       aria-pressed={active}
       className={`rounded-full border px-4 py-3 text-sm transition-colors ${
-        active ? "border-gold bg-gold text-background" : "border-gold/20 text-secondary-text hover:border-gold"
+        active ? "border-gold bg-gold text-gold-foreground" : "border-gold/20 text-secondary-text hover:border-gold"
       }`}
     >
       {active ? "Wishlisted ♥" : "Add to Wishlist"}

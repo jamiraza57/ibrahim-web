@@ -18,15 +18,17 @@ export async function FeaturedCollectionsSection({
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
-      <RevealOnScroll>
-        <h2 className="mb-8 text-center font-serif text-2xl text-white sm:text-3xl">{config.heading}</h2>
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {collections.map((collection) => (
+      <RevealOnScroll className="text-center">
+        <span className="eyebrow">Explore</span>
+        <h2 className="mb-8 mt-2 font-display text-2xl sm:text-3xl">{config.heading}</h2>
+      </RevealOnScroll>
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {collections.map((collection, i) => (
+          <RevealOnScroll key={collection.id} delay={i * 0.08}>
             <Link
-              key={collection.id}
               href={`/collections/${collection.slug}`}
               data-cursor="hover"
-              className="group relative aspect-[4/5] overflow-hidden rounded-lg border border-gold/10"
+              className="lux-card group relative block aspect-[4/5] overflow-hidden rounded-lg"
             >
               {collection.bannerUrl && (
                 <Image
@@ -37,12 +39,12 @@ export async function FeaturedCollectionsSection({
                 />
               )}
               <div className="absolute inset-0 flex items-end bg-gradient-to-t from-background/80 to-transparent p-5">
-                <span className="font-serif text-lg text-white">{collection.name}</span>
+                <span className="font-display text-lg group-hover:text-gold">{collection.name}</span>
               </div>
             </Link>
-          ))}
-        </div>
-      </RevealOnScroll>
+          </RevealOnScroll>
+        ))}
+      </div>
     </section>
   );
 }

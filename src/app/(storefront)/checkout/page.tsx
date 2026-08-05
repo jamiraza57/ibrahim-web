@@ -89,87 +89,88 @@ export default function CheckoutPage() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
-      <h1 className="mb-8 font-serif text-2xl text-white">Checkout</h1>
+      <span className="eyebrow">Checkout</span>
+      <h1 className="mb-8 mt-2 font-display text-2xl sm:text-3xl">Complete Your Order</h1>
 
       <div className="grid gap-10 md:grid-cols-3">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 md:col-span-2">
-          <h2 className="font-serif text-lg text-white">Contact</h2>
+          <h2 className="font-display text-lg">Contact</h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="col-span-2">
               <label className="mb-1 block text-sm text-secondary-text">Full Name</label>
-              <input {...register("name")} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white" />
-              {errors.name && <p className="mt-1 text-sm text-red-400">{errors.name.message}</p>}
+              <input {...register("name")} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground focus:border-gold/50 focus:outline-none" />
+              {errors.name && <p className="mt-1 text-sm text-destructive">{errors.name.message}</p>}
             </div>
             <div>
               <label className="mb-1 block text-sm text-secondary-text">Email</label>
-              <input {...register("email")} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white" />
-              {errors.email && <p className="mt-1 text-sm text-red-400">{errors.email.message}</p>}
+              <input {...register("email")} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground focus:border-gold/50 focus:outline-none" />
+              {errors.email && <p className="mt-1 text-sm text-destructive">{errors.email.message}</p>}
             </div>
             <div>
               <label className="mb-1 block text-sm text-secondary-text">Phone</label>
-              <input {...register("phone")} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white" />
-              {errors.phone && <p className="mt-1 text-sm text-red-400">{errors.phone.message}</p>}
+              <input {...register("phone")} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground focus:border-gold/50 focus:outline-none" />
+              {errors.phone && <p className="mt-1 text-sm text-destructive">{errors.phone.message}</p>}
             </div>
           </div>
 
-          <h2 className="pt-4 font-serif text-lg text-white">Shipping Address</h2>
+          <h2 className="pt-4 font-display text-lg">Shipping Address</h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="col-span-2">
               <label className="mb-1 block text-sm text-secondary-text">Address Line 1</label>
-              <input {...register("line1")} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white" />
-              {errors.line1 && <p className="mt-1 text-sm text-red-400">{errors.line1.message}</p>}
+              <input {...register("line1")} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground focus:border-gold/50 focus:outline-none" />
+              {errors.line1 && <p className="mt-1 text-sm text-destructive">{errors.line1.message}</p>}
             </div>
             <div className="col-span-2">
               <label className="mb-1 block text-sm text-secondary-text">Address Line 2 (optional)</label>
-              <input {...register("line2")} placeholder="Apartment, suite, floor…" className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white" />
+              <input {...register("line2")} placeholder="Apartment, suite, floor…" className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground focus:border-gold/50 focus:outline-none" />
             </div>
             <div>
               <label className="mb-1 block text-sm text-secondary-text">City</label>
-              <input {...register("city")} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white" />
-              {errors.city && <p className="mt-1 text-sm text-red-400">{errors.city.message}</p>}
+              <input {...register("city")} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground focus:border-gold/50 focus:outline-none" />
+              {errors.city && <p className="mt-1 text-sm text-destructive">{errors.city.message}</p>}
             </div>
             <div>
               <label className="mb-1 block text-sm text-secondary-text">State / Province</label>
-              <input {...register("state")} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white" />
-              {errors.state && <p className="mt-1 text-sm text-red-400">{errors.state.message}</p>}
+              <input {...register("state")} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground focus:border-gold/50 focus:outline-none" />
+              {errors.state && <p className="mt-1 text-sm text-destructive">{errors.state.message}</p>}
             </div>
             <div>
               <label className="mb-1 block text-sm text-secondary-text">Postal Code</label>
-              <input {...register("postalCode")} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white" />
-              {errors.postalCode && <p className="mt-1 text-sm text-red-400">{errors.postalCode.message}</p>}
+              <input {...register("postalCode")} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground focus:border-gold/50 focus:outline-none" />
+              {errors.postalCode && <p className="mt-1 text-sm text-destructive">{errors.postalCode.message}</p>}
             </div>
             <div>
               <label className="mb-1 block text-sm text-secondary-text">Country</label>
-              <input {...register("country")} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white" />
-              {errors.country && <p className="mt-1 text-sm text-red-400">{errors.country.message}</p>}
+              <input {...register("country")} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground focus:border-gold/50 focus:outline-none" />
+              {errors.country && <p className="mt-1 text-sm text-destructive">{errors.country.message}</p>}
             </div>
             <div className="col-span-2">
               <label className="mb-1 block text-sm text-secondary-text">Delivery Notes (optional)</label>
-              <textarea {...register("notes")} rows={2} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white" />
+              <textarea {...register("notes")} rows={2} className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground focus:border-gold/50 focus:outline-none" />
             </div>
           </div>
 
-          <h2 className="pt-4 font-serif text-lg text-white">Payment</h2>
+          <h2 className="pt-4 font-display text-lg">Payment</h2>
           <p className="rounded border border-gold/20 bg-card px-4 py-3 text-sm text-secondary-text">
             Cash on Delivery — pay when your order arrives.
           </p>
 
-          <h2 className="pt-4 font-serif text-lg text-white">Coupon</h2>
+          <h2 className="pt-4 font-display text-lg">Coupon</h2>
           <input
             {...register("couponCode")}
             placeholder="Have a coupon code?"
-            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-white"
+            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground focus:border-gold/50 focus:outline-none"
           />
 
-          {serverError && <p className="text-sm text-red-400">{serverError}</p>}
+          {serverError && <p className="text-sm text-destructive">{serverError}</p>}
 
           <MagneticButton type="submit" disabled={isSubmitting} className="mt-4 w-full">
             {isSubmitting ? "Placing Order…" : "Place Order (Cash on Delivery)"}
           </MagneticButton>
         </form>
 
-        <aside className="h-fit rounded border border-gold/20 bg-card p-6">
-          <h2 className="mb-4 font-serif text-lg text-white">Order Summary</h2>
+        <aside className="lux-card h-fit rounded-lg p-6">
+          <h2 className="mb-4 font-display text-lg">Order Summary</h2>
           <ul className="space-y-2 text-sm">
             {items.map((item) => (
               <li key={item.productId} className="flex justify-between text-secondary-text">
@@ -180,7 +181,7 @@ export default function CheckoutPage() {
               </li>
             ))}
           </ul>
-          <div className="mt-4 flex justify-between border-t border-gold/10 pt-4 text-white">
+          <div className="mt-4 flex justify-between border-t border-gold/10 pt-4 text-foreground">
             <span>Subtotal</span>
             <span>${subtotal.toLocaleString()}</span>
           </div>

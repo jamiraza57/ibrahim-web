@@ -70,7 +70,8 @@ export default async function CollectionPage({ params, searchParams }: PageProps
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      <h1 className="mb-2 font-serif text-3xl text-white">{collection.name}</h1>
+      <span className="eyebrow">Collection</span>
+      <h1 className="mb-2 mt-2 font-display text-3xl">{collection.name}</h1>
       {collection.description && (
         <p className="mb-8 max-w-2xl text-secondary-text">{collection.description}</p>
       )}
