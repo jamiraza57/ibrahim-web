@@ -1,12 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import type { Route } from "next";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { siteConfig } from "@/config/site";
+import { useCart } from "@/features/cart/context/CartContext";
 
 export function MobileNav() {
   const [isOpen, setIsOpen] = useState(false);
+  const { itemCount } = useCart();
 
   return (
     <>
@@ -34,13 +37,13 @@ export function MobileNav() {
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ type: "spring", stiffness: 300, damping: 32 }}
-              className="fixed right-0 top-0 z-50 h-full w-72 max-w-[80vw] bg-secondary-background p-6 md:hidden"
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              className="fixed right-0 top-0 z-50 h-full w-72 max-w-[80vw] border-l border-gold/10 bg-secondary-background p-6 md:hidden"
             >
               <button
                 onClick={() => setIsOpen(false)}
                 aria-label="Close menu"
-                className="mb-8 text-2xl text-white"
+                className="mb-8 text-2xl text-secondary-text hover:text-gold"
               >
                 ×
               </button>
@@ -49,9 +52,9 @@ export function MobileNav() {
                 {siteConfig.navigation.map((item) => (
                   <Link
                     key={item.href}
-                    href={item.href}
+                    href={item.href as Route}
                     onClick={() => setIsOpen(false)}
-                    className="text-base text-white hover:text-gold"
+                    className="font-serif text-lg hover:text-gold"
                   >
                     {item.label}
                   </Link>
@@ -60,11 +63,11 @@ export function MobileNav() {
                   <Link href="/search" onClick={() => setIsOpen(false)} className="hover:text-gold">
                     Search
                   </Link>
-                  <Link href="/wishlist" onClick={() => setIsOpen(false)} className="hover:text-gold">
+                  <Link href={"/wishlist" as Route} onClick={() => setIsOpen(false)} className="hover:text-gold">
                     Wishlist
                   </Link>
                   <Link href="/cart" onClick={() => setIsOpen(false)} className="hover:text-gold">
-                    Cart
+                    Cart{itemCount > 0 ? ` (${itemCount})` : ""}
                   </Link>
                 </div>
               </nav>

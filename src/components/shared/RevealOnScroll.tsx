@@ -21,7 +21,7 @@ interface RevealOnScrollProps {
  * rather than a CSS-only intersection observer trick — matches the "premium
  * scrolling" motion called for in the design brief. Respects reduced-motion.
  */
-export function RevealOnScroll({ children, className, y = 40, delay = 0 }: RevealOnScrollProps) {
+export function RevealOnScroll({ children, className, y = 24, delay = 0 }: RevealOnScrollProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export function RevealOnScroll({ children, className, y = 40, delay = 0 }: Revea
         {
           opacity: 1,
           y: 0,
-          duration: 1,
+          duration: 0.9,
           delay,
           ease: "power3.out",
           scrollTrigger: {

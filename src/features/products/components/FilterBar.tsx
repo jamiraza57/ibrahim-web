@@ -1,5 +1,6 @@
 "use client";
 
+import type { Route } from "next";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 
 interface FilterBarProps {
@@ -24,7 +25,7 @@ export function FilterBar({ facets }: FilterBarProps) {
     if (value) params.set(key, value);
     else params.delete(key);
     params.delete("page"); // any filter change resets pagination
-    router.push(`${pathname}?${params.toString()}`);
+    router.push(`${pathname}?${params.toString()}` as Route);
   }
 
   return (

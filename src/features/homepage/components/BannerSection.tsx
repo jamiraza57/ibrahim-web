@@ -1,3 +1,4 @@
+import type { Route } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import type { z } from "zod";
@@ -18,7 +19,7 @@ export function BannerSection({ config }: { config: z.infer<typeof bannerConfigS
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
-      {config.ctaHref ? <Link href={config.ctaHref}>{content}</Link> : content}
+      {config.ctaHref ? <Link href={config.ctaHref as Route}>{content}</Link> : content}
     </section>
   );
 }

@@ -20,7 +20,8 @@ export function NewsletterForm() {
 
   return (
     <div>
-      <h4 className="mb-3 font-serif text-lg text-white">Stay Updated</h4>
+      <span className="eyebrow">Newsletter</span>
+      <h4 className="mb-3 mt-2 font-serif text-lg">Stay Updated</h4>
       {status === "done" ? (
         <p className="text-sm text-gold">Subscribed — welcome.</p>
       ) : (
@@ -31,18 +32,18 @@ export function NewsletterForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Your email"
-            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-sm text-white"
+            className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-secondary-text/60 focus:border-gold/50 focus:outline-none"
           />
           <button
             type="submit"
             disabled={status === "loading"}
-            className="whitespace-nowrap rounded bg-gold px-4 py-2 text-sm font-medium text-background disabled:opacity-50"
+            className="whitespace-nowrap rounded bg-gold px-4 py-2 text-sm font-medium text-gold-foreground transition-opacity hover:opacity-90 disabled:opacity-50"
           >
             {status === "loading" ? "…" : "Join"}
           </button>
         </form>
       )}
-      {status === "error" && <p className="mt-2 text-xs text-red-400">Something went wrong.</p>}
+      {status === "error" && <p className="mt-2 text-xs text-destructive">Something went wrong.</p>}
     </div>
   );
 }

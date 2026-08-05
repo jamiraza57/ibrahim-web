@@ -1,37 +1,72 @@
+"use client";
+
+import type { Route } from "next";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import { Search, Heart, ShoppingBag } from "lucide-react";
 import { siteConfig } from "@/config/site";
+import { useCart } from "@/features/cart/context/CartContext";
 import { MobileNav } from "./MobileNav";
 
-export function Header() {
+function NavLink({ href, label }: { href: string; label: string }) {
+  const pathname = usePathname();
+  const isActive = pathname === href || pathname.startsWith(`${href}/`);
+
   return (
-    <header className="sticky top-0 z-50 border-b border-gold/10 bg-background/60 backdrop-blur-lg">
+    <Link href={href as Route} data-cursor="hover" className="group relative text-sm tracking-wide text-secondary-text transition-colors hover:text-gold">
+      {label}
+      <span
+        className={`absolute -bottom-1 left-0 h-px bg-gold transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          isActive ? "w-full" : "w-0 group-hover:w-full"
+        }`}
+      />
+    </Link>
+  );
+}
+
+export function Header() {
+  const [scrolled, setScrolled] = useState(false);
+  const { itemCount } = useCart();
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <header
+      className={`sticky top-0 z-50 border-b transition-colors duration-500 ${
+        scrolled ? "border-gold/10 bg-background/85 backdrop-blur-xl" : "border-transparent bg-transparent"
+      }`}
+    >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
-        <Link href="/" className="font-serif text-lg tracking-wide text-white sm:text-xl" data-cursor="hover">
-          {siteConfig.name}
+        <Link href="/" className="font-serif text-lg tracking-wide sm:text-xl" data-cursor="hover">
+          <span className="text-gradient-gold">{siteConfig.name}</span>
         </Link>
 
         <nav className="hidden gap-8 md:flex">
           {siteConfig.navigation.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              data-cursor="hover"
-              className="text-sm tracking-wide text-secondary-text transition-colors hover:text-gold"
-            >
-              {item.label}
-            </Link>
+            <NavLink key={item.href} href={item.href} label={item.label} />
           ))}
         </nav>
 
         <div className="hidden items-center gap-5 md:flex">
           <Link href="/search" data-cursor="hover" aria-label="Search" className="text-secondary-text hover:text-gold">
-            Search
+            <Search className="h-[18px] w-[18px]" />
           </Link>
-          <Link href="/wishlist" data-cursor="hover" aria-label="Wishlist" className="text-secondary-text hover:text-gold">
-            Wishlist
+          <Link href={"/wishlist" as Route} data-cursor="hover" aria-label="Wishlist" className="text-secondary-text hover:text-gold">
+            <Heart className="h-[18px] w-[18px]" />
           </Link>
-          <Link href="/cart" data-cursor="hover" aria-label="Cart" className="text-secondary-text hover:text-gold">
-            Cart
+          <Link href="/cart" data-cursor="hover" aria-label="Cart" className="relative text-secondary-text hover:text-gold">
+            <ShoppingBag className="h-[18px] w-[18px]" />
+            {itemCount > 0 && (
+              <span className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-gold text-[10px] font-medium text-gold-foreground">
+                {itemCount}
+              </span>
+            )}
           </Link>
         </div>
 

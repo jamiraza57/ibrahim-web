@@ -1,3 +1,4 @@
+import type { Route } from "next";
 import Link from "next/link";
 import { ProductCard } from "./ProductCard";
 import type { Prisma } from "@prisma/client";
@@ -17,10 +18,10 @@ export function ProductGrid({ products, page, totalPages, basePath, searchParams
     return <p className="py-16 text-center text-secondary-text">No products match these filters.</p>;
   }
 
-  function pageHref(p: number) {
+  function pageHref(p: number): Route {
     const params = new URLSearchParams(searchParamsString);
     params.set("page", String(p));
-    return `${basePath}?${params.toString()}`;
+    return `${basePath}?${params.toString()}` as Route;
   }
 
   return (

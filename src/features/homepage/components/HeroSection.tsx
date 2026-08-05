@@ -1,3 +1,4 @@
+import type { Route } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { MagneticButton } from "@/components/shared/MagneticButton";
@@ -33,7 +34,7 @@ export function HeroSection({ config }: { config: z.infer<typeof heroConfigSchem
             <p className="mx-auto mt-5 max-w-md text-secondary-text sm:text-lg md:mx-0">{config.subheading}</p>
           )}
           {config.ctaLabel && config.ctaHref && (
-            <Link href={config.ctaHref} className="mt-8 inline-block">
+            <Link href={config.ctaHref as Route} className="mt-8 inline-block">
               <MagneticButton>{config.ctaLabel}</MagneticButton>
             </Link>
           )}

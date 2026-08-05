@@ -7,11 +7,12 @@ export function Footer() {
     <footer className="border-t border-gold/10 bg-secondary-background">
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 md:grid-cols-3">
         <div>
-          <h3 className="mb-4 font-serif text-lg text-white">{siteConfig.name}</h3>
+          <h3 className="mb-4 font-serif text-lg text-gradient-gold">{siteConfig.name}</h3>
           <p className="text-sm text-secondary-text">{siteConfig.tagline}</p>
         </div>
 
         <nav className="flex flex-col gap-2">
+          <span className="eyebrow mb-2">Explore</span>
           {siteConfig.footerLinks.map((link) => (
             <Link
               key={link.href}
@@ -26,7 +27,9 @@ export function Footer() {
         <NewsletterForm />
       </div>
 
-      <div className="border-t border-gold/10 py-6 text-center text-xs text-secondary-text">
+      <div className="hairline" />
+
+      <div className="py-6 text-center text-xs text-secondary-text">
         © {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
       </div>
     </footer>
