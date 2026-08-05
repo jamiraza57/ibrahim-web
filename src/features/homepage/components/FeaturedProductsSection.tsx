@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { ProductCard } from "@/features/products/components/ProductCard";
 import { RevealOnScroll } from "@/components/shared/RevealOnScroll";
@@ -37,6 +39,17 @@ export async function FeaturedProductsSection({
           </RevealOnScroll>
         ))}
       </div>
+
+      <RevealOnScroll className="mt-10 flex justify-center">
+        <Link
+          href="/search"
+          data-cursor="hover"
+          className="group inline-flex items-center gap-2 text-sm tracking-wide text-secondary-text transition-colors hover:text-gold"
+        >
+          View All
+          <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+        </Link>
+      </RevealOnScroll>
     </section>
   );
 }
