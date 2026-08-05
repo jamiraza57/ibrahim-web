@@ -1,0 +1,39 @@
+import type { HomepageSection } from "@prisma/client";
+import { HeroSection } from "./HeroSection";
+import { BannerSection } from "./BannerSection";
+import { FeaturedCollectionsSection } from "./FeaturedCollectionsSection";
+import { FeaturedProductsSection } from "./FeaturedProductsSection";
+import { TestimonialsSection } from "./TestimonialsSection";
+import { NewsletterSection } from "./NewsletterSection";
+import { InstagramSection } from "./InstagramSection";
+import {
+  heroConfigSchema,
+  bannerConfigSchema,
+  featuredCollectionsConfigSchema,
+  featuredProductsConfigSchema,
+  instagramConfigSchema,
+} from "../schemas/homepage-section.schema";
+
+export function SectionRenderer({ section }: { section: HomepageSection }) {
+  switch (section.type) {
+    case "HERO":
+      return <HeroSection config={heroConfigSchema.parse(section.config)} />;
+    case "BANNER":
+      return <BannerSection config={bannerConfigSchema.parse(section.config)} />;
+    case "FEATURED_COLLECTIONS":
+      return <FeaturedCollectionsSection config={featuredCollectionsConfigSchema.parse(section.config)} />;
+    case "FEATURED_PRODUCTS":
+      return <FeaturedProductsSection config={featuredProductsConfigSchema.parse(section.config)} />;
+    case "TESTIMONIALS":
+      return <TestimonialsSection />;
+    case "NEWSLETTER":
+      return <NewsletterSection />;
+    case "INSTAGRAM":
+      return <InstagramSection config={instagramConfigSchema.parse(section.config)} />;
+    // FOOTER is rendered globally by the storefront layout, not per-section here.
+    case "FOOTER":
+      return null;
+    default:
+      return null;
+  }
+}
