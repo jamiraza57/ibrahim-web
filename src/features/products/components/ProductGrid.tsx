@@ -1,9 +1,7 @@
-"use client";
-
 import type { Route } from "next";
 import Link from "next/link";
-import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { ProductCard } from "./ProductCard";
+import { RevealOnScroll } from "@/components/shared/RevealOnScroll";
 import type { Prisma } from "@prisma/client";
 
 type ProductWithImages = Prisma.ProductGetPayload<{ include: { images: true } }>;
@@ -16,19 +14,9 @@ interface ProductGridProps {
   searchParamsString: string;
 }
 
-const gridVariants: Variants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.06 } },
-};
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
-};
+const MAX_STAGGER_DELAY = 0.4;
 
 export function ProductGrid({ products, page, totalPages, basePath, searchParamsString }: ProductGridProps) {
-  const reduceMotion = useReducedMotion();
-
   if (products.length === 0) {
     return <p className="py-16 text-center text-secondary-text">No products match these filters.</p>;
   }
@@ -41,15 +29,9 @@ export function ProductGrid({ products, page, totalPages, basePath, searchParams
 
   return (
     <>
-      <motion.div
-        className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4"
-        initial={reduceMotion ? undefined : "hidden"}
-        whileInView={reduceMotion ? undefined : "visible"}
-        viewport={{ once: true, amount: 0.15 }}
-        variants={gridVariants}
-      >
-        {products.map((product) => (
-          <motion.div key={product.id} variants={reduceMotion ? undefined : itemVariants}>
+      <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4">
+        {products.map((product, i) => (
+          <RevealOnScroll key={product.id} delay={Math.min(i * 0.06, MAX_STAGGER_DELAY)}>
             <ProductCard
               id={product.id}
               slug={product.slug}
@@ -60,9 +42,9 @@ export function ProductGrid({ products, page, totalPages, basePath, searchParams
               isNewArrival={product.isNewArrival}
               stock={product.stock}
             />
-          </motion.div>
+          </RevealOnScroll>
         ))}
-      </motion.div>
+      </div>
 
       {totalPages > 1 && (
         <div className="mt-10 flex justify-center gap-2">
