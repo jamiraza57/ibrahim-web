@@ -72,22 +72,13 @@ export async function createOrder(input: CheckoutInput) {
   const { orderItemsData, subtotal, discount, shipping, total, couponCode } = await buildOrder(input);
 
   return prisma.$transaction(async (tx) => {
-    const customer = await tx.customer.upsert({
-      where: {
-        // Composite dedup key isn't a real unique constraint (email+phone
-        // isn't declared unique in the schema), so we look up first and
-        // create if absent rather than relying on upsert's where clause.
-        id:
-          (
-            await tx.customer.findFirst({
-              where: { email: input.customer.email, phone: input.customer.phone },
-              select: { id: true },
-            })
-          )?.id ?? "__none__",
-      },
-      update: {},
-      create: input.customer,
-    });
+    // Composite dedup key isn't a real unique constraint (email+phone isn't
+    // declared unique in the schema), so `upsert`'s where clause can't target
+    // it — look the customer up first and create only if absent.
+    const customer =
+      (await tx.customer.findFirst({
+        where: { email: input.customer.email, phone: input.customer.phone },
+      })) ?? (await tx.customer.create({ data: input.customer }));
 
     const address = await tx.address.create({
       data: { ...input.address, customerId: customer.id },
