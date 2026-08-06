@@ -106,6 +106,40 @@ export async function getStorefrontProductBySlug(slug: string) {
   });
 }
 
+/**
+ * "You may also like" — same category first, falls back to newest published
+ * products if the product has no categories or too few category-mates to
+ * fill the rail.
+ */
+export async function getRelatedProducts(productId: string, categoryIds: string[], limit = 8) {
+  const base: Prisma.ProductWhereInput = {
+    id: { not: productId },
+    status: "PUBLISHED",
+    OR: [{ publishAt: { isSet: false } }, { publishAt: null }, { publishAt: { lte: new Date() } }],
+  };
+
+  const byCategory =
+    categoryIds.length > 0
+      ? await prisma.product.findMany({
+          where: { ...base, categories: { some: { categoryId: { in: categoryIds } } } },
+          include: { images: { orderBy: { position: "asc" } } },
+          orderBy: { createdAt: "desc" },
+          take: limit,
+        })
+      : [];
+
+  if (byCategory.length >= limit) return byCategory;
+
+  const fallback = await prisma.product.findMany({
+    where: { ...base, id: { notIn: byCategory.map((p) => p.id).concat(productId) } },
+    include: { images: { orderBy: { position: "asc" } } },
+    orderBy: { createdAt: "desc" },
+    take: limit - byCategory.length,
+  });
+
+  return [...byCategory, ...fallback];
+}
+
 export async function getFilterFacets() {
   const [materials, stones, colors] = await Promise.all([
     prisma.product.findMany({ where: { status: "PUBLISHED", material: { not: null } }, distinct: ["material"], select: { material: true } }),

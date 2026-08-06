@@ -6,10 +6,12 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { siteConfig } from "@/config/site";
 import { useCart } from "@/features/cart/context/CartContext";
+import { useWishlist } from "@/features/cart/context/WishlistContext";
 
 export function MobileNav() {
   const [isOpen, setIsOpen] = useState(false);
   const { itemCount } = useCart();
+  const { productIds } = useWishlist();
 
   return (
     <>
@@ -64,7 +66,7 @@ export function MobileNav() {
                     Search
                   </Link>
                   <Link href={"/wishlist" as Route} onClick={() => setIsOpen(false)} className="hover:text-gold">
-                    Wishlist
+                    Wishlist{productIds.length > 0 ? ` (${productIds.length})` : ""}
                   </Link>
                   <Link href="/cart" onClick={() => setIsOpen(false)} className="hover:text-gold">
                     Cart{itemCount > 0 ? ` (${itemCount})` : ""}

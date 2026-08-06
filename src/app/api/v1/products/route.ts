@@ -30,6 +30,10 @@ export async function GET(request: NextRequest) {
     salePrice: product.salePrice?.toString() ?? null,
     thumbnailUrl: product.images.find((i) => i.isThumbnail)?.url ?? product.images[0]?.url,
     inStock: product.stock > 0,
+    stock: product.stock,
+    isNewArrival: product.isNewArrival,
+    shortDescription: product.shortDescription,
+    material: product.material,
   }));
 
   return NextResponse.json({ items });

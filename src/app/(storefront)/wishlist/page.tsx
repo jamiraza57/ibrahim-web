@@ -15,6 +15,8 @@ interface WishlistProduct {
   salePrice: string | null;
   thumbnailUrl?: string;
   inStock: boolean;
+  stock: number;
+  isNewArrival: boolean;
 }
 
 export default function WishlistPage() {
@@ -80,12 +82,15 @@ export default function WishlistPage() {
           {products.map((product) => (
             <ProductCard
               key={product.id}
+              id={product.id}
               slug={product.slug}
               name={product.name}
               price={product.price}
               salePrice={product.salePrice ?? undefined}
               thumbnailUrl={product.thumbnailUrl}
               badge={!product.inStock ? "Out of Stock" : undefined}
+              isNewArrival={product.isNewArrival}
+              stock={product.stock}
             />
           ))}
         </div>

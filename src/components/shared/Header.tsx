@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { Search, Heart, ShoppingBag } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { useCart } from "@/features/cart/context/CartContext";
+import { useWishlist } from "@/features/cart/context/WishlistContext";
 import { MobileNav } from "./MobileNav";
 
 function NavLink({ href, label }: { href: string; label: string }) {
@@ -28,6 +29,7 @@ function NavLink({ href, label }: { href: string; label: string }) {
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const { itemCount } = useCart();
+  const { productIds } = useWishlist();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -57,8 +59,13 @@ export function Header() {
           <Link href="/search" data-cursor="hover" aria-label="Search" className="text-secondary-text hover:text-gold">
             <Search className="h-[18px] w-[18px]" />
           </Link>
-          <Link href={"/wishlist" as Route} data-cursor="hover" aria-label="Wishlist" className="text-secondary-text hover:text-gold">
+          <Link href={"/wishlist" as Route} data-cursor="hover" aria-label="Wishlist" className="relative text-secondary-text hover:text-gold">
             <Heart className="h-[18px] w-[18px]" />
+            {productIds.length > 0 && (
+              <span className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-gold text-[10px] font-medium text-gold-foreground">
+                {productIds.length}
+              </span>
+            )}
           </Link>
           <Link href="/cart" data-cursor="hover" aria-label="Cart" className="relative text-secondary-text hover:text-gold">
             <ShoppingBag className="h-[18px] w-[18px]" />

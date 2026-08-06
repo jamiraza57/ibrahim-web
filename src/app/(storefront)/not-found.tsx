@@ -3,7 +3,7 @@ import Link from "next/link";
 import { MagneticButton } from "@/components/shared/MagneticButton";
 
 const suggestions: { label: string; href: Route }[] = [
-  { label: "New Arrivals", href: "/collections/new-arrivals" },
+  { label: "New Arrivals", href: "/collections/new-arrivals" as Route },
   { label: "Shop All", href: "/search" },
   { label: "Contact Us", href: "/contact" },
 ];

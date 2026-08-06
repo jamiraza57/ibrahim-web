@@ -1,10 +1,16 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import Image from "next/image";
+import Link from "next/link";
 import { getStorefrontProductBySlug } from "@/features/products/services/storefront-product.service";
 import { AddToCartButton } from "@/features/cart/components/AddToCartButton";
 import { WishlistButton } from "@/features/cart/components/WishlistButton";
+import { ProductGallery } from "@/features/products/components/ProductGallery";
+import { StickyBuyBar } from "@/features/products/components/StickyBuyBar";
+import { RelatedProducts } from "@/features/products/components/RelatedProducts";
+import { RecentlyViewed } from "@/features/products/components/RecentlyViewed";
 import { getEnv } from "@/lib/env";
+
+const LOW_STOCK_THRESHOLD = 3;
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -57,42 +63,66 @@ export default async function ProductPage({ params }: PageProps) {
     },
   };
 
+  const primaryCategory = product.categories[0]?.category;
+  const isOnSale = Boolean(product.salePrice && Number(product.salePrice) < Number(product.price));
+  const percentOff = isOnSale ? Math.round((1 - Number(product.salePrice) / Number(product.price)) * 100) : 0;
+  const isLowStock = product.stock > 0 && product.stock <= LOW_STOCK_THRESHOLD;
+
   return (
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
+      <nav aria-label="Breadcrumb" className="mb-6 flex flex-wrap items-center gap-2 text-xs text-secondary-text">
+        <Link href="/" className="hover:text-gold">
+          Home
+        </Link>
+        <span>/</span>
+        {primaryCategory ? (
+          <>
+            <Link href={`/categories/${primaryCategory.slug}`} className="hover:text-gold">
+              {primaryCategory.name}
+            </Link>
+            <span>/</span>
+          </>
+        ) : null}
+        <span className="text-foreground">{product.name}</span>
+      </nav>
+
       <div className="grid gap-10 md:grid-cols-2">
-        <div className="space-y-4">
-          {product.images.length > 0 ? (
-            product.images.map((img) => (
-              <div key={img.id} className="lux-card relative aspect-square overflow-hidden rounded-lg">
-                <Image src={img.url} alt={img.alt ?? product.name} fill className="object-cover" priority />
-              </div>
-            ))
-          ) : (
-            <div className="flex aspect-square items-center justify-center rounded-lg border border-gold/10 bg-card text-secondary-text">
-              No image available
-            </div>
-          )}
-        </div>
+        <ProductGallery
+          images={product.images.map((img) => ({ id: img.id, url: img.url, alt: img.alt }))}
+          productName={product.name}
+        />
 
         <div>
           {product.material && <span className="eyebrow">{product.material}</span>}
           <h1 className="mt-2 font-display text-3xl">{product.name}</h1>
 
-          <div className="mt-3 flex items-center gap-3">
+          <div className="mt-3 flex flex-wrap items-center gap-3">
             {product.salePrice ? (
               <>
                 <span className="text-2xl text-gold">${product.salePrice.toString()}</span>
                 <span className="text-lg text-secondary-text line-through">${product.price.toString()}</span>
+                <span className="rounded-full bg-gold px-3 py-1 text-[10px] uppercase tracking-widest text-gold-foreground">
+                  −{percentOff}%
+                </span>
               </>
             ) : (
               <span className="text-2xl text-gold">${product.price.toString()}</span>
             )}
+            {product.isNewArrival && (
+              <span className="rounded-full border border-gold/30 px-3 py-1 text-[10px] uppercase tracking-widest text-gold">
+                New Arrival
+              </span>
+            )}
           </div>
 
           <p className="mt-2 text-xs uppercase tracking-wide text-secondary-text">
-            {product.stock > 0 ? `In stock — ${product.stock} available` : "Out of stock"}
+            {product.stock <= 0
+              ? "Out of stock"
+              : isLowStock
+                ? `Only ${product.stock} left in stock`
+                : `In stock — ${product.stock} available`}
           </p>
 
           {product.shortDescription && <p className="mt-4 text-secondary-text">{product.shortDescription}</p>}
@@ -170,6 +200,18 @@ export default async function ProductPage({ params }: PageProps) {
           </div>
         </div>
       </div>
+
+      <RelatedProducts productId={product.id} categoryIds={product.categories.map((c) => c.categoryId)} />
+      <RecentlyViewed currentProductId={product.id} />
+
+      <StickyBuyBar
+        productId={product.id}
+        slug={product.slug}
+        name={product.name}
+        price={Number(product.salePrice ?? product.price)}
+        image={product.images[0]?.url}
+        inStock={product.stock > 0}
+      />
     </div>
   );
 }

@@ -1,5 +1,8 @@
+"use client";
+
 import type { Route } from "next";
 import Link from "next/link";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { ProductCard } from "./ProductCard";
 import type { Prisma } from "@prisma/client";
 
@@ -13,7 +16,19 @@ interface ProductGridProps {
   searchParamsString: string;
 }
 
+const gridVariants: Variants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.06 } },
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+};
+
 export function ProductGrid({ products, page, totalPages, basePath, searchParamsString }: ProductGridProps) {
+  const reduceMotion = useReducedMotion();
+
   if (products.length === 0) {
     return <p className="py-16 text-center text-secondary-text">No products match these filters.</p>;
   }
@@ -26,18 +41,28 @@ export function ProductGrid({ products, page, totalPages, basePath, searchParams
 
   return (
     <>
-      <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4">
+      <motion.div
+        className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4"
+        initial={reduceMotion ? undefined : "hidden"}
+        whileInView={reduceMotion ? undefined : "visible"}
+        viewport={{ once: true, amount: 0.15 }}
+        variants={gridVariants}
+      >
         {products.map((product) => (
-          <ProductCard
-            key={product.id}
-            slug={product.slug}
-            name={product.name}
-            price={product.price.toString()}
-            salePrice={product.salePrice?.toString()}
-            thumbnailUrl={product.images.find((i) => i.isThumbnail)?.url ?? product.images[0]?.url}
-          />
+          <motion.div key={product.id} variants={reduceMotion ? undefined : itemVariants}>
+            <ProductCard
+              id={product.id}
+              slug={product.slug}
+              name={product.name}
+              price={product.price.toString()}
+              salePrice={product.salePrice?.toString()}
+              thumbnailUrl={product.images.find((i) => i.isThumbnail)?.url ?? product.images[0]?.url}
+              isNewArrival={product.isNewArrival}
+              stock={product.stock}
+            />
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
       {totalPages > 1 && (
         <div className="mt-10 flex justify-center gap-2">
