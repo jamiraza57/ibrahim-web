@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { formatPrice } from "@/lib/format";
 
 interface OrderRow {
   id: string;
@@ -17,6 +18,7 @@ const STATUS_OPTIONS = ["", "PENDING", "CONFIRMED", "PROCESSING", "PACKED", "SHI
 
 export default function AdminOrdersPage() {
   const [orders, setOrders] = useState<OrderRow[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [status, setStatus] = useState("");
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
@@ -27,12 +29,14 @@ export default function AdminOrdersPage() {
     if (status) params.set("status", status);
     if (search) params.set("search", search);
 
+    setIsLoading(true);
     fetch(`/api/v1/admin/orders?${params}`)
       .then((res) => res.json())
       .then(({ data, meta }) => {
         setOrders(data ?? []);
         setTotalPages(meta?.totalPages ?? 1);
-      });
+      })
+      .finally(() => setIsLoading(false));
   }, [status, search, page]);
 
   return (
@@ -89,7 +93,7 @@ export default function AdminOrdersPage() {
                 {o.customer.name}
                 <div className="text-xs text-secondary-text">{o.customer.email}</div>
               </td>
-              <td className="py-2">${o.total}</td>
+              <td className="py-2">{formatPrice(Number(o.total))}</td>
               <td className="py-2">{o.status}</td>
               <td className="py-2">{o.paymentStatus}</td>
               <td className="py-2 text-secondary-text">{new Date(o.createdAt).toLocaleDateString()}</td>
@@ -98,7 +102,7 @@ export default function AdminOrdersPage() {
           {orders.length === 0 && (
             <tr>
               <td colSpan={6} className="py-6 text-center text-secondary-text">
-                No orders found.
+                {isLoading ? "Loading orders…" : "No orders found."}
               </td>
             </tr>
           )}

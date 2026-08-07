@@ -1,6 +1,9 @@
 import type { HomepageSection } from "@prisma/client";
 import { HeroSection } from "./HeroSection";
 import { BannerSection } from "./BannerSection";
+import { StatsSection } from "./StatsSection";
+import { BrandStorySection } from "./BrandStorySection";
+import { ShopByCategorySection } from "./ShopByCategorySection";
 import { FeaturedCollectionsSection } from "./FeaturedCollectionsSection";
 import { FeaturedProductsSection } from "./FeaturedProductsSection";
 import { TestimonialsSection } from "./TestimonialsSection";
@@ -9,6 +12,9 @@ import { InstagramSection } from "./InstagramSection";
 import {
   heroConfigSchema,
   bannerConfigSchema,
+  statsConfigSchema,
+  brandStoryConfigSchema,
+  shopByCategoryConfigSchema,
   featuredCollectionsConfigSchema,
   featuredProductsConfigSchema,
   instagramConfigSchema,
@@ -20,6 +26,12 @@ export function SectionRenderer({ section }: { section: HomepageSection }) {
       return <HeroSection config={heroConfigSchema.parse(section.config)} />;
     case "BANNER":
       return <BannerSection config={bannerConfigSchema.parse(section.config)} />;
+    case "STATS":
+      return <StatsSection config={statsConfigSchema.parse(section.config)} />;
+    case "BRAND_STORY":
+      return <BrandStorySection config={brandStoryConfigSchema.parse(section.config)} />;
+    case "SHOP_BY_CATEGORY":
+      return <ShopByCategorySection config={shopByCategoryConfigSchema.parse(section.config)} />;
     case "FEATURED_COLLECTIONS":
       return <FeaturedCollectionsSection config={featuredCollectionsConfigSchema.parse(section.config)} />;
     case "FEATURED_PRODUCTS":

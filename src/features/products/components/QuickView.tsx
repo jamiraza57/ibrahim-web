@@ -7,6 +7,7 @@ import { Eye, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { AddToCartButton } from "@/features/cart/components/AddToCartButton";
 import { WishlistButton } from "@/features/cart/components/WishlistButton";
+import { formatPrice } from "@/lib/format";
 
 interface QuickViewProduct {
   id: string;
@@ -98,13 +99,13 @@ export function QuickViewTrigger({ productId }: { productId: string }) {
                     <div className="mt-2 flex items-center gap-2">
                       {product.salePrice ? (
                         <>
-                          <span className="text-lg text-gold">${Number(product.salePrice).toLocaleString()}</span>
+                          <span className="text-lg text-gold">{formatPrice(Number(product.salePrice))}</span>
                           <span className="text-sm text-secondary-text line-through">
-                            ${Number(product.price).toLocaleString()}
+                            {formatPrice(Number(product.price))}
                           </span>
                         </>
                       ) : (
-                        <span className="text-lg text-gold">${Number(product.price).toLocaleString()}</span>
+                        <span className="text-lg text-gold">{formatPrice(Number(product.price))}</span>
                       )}
                     </div>
                     {product.shortDescription && (

@@ -9,11 +9,44 @@ export const heroConfigSchema = z.object({
   backgroundImageUrl: z.string().url().optional(),
 });
 
-export const bannerConfigSchema = z.object({
+// `variant` distinguishes the fixed homepage's two BANNER-type uses: a single
+// promo banner (imageUrl) vs. the 3-image triptych strip (images). Kept as one
+// schema (not a new HomepageSectionType) to avoid a Prisma enum migration —
+// old rows saved before `variant` existed default to "single" and still parse.
+export const bannerConfigSchema = z
+  .object({
+    variant: z.enum(["single", "triptych"]).default("single"),
+    imageUrl: z.string().url().optional(),
+    images: z.array(z.string().url()).optional(),
+    heading: z.string().optional(),
+    ctaLabel: z.string().optional(),
+    ctaHref: z.string().optional(),
+  })
+  .refine((v) => v.variant !== "single" || !!v.imageUrl, {
+    message: "imageUrl is required for the single banner variant",
+  })
+  .refine((v) => v.variant !== "triptych" || (v.images && v.images.length === 3), {
+    message: "images must have exactly 3 entries for the triptych variant",
+  });
+
+export const statsConfigSchema = z.object({
+  items: z
+    .array(z.object({ value: z.string().min(1), label: z.string().min(1) }))
+    .min(1, "Add at least one stat"),
+});
+
+export const brandStoryConfigSchema = z.object({
+  eyebrow: z.string().default("Our Story"),
+  heading: z.string().min(1),
+  body: z.string().min(1),
   imageUrl: z.string().url(),
-  heading: z.string().optional(),
   ctaLabel: z.string().optional(),
   ctaHref: z.string().optional(),
+});
+
+export const shopByCategoryConfigSchema = z.object({
+  heading: z.string().default("Shop by Category"),
+  categoryIds: z.array(objectIdSchema).min(1, "Pick at least one category"),
 });
 
 export const featuredCollectionsConfigSchema = z.object({
@@ -37,6 +70,9 @@ export const emptyConfigSchema = z.object({}).catchall(z.never()).default({});
 export const CONFIG_SCHEMA_BY_TYPE = {
   HERO: heroConfigSchema,
   BANNER: bannerConfigSchema,
+  STATS: statsConfigSchema,
+  BRAND_STORY: brandStoryConfigSchema,
+  SHOP_BY_CATEGORY: shopByCategoryConfigSchema,
   FEATURED_COLLECTIONS: featuredCollectionsConfigSchema,
   FEATURED_PRODUCTS: featuredProductsConfigSchema,
   TESTIMONIALS: emptyConfigSchema,
@@ -51,6 +87,9 @@ export const homepageSectionSchema = z.object({
   type: z.enum([
     "HERO",
     "BANNER",
+    "STATS",
+    "BRAND_STORY",
+    "SHOP_BY_CATEGORY",
     "FEATURED_COLLECTIONS",
     "FEATURED_PRODUCTS",
     "TESTIMONIALS",

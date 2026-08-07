@@ -6,6 +6,8 @@ import type { z } from "zod";
 import type { bannerConfigSchema } from "../schemas/homepage-section.schema";
 
 export function BannerSection({ config }: { config: z.infer<typeof bannerConfigSchema> }) {
+  if (!config.imageUrl) return null;
+
   const content = (
     <div className="lux-card group relative aspect-[21/9] w-full overflow-hidden rounded-lg sm:aspect-[3/1]">
       <Image

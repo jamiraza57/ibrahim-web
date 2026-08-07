@@ -1,38 +1,54 @@
-import Link from "next/link";
-import { listVisibleSections } from "@/features/homepage/services/homepage-section.service";
-import { SectionRenderer } from "@/features/homepage/components/SectionRenderer";
+import {
+  getHeroSection,
+  getPromoBannerSection,
+  getTriptychSection,
+} from "@/features/homepage/services/homepage-section.service";
+import { heroConfigSchema, bannerConfigSchema } from "@/features/homepage/schemas/homepage-section.schema";
+import { HeroSection } from "@/features/homepage/components/HeroSection";
+import { CategoryIconRow } from "@/features/homepage/components/CategoryIconRow";
+import { WhyChooseUsSection } from "@/features/homepage/components/WhyChooseUsSection";
+import { ImageTriptychSection } from "@/features/homepage/components/ImageTriptychSection";
+import { FeatureImageSection } from "@/features/homepage/components/FeatureImageSection";
+import { FeaturedProductsSection } from "@/features/homepage/components/FeaturedProductsSection";
+import { HowItWorksSection } from "@/features/homepage/components/HowItWorksSection";
+import { BannerSection } from "@/features/homepage/components/BannerSection";
+import { TestimonialsSection } from "@/features/homepage/components/TestimonialsSection";
+import { NewsletterSection } from "@/features/homepage/components/NewsletterSection";
 
+const DEFAULT_HERO = heroConfigSchema.parse({
+  heading: "Timeless Elegance",
+  subheading: "Fine jewelry crafted to last, delivered across Pakistan.",
+  ctaLabel: "Shop Now",
+  ctaHref: "/products",
+});
+
+// The homepage is a fixed sequence of sections (not the arbitrary,
+// admin-composed homepage-builder list) — only the hero image/text, one promo
+// banner, and the triptych images are admin-editable, via /admin/header-images.
 export default async function HomePage() {
-  const sections = await listVisibleSections();
+  const [heroRow, promoRow, triptychRow] = await Promise.all([
+    getHeroSection(),
+    getPromoBannerSection(),
+    getTriptychSection(),
+  ]);
 
-  if (sections.length === 0) {
-    // First-run state before the owner has configured anything in the Homepage Builder.
-    return (
-      <div className="relative flex min-h-[80vh] items-center justify-center overflow-hidden px-4 text-center">
-        <div className="pointer-events-none absolute left-1/2 top-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold opacity-[0.1] blur-3xl" />
-        <div className="relative">
-          <span className="eyebrow">Ibrahim Fine Jewelry</span>
-          <h1 className="mt-3 font-display text-4xl text-gradient-gold sm:text-5xl">Timeless Elegance</h1>
-          <p className="mx-auto mt-4 max-w-sm text-secondary-text">
-            This homepage hasn&apos;t been configured yet. Head to Admin → Homepage Builder to add your first
-            sections.
-          </p>
-          <Link
-            href="/admin/homepage-builder"
-            className="mt-8 inline-block rounded-full border border-gold/40 px-8 py-3 text-sm tracking-wide text-gold transition-colors hover:bg-gold hover:text-gold-foreground"
-          >
-            Open Homepage Builder
-          </Link>
-        </div>
-      </div>
-    );
-  }
+  const hero = heroRow ? heroConfigSchema.parse(heroRow.config) : DEFAULT_HERO;
+  const promo = promoRow ? bannerConfigSchema.parse(promoRow.config) : null;
+  const triptychImages = triptychRow ? (bannerConfigSchema.parse(triptychRow.config).images ?? []) : [];
 
   return (
     <div>
-      {sections.map((section) => (
-        <SectionRenderer key={section.id} section={section} />
-      ))}
+      <HeroSection config={hero} />
+      <CategoryIconRow />
+      <WhyChooseUsSection />
+      <ImageTriptychSection images={triptychImages} />
+      <FeatureImageSection />
+      <FeaturedProductsSection config={{ heading: "New Arrivals", tag: "isNewArrival", limit: 8 }} />
+      <HowItWorksSection />
+      <FeaturedProductsSection config={{ heading: "Best Sellers", tag: "isBestSeller", limit: 8 }} />
+      {promo && <BannerSection config={promo} />}
+      <TestimonialsSection />
+      <NewsletterSection />
     </div>
   );
 }

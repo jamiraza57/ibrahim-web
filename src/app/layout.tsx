@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { DM_Serif_Display, Fira_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/features/cart/context/CartContext";
@@ -35,6 +35,11 @@ export const metadata: Metadata = {
   },
   description: "Luxury jewelry, crafted to last.",
   alternates: { canonical: "/" },
+  manifest: "/manifest.webmanifest",
+};
+
+export const viewport: Viewport = {
+  themeColor: "#fcfbf9",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

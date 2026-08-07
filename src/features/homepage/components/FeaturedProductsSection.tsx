@@ -30,11 +30,14 @@ export async function FeaturedProductsSection({
         {products.map((product, idx) => (
           <RevealOnScroll key={product.id} delay={idx * 0.06}>
             <ProductCard
+              id={product.id}
               slug={product.slug}
               name={product.name}
               price={product.price.toString()}
               salePrice={product.salePrice?.toString()}
               thumbnailUrl={product.images.find((i) => i.isThumbnail)?.url ?? product.images[0]?.url}
+              isNewArrival={product.isNewArrival}
+              stock={product.stock}
             />
           </RevealOnScroll>
         ))}
@@ -42,7 +45,7 @@ export async function FeaturedProductsSection({
 
       <RevealOnScroll className="mt-10 flex justify-center">
         <Link
-          href="/search"
+          href="/products"
           data-cursor="hover"
           className="group inline-flex items-center gap-2 text-sm tracking-wide text-secondary-text transition-colors hover:text-gold"
         >

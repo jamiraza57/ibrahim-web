@@ -6,14 +6,15 @@ import {
   getLowStockProducts,
 } from "@/features/analytics/services/analytics.service";
 import { RevenueChart } from "@/features/analytics/components/RevenueChart";
+import { formatPrice } from "@/lib/format";
 
 // KPI/order/stock data must be fresh on every load, not baked in at build time.
 export const dynamic = "force-dynamic";
 
 const KPI_CARDS = [
-  { key: "revenue" as const, label: "Total Revenue", format: (v: number) => `$${v.toLocaleString(undefined, { maximumFractionDigits: 0 })}` },
+  { key: "revenue" as const, label: "Total Revenue", format: (v: number) => formatPrice(v) },
   { key: "orderCount" as const, label: "Orders", format: (v: number) => v.toLocaleString() },
-  { key: "avgOrderValue" as const, label: "Avg Order Value", format: (v: number) => `$${v.toFixed(2)}` },
+  { key: "avgOrderValue" as const, label: "Avg Order Value", format: (v: number) => formatPrice(v) },
   { key: "uniqueCustomers" as const, label: "Customers", format: (v: number) => v.toLocaleString() },
 ];
 
@@ -78,7 +79,7 @@ export default async function AdminDashboardPage() {
                   <span className={`rounded-full px-2 py-0.5 text-xs ${STATUS_STYLES[order.status] ?? "bg-surface-2 text-secondary-text"}`}>
                     {order.status}
                   </span>
-                  <span className="text-foreground">${order.total.toLocaleString()}</span>
+                  <span className="text-foreground">{formatPrice(order.total)}</span>
                 </div>
               </li>
             ))}

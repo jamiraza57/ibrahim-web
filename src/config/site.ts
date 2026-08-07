@@ -1,18 +1,20 @@
 export const siteConfig = {
   name: "Ibrahim",
   tagline: "Fine Jewelry",
+  // WhatsApp number is intentionally blank — no confirmed number yet. The
+  // floating WhatsApp button only renders once this is filled in with a real
+  // one (see WhatsAppButton), so nothing fabricated ships in the meantime.
+  whatsappNumber: "" as string,
   navigation: [
-    { label: "New Arrivals", href: "/collections/new-arrivals" },
-    { label: "Rings", href: "/categories/rings" },
-    { label: "Necklaces", href: "/categories/necklaces" },
-    { label: "Bracelets", href: "/categories/bracelets" },
-    { label: "Earrings", href: "/categories/earrings" },
-    { label: "Watches", href: "/categories/watches" },
-    { label: "Gifts", href: "/collections/gifts" },
+    { label: "Shop All", href: "/products" },
+    { label: "Rings", href: "/products?category=rings" },
+    { label: "Necklaces", href: "/products?category=necklaces" },
+    { label: "Bracelets", href: "/products?category=bracelets" },
+    { label: "Earrings", href: "/products?category=earrings" },
+    { label: "Watches", href: "/products?category=watches" },
   ],
   footerShopLinks: [
-    { label: "All Collections", href: "/collections" },
-    { label: "All Categories", href: "/categories" },
+    { label: "Shop All", href: "/products" },
     { label: "Wishlist", href: "/wishlist" },
     { label: "Track Order", href: "/track-order" },
   ],

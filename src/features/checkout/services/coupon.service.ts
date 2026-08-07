@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import type { Coupon } from "@prisma/client";
+import { formatPrice } from "@/lib/format";
 
 export class InvalidCouponError extends Error {
   constructor(message: string) {
@@ -17,7 +18,7 @@ export async function validateAndComputeDiscount(code: string, subtotal: number)
     throw new InvalidCouponError("Coupon usage limit reached");
   }
   if (coupon.minPurchase && subtotal < Number(coupon.minPurchase)) {
-    throw new InvalidCouponError(`Minimum purchase of $${coupon.minPurchase} required for this coupon`);
+    throw new InvalidCouponError(`Minimum purchase of ${formatPrice(Number(coupon.minPurchase))} required for this coupon`);
   }
 
   const discount =

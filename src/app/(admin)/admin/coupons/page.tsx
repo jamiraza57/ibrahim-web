@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { CouponForm } from "@/features/coupons/components/CouponForm";
 import type { CouponInput } from "@/features/coupons/schemas/coupon.schema";
+import { formatPrice } from "@/lib/format";
 
 interface CouponRow {
   id: string;
@@ -83,7 +84,7 @@ export default function AdminCouponsPage() {
           {coupons.map((c) => (
             <tr key={c.id} className="border-b border-gold/5 text-foreground">
               <td className="py-2 font-mono">{c.code}</td>
-              <td className="py-2">{c.type === "PERCENTAGE" ? `${c.value}%` : `$${c.value}`}</td>
+              <td className="py-2">{c.type === "PERCENTAGE" ? `${c.value}%` : formatPrice(Number(c.value))}</td>
               <td className="py-2">
                 {c.usedCount}
                 {c.usageLimit ? ` / ${c.usageLimit}` : ""}

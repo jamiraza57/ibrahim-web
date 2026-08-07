@@ -8,32 +8,24 @@ import {
   LayoutDashboard,
   Package,
   FolderTree,
-  Layers,
   ShoppingBag,
-  Ticket,
   Image as ImageIcon,
-  LayoutTemplate,
-  Quote,
-  BarChart3,
-  Megaphone,
   ChevronsLeft,
   ChevronsRight,
   Store,
 } from "lucide-react";
 import { LogoutButton } from "./LogoutButton";
 
+// Trimmed to what the admin is actually meant to manage: products, categories,
+// orders (so live COD orders can still be fulfilled), and header images. The
+// rest (collections/coupons/media library/homepage builder/testimonials/
+// analytics/announcement bar) stay in the codebase, just unlinked here.
 const NAV_ITEMS = [
   { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
   { label: "Products", href: "/admin/products", icon: Package },
   { label: "Categories", href: "/admin/categories", icon: FolderTree },
-  { label: "Collections", href: "/admin/collections", icon: Layers },
   { label: "Orders", href: "/admin/orders", icon: ShoppingBag },
-  { label: "Coupons", href: "/admin/coupons", icon: Ticket },
-  { label: "Media Library", href: "/admin/media", icon: ImageIcon },
-  { label: "Homepage Builder", href: "/admin/homepage-builder", icon: LayoutTemplate },
-  { label: "Testimonials", href: "/admin/testimonials", icon: Quote },
-  { label: "Analytics", href: "/admin/analytics", icon: BarChart3 },
-  { label: "Announcement Bar", href: "/admin/announcement-bar", icon: Megaphone },
+  { label: "Header Images", href: "/admin/header-images", icon: ImageIcon },
 ];
 
 function NavLinks({ collapsed, onNavigate }: { collapsed?: boolean; onNavigate?: () => void }) {

@@ -1,8 +1,19 @@
+import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { calculateShipping } from "@/config/shipping";
 import { generateOrderNumber } from "@/features/orders/services/order-number";
 import { validateAndComputeDiscount } from "./coupon.service";
 import type { CheckoutInput } from "../schemas/checkout.schema";
+
+const MAX_ORDER_NUMBER_ATTEMPTS = 5;
+
+function isOrderNumberCollision(err: unknown): boolean {
+  return (
+    err instanceof Prisma.PrismaClientKnownRequestError &&
+    err.code === "P2002" &&
+    (err.meta?.target as string[] | undefined)?.includes("orderNumber") === true
+  );
+}
 
 export class InsufficientStockError extends Error {
   constructor(productName: string) {
@@ -71,6 +82,28 @@ export async function buildOrder(input: CheckoutInput) {
 export async function createOrder(input: CheckoutInput) {
   const { orderItemsData, subtotal, discount, shipping, total, couponCode } = await buildOrder(input);
 
+  for (let attempt = 1; attempt <= MAX_ORDER_NUMBER_ATTEMPTS; attempt++) {
+    try {
+      return await runOrderTransaction({ input, orderItemsData, subtotal, discount, shipping, total, couponCode });
+    } catch (err) {
+      if (isOrderNumberCollision(err) && attempt < MAX_ORDER_NUMBER_ATTEMPTS) continue;
+      throw err;
+    }
+  }
+  throw new Error("Unreachable");
+}
+
+function runOrderTransaction(params: {
+  input: CheckoutInput;
+  orderItemsData: Awaited<ReturnType<typeof buildOrder>>["orderItemsData"];
+  subtotal: number;
+  discount: number;
+  shipping: number;
+  total: number;
+  couponCode: string | null;
+}) {
+  const { input, orderItemsData, subtotal, discount, shipping, total, couponCode } = params;
+
   return prisma.$transaction(async (tx) => {
     // Composite dedup key isn't a real unique constraint (email+phone isn't
     // declared unique in the schema), so `upsert`'s where clause can't target
@@ -103,8 +136,7 @@ export async function createOrder(input: CheckoutInput) {
       include: { items: true },
     });
 
-    // Decrement stock now — released back via a cancellation flow if the
-    // order is later cancelled or a Stripe session expires unpaid.
+    // Decrement stock now — released back via the order-cancellation flow if needed.
     for (const item of order.items) {
       if (!item.productId) continue;
       await tx.product.update({

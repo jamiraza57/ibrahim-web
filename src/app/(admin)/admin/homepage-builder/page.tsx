@@ -15,6 +15,9 @@ interface Section {
 const TYPE_OPTIONS: HomepageSectionType[] = [
   "HERO",
   "BANNER",
+  "STATS",
+  "BRAND_STORY",
+  "SHOP_BY_CATEGORY",
   "FEATURED_COLLECTIONS",
   "FEATURED_PRODUCTS",
   "TESTIMONIALS",

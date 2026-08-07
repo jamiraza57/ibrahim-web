@@ -1,8 +1,13 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowUpRight } from "lucide-react";
 import { WishlistHeart } from "@/features/cart/components/WishlistHeart";
 import { QuickViewTrigger } from "./QuickView";
+import { LOW_STOCK_THRESHOLD } from "@/config/inventory";
+import { formatPrice } from "@/lib/format";
+import { useCart } from "@/features/cart/context/CartContext";
+import { useState } from "react";
 
 interface ProductCardProps {
   id?: string;
@@ -17,8 +22,6 @@ interface ProductCardProps {
   stock?: number;
 }
 
-const LOW_STOCK_THRESHOLD = 3;
-
 export function ProductCard({
   id,
   slug,
@@ -31,10 +34,22 @@ export function ProductCard({
   isNewArrival,
   stock,
 }: ProductCardProps) {
+  const { addItem } = useCart();
+  const [added, setAdded] = useState(false);
   const isOnSale = Boolean(salePrice && Number(salePrice) < Number(price));
   const percentOff = isOnSale ? Math.round((1 - Number(salePrice) / Number(price)) * 100) : 0;
   const isLowStock = typeof stock === "number" && stock > 0 && stock <= LOW_STOCK_THRESHOLD;
   const isOutOfStock = typeof stock === "number" && stock <= 0;
+  const effectivePrice = Number(salePrice ?? price);
+
+  function handleAddToCart(e: React.MouseEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!id || isOutOfStock) return;
+    addItem({ productId: id, slug, name, price: effectivePrice, image: thumbnailUrl }, 1);
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1500);
+  }
 
   return (
     <Link href={`/products/${slug}`} data-cursor="hover" className="group block">
@@ -83,10 +98,6 @@ export function ProductCard({
             <QuickViewTrigger productId={id} />
           </div>
         )}
-
-        <span className="absolute bottom-3 right-3 flex h-9 w-9 translate-y-2 items-center justify-center rounded-full bg-gold text-gold-foreground opacity-0 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-y-0 group-hover:opacity-100">
-          <ArrowUpRight className="h-4 w-4" />
-        </span>
       </div>
 
       <div className="mt-3">
@@ -95,15 +106,26 @@ export function ProductCard({
         <div className="mt-1 flex items-center gap-2">
           {isOnSale ? (
             <>
-              <span className="text-sm text-gold">${Number(salePrice).toLocaleString()}</span>
+              <span className="text-sm text-gold">{formatPrice(Number(salePrice))}</span>
               <span className="text-xs text-secondary-text line-through">
-                ${Number(price).toLocaleString()}
+                {formatPrice(Number(price))}
               </span>
             </>
           ) : (
-            <span className="text-sm text-secondary-text">${Number(price).toLocaleString()}</span>
+            <span className="text-sm text-secondary-text">{formatPrice(Number(price))}</span>
           )}
         </div>
+
+        {id && (
+          <button
+            onClick={handleAddToCart}
+            disabled={isOutOfStock}
+            data-cursor="hover"
+            className="mt-3 w-full rounded-full border border-gold px-4 py-2 text-xs uppercase tracking-widest text-gold transition-colors duration-300 hover:bg-gold hover:text-gold-foreground disabled:cursor-not-allowed disabled:border-secondary-text/30 disabled:text-secondary-text/50 disabled:hover:bg-transparent"
+          >
+            {isOutOfStock ? "Sold Out" : added ? "Added ✓" : "Add to Cart"}
+          </button>
+        )}
       </div>
     </Link>
   );

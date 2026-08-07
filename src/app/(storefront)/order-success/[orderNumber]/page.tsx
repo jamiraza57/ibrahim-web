@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
+import { formatPrice } from "@/lib/format";
 
 interface PageProps {
   params: Promise<{ orderNumber: string }>;
@@ -33,7 +34,7 @@ export default async function OrderSuccessPage({ params }: PageProps) {
               <span>
                 {item.name} × {item.quantity}
               </span>
-              <span>${item.price.toString()}</span>
+              <span>{formatPrice(Number(item.price))}</span>
             </li>
           ))}
         </ul>
@@ -41,21 +42,21 @@ export default async function OrderSuccessPage({ params }: PageProps) {
         <div className="mt-4 space-y-1 border-t border-gold/10 pt-4 text-sm">
           <div className="flex justify-between text-secondary-text">
             <span>Subtotal</span>
-            <span>${order.subtotal.toString()}</span>
+            <span>{formatPrice(Number(order.subtotal))}</span>
           </div>
           {Number(order.discount) > 0 && (
             <div className="flex justify-between text-secondary-text">
               <span>Discount</span>
-              <span>-${order.discount.toString()}</span>
+              <span>-{formatPrice(Number(order.discount))}</span>
             </div>
           )}
           <div className="flex justify-between text-secondary-text">
             <span>Shipping</span>
-            <span>{Number(order.shipping) === 0 ? "Free" : `$${order.shipping.toString()}`}</span>
+            <span>{Number(order.shipping) === 0 ? "Free" : formatPrice(Number(order.shipping))}</span>
           </div>
           <div className="flex justify-between font-medium text-foreground">
             <span>Total (Cash on Delivery)</span>
-            <span>${order.total.toString()}</span>
+            <span>{formatPrice(Number(order.total))}</span>
           </div>
         </div>
 

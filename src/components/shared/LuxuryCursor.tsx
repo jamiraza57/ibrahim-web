@@ -41,7 +41,7 @@ export function LuxuryCursor() {
   return (
     <motion.div
       style={{ translateX: springX, translateY: springY }}
-      className="pointer-events-none fixed left-0 top-0 z-[9999] hidden h-8 w-8 rounded-full border border-gold mix-blend-difference md:block"
+      className="pointer-events-none fixed left-0 top-0 z-[9999] hidden h-8 w-8 rounded-full border-2 border-gold/70 bg-gold/10 md:block"
     />
   );
 }

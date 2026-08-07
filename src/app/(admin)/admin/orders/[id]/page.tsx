@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { useParams } from "next/navigation";
+import { formatPrice } from "@/lib/format";
 
 interface OrderDetail {
   id: string;
@@ -108,19 +109,19 @@ export default function AdminOrderDetailPage() {
           <div className="mt-4 space-y-1 border-t border-gold/10 pt-4 text-sm">
             <div className="flex justify-between text-secondary-text">
               <span>Subtotal</span>
-              <span>${order.subtotal}</span>
+              <span>{formatPrice(Number(order.subtotal))}</span>
             </div>
             <div className="flex justify-between text-secondary-text">
               <span>Discount</span>
-              <span>-${order.discount}</span>
+              <span>-{formatPrice(Number(order.discount))}</span>
             </div>
             <div className="flex justify-between text-secondary-text">
               <span>Shipping</span>
-              <span>${order.shipping}</span>
+              <span>{formatPrice(Number(order.shipping))}</span>
             </div>
             <div className="flex justify-between font-medium text-foreground">
               <span>Total</span>
-              <span>${order.total}</span>
+              <span>{formatPrice(Number(order.total))}</span>
             </div>
           </div>
         </div>
@@ -135,7 +136,7 @@ export default function AdminOrderDetailPage() {
               <tr key={item.id} className="border-b border-gold/5 text-foreground">
                 <td className="py-2">{item.name}</td>
                 <td className="py-2 text-secondary-text">× {item.quantity}</td>
-                <td className="py-2">${item.price}</td>
+                <td className="py-2">{formatPrice(Number(item.price))}</td>
               </tr>
             ))}
           </tbody>

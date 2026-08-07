@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { PackageSearch, CheckCircle2, Circle } from "lucide-react";
 import { MagneticButton } from "@/components/shared/MagneticButton";
+import { formatPrice } from "@/lib/format";
 
 const STEPS = ["PENDING", "CONFIRMED", "PROCESSING", "PACKED", "SHIPPED", "DELIVERED"] as const;
 
@@ -95,7 +96,7 @@ export default function TrackOrderPage() {
               <p className="eyebrow">Order</p>
               <p className="font-display text-lg">{order.orderNumber}</p>
             </div>
-            <p className="font-display text-lg text-gold">${order.total}</p>
+            <p className="font-display text-lg text-gold">{formatPrice(Number(order.total))}</p>
           </div>
 
           {isTerminalNonDelivery ? (
@@ -129,7 +130,7 @@ export default function TrackOrderPage() {
                 <span>
                   {item.name} × {item.quantity}
                 </span>
-                <span>${item.price}</span>
+                <span>{formatPrice(Number(item.price))}</span>
               </div>
             ))}
           </div>

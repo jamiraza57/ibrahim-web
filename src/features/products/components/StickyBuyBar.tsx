@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/features/cart/context/CartContext";
+import { formatPrice } from "@/lib/format";
 
 interface StickyBuyBarProps {
   productId: string;
@@ -43,7 +44,7 @@ export function StickyBuyBar({ productId, slug, name, price, image, inStock }: S
         >
           <div className="min-w-0">
             <p className="truncate text-sm">{name}</p>
-            <p className="text-sm text-gold">${price.toLocaleString()}</p>
+            <p className="text-sm text-gold">{formatPrice(price)}</p>
           </div>
           <button
             onClick={handleAdd}

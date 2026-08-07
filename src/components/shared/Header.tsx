@@ -2,8 +2,8 @@
 
 import type { Route } from "next";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
 import { Search, Heart, ShoppingBag } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { useCart } from "@/features/cart/context/CartContext";
@@ -12,7 +12,12 @@ import { MobileNav } from "./MobileNav";
 
 function NavLink({ href, label }: { href: string; label: string }) {
   const pathname = usePathname();
-  const isActive = pathname === href || pathname.startsWith(`${href}/`);
+  const searchParams = useSearchParams();
+  const [hrefPath, hrefQuery] = href.split("?");
+  const hrefCategory = new URLSearchParams(hrefQuery).get("category");
+  const isActive =
+    (pathname === hrefPath || pathname.startsWith(`${hrefPath}/`)) &&
+    (hrefCategory ? searchParams.get("category") === hrefCategory : !searchParams.get("category"));
 
   return (
     <Link href={href as Route} data-cursor="hover" className="group relative text-sm tracking-wide text-secondary-text transition-colors hover:text-gold">
@@ -23,6 +28,26 @@ function NavLink({ href, label }: { href: string; label: string }) {
         }`}
       />
     </Link>
+  );
+}
+
+// Static fallback shown while NavLink's useSearchParams-based active state
+// resolves (and during the static prerender pass, since useSearchParams
+// requires a Suspense boundary) — same links, without the active underline.
+function NavLinksFallback() {
+  return (
+    <>
+      {siteConfig.navigation.map((item) => (
+        <Link
+          key={item.href}
+          href={item.href as Route}
+          data-cursor="hover"
+          className="text-sm tracking-wide text-secondary-text transition-colors hover:text-gold"
+        >
+          {item.label}
+        </Link>
+      ))}
+    </>
   );
 }
 
@@ -50,9 +75,11 @@ export function Header() {
         </Link>
 
         <nav className="hidden gap-8 md:flex">
-          {siteConfig.navigation.map((item) => (
-            <NavLink key={item.href} href={item.href} label={item.label} />
-          ))}
+          <Suspense fallback={<NavLinksFallback />}>
+            {siteConfig.navigation.map((item) => (
+              <NavLink key={item.href} href={item.href} label={item.label} />
+            ))}
+          </Suspense>
         </nav>
 
         <div className="hidden items-center gap-5 md:flex">

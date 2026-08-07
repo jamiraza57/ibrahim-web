@@ -9,8 +9,8 @@ import { StickyBuyBar } from "@/features/products/components/StickyBuyBar";
 import { RelatedProducts } from "@/features/products/components/RelatedProducts";
 import { RecentlyViewed } from "@/features/products/components/RecentlyViewed";
 import { getEnv } from "@/lib/env";
-
-const LOW_STOCK_THRESHOLD = 3;
+import { LOW_STOCK_THRESHOLD } from "@/config/inventory";
+import { formatPrice } from "@/lib/format";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -57,7 +57,7 @@ export default async function ProductPage({ params }: PageProps) {
     sku: product.sku,
     offers: {
       "@type": "Offer",
-      priceCurrency: "USD",
+      priceCurrency: "PKR",
       price: (product.salePrice ?? product.price).toString(),
       availability: product.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
     },
@@ -101,14 +101,14 @@ export default async function ProductPage({ params }: PageProps) {
           <div className="mt-3 flex flex-wrap items-center gap-3">
             {product.salePrice ? (
               <>
-                <span className="text-2xl text-gold">${product.salePrice.toString()}</span>
-                <span className="text-lg text-secondary-text line-through">${product.price.toString()}</span>
+                <span className="text-2xl text-gold">{formatPrice(Number(product.salePrice))}</span>
+                <span className="text-lg text-secondary-text line-through">{formatPrice(Number(product.price))}</span>
                 <span className="rounded-full bg-gold px-3 py-1 text-[10px] uppercase tracking-widest text-gold-foreground">
                   −{percentOff}%
                 </span>
               </>
             ) : (
-              <span className="text-2xl text-gold">${product.price.toString()}</span>
+              <span className="text-2xl text-gold">{formatPrice(Number(product.price))}</span>
             )}
             {product.isNewArrival && (
               <span className="rounded-full border border-gold/30 px-3 py-1 text-[10px] uppercase tracking-widest text-gold">

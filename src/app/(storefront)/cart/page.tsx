@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useCart } from "@/features/cart/context/CartContext";
 import { MagneticButton } from "@/components/shared/MagneticButton";
+import { formatPrice } from "@/lib/format";
 
 export default function CartPage() {
   const { items, updateQuantity, removeItem, subtotal } = useCart();
@@ -39,7 +40,7 @@ export default function CartPage() {
                 <Link href={`/products/${item.slug}`} className="font-display hover:text-gold">
                   {item.name}
                 </Link>
-                <p className="text-sm text-secondary-text">${item.price.toLocaleString()}</p>
+                <p className="text-sm text-secondary-text">{formatPrice(item.price)}</p>
               </div>
               <div className="flex items-center gap-2 rounded border border-gold/20">
                 <button
@@ -69,7 +70,7 @@ export default function CartPage() {
           <h2 className="mb-4 font-display text-lg">Order Summary</h2>
           <div className="flex items-center justify-between border-t border-gold/10 pt-4">
             <span className="text-secondary-text">Subtotal</span>
-            <span className="text-lg text-gold">${subtotal.toLocaleString()}</span>
+            <span className="text-lg text-gold">{formatPrice(subtotal)}</span>
           </div>
           <p className="mt-2 text-xs text-secondary-text">Coupon codes and shipping are applied at checkout.</p>
 

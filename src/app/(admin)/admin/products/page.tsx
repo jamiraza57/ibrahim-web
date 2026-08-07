@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { formatPrice } from "@/lib/format";
 
 interface ProductRow {
   id: string;
@@ -77,7 +78,7 @@ export default function AdminProductsPage() {
             <tr key={p.id} className="border-b border-gold/5 text-foreground">
               <td className="py-2">{p.name}</td>
               <td className="py-2 text-secondary-text">{p.sku}</td>
-              <td className="py-2">${p.price}</td>
+              <td className="py-2">{formatPrice(Number(p.price))}</td>
               <td className="py-2">{p.stock}</td>
               <td className="py-2">{p.status}</td>
               <td className="py-2">

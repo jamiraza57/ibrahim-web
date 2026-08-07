@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { RevenueChart } from "@/features/analytics/components/RevenueChart";
+import { formatPrice } from "@/lib/format";
 
 interface AnalyticsData {
   kpis: { revenue: number; orderCount: number; avgOrderValue: number; uniqueCustomers: number };
@@ -10,9 +11,9 @@ interface AnalyticsData {
 }
 
 const KPI_CARDS = [
-  { key: "revenue" as const, label: "Total Revenue", format: (v: number) => `$${v.toLocaleString(undefined, { maximumFractionDigits: 0 })}` },
+  { key: "revenue" as const, label: "Total Revenue", format: (v: number) => formatPrice(v) },
   { key: "orderCount" as const, label: "Orders", format: (v: number) => v.toLocaleString() },
-  { key: "avgOrderValue" as const, label: "Avg Order Value", format: (v: number) => `$${v.toFixed(2)}` },
+  { key: "avgOrderValue" as const, label: "Avg Order Value", format: (v: number) => formatPrice(v) },
   { key: "uniqueCustomers" as const, label: "Customers", format: (v: number) => v.toLocaleString() },
 ];
 
@@ -78,7 +79,7 @@ export default function AdminAnalyticsPage() {
                 <tr key={p.productId} className="border-b border-gold/5 text-foreground">
                   <td className="py-2">{p.name}</td>
                   <td className="py-2">{p.unitsSold}</td>
-                  <td className="py-2">${p.revenue.toLocaleString(undefined, { maximumFractionDigits: 2 })}</td>
+                  <td className="py-2">{formatPrice(p.revenue)}</td>
                 </tr>
               ))}
               {data.topProducts.length === 0 && (

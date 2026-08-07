@@ -20,9 +20,9 @@ export function MobileNav() {
         aria-label="Open menu"
         className="flex h-9 w-9 flex-col items-center justify-center gap-1.5 md:hidden"
       >
-        <span className="h-px w-6 bg-white" />
-        <span className="h-px w-6 bg-white" />
-        <span className="h-px w-6 bg-white" />
+        <span className="h-px w-6 bg-foreground" />
+        <span className="h-px w-6 bg-foreground" />
+        <span className="h-px w-6 bg-foreground" />
       </button>
 
       <AnimatePresence>

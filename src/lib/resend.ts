@@ -1,5 +1,6 @@
 import { Resend } from "resend";
 import { getEnv } from "@/lib/env";
+import { formatPrice } from "@/lib/format";
 
 let client: Resend | null = null;
 
@@ -18,7 +19,7 @@ export async function sendOrderConfirmationEmail(params: {
   const env = getEnv();
 
   const itemsHtml = params.itemLines
-    .map((i) => `<tr><td>${i.name}</td><td>${i.quantity}</td><td>$${i.price}</td></tr>`)
+    .map((i) => `<tr><td>${i.name}</td><td>${i.quantity}</td><td>${formatPrice(Number(i.price))}</td></tr>`)
     .join("");
 
   await getResend().emails.send({
@@ -33,7 +34,7 @@ export async function sendOrderConfirmationEmail(params: {
           <thead><tr><th align="left">Item</th><th align="left">Qty</th><th align="left">Price</th></tr></thead>
           <tbody>${itemsHtml}</tbody>
         </table>
-        <p><strong>Total: $${params.total}</strong></p>
+        <p><strong>Total: ${formatPrice(Number(params.total))}</strong></p>
       </div>
     `,
   });

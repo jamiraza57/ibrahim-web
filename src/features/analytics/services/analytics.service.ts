@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { LOW_STOCK_THRESHOLD } from "@/config/inventory";
 
 const EXCLUDED_STATUSES = ["CANCELLED"] as const;
 
@@ -127,8 +128,6 @@ export interface LowStockProduct {
   slug: string;
   stock: number;
 }
-
-const LOW_STOCK_THRESHOLD = 8;
 
 export async function getLowStockProducts(limit = 5): Promise<LowStockProduct[]> {
   return prisma.product.findMany({

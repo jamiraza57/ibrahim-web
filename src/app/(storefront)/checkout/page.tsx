@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useCart } from "@/features/cart/context/CartContext";
 import { MagneticButton } from "@/components/shared/MagneticButton";
+import { formatPrice } from "@/lib/format";
 
 const checkoutFormSchema = z.object({
   name: z.string().min(1, "Full name is required"),
@@ -177,13 +178,13 @@ export default function CheckoutPage() {
                 <span>
                   {item.name} × {item.quantity}
                 </span>
-                <span>${(item.price * item.quantity).toLocaleString()}</span>
+                <span>{formatPrice(item.price * item.quantity)}</span>
               </li>
             ))}
           </ul>
           <div className="mt-4 flex justify-between border-t border-gold/10 pt-4 text-foreground">
             <span>Subtotal</span>
-            <span>${subtotal.toLocaleString()}</span>
+            <span>{formatPrice(subtotal)}</span>
           </div>
           <p className="mt-2 text-xs text-secondary-text">
             Shipping and any coupon discount are calculated after you place the order.

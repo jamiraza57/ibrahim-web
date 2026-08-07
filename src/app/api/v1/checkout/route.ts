@@ -34,7 +34,10 @@ export async function POST(request: NextRequest) {
   try {
     const order = await createOrder(parsed.data);
 
-    await sendOrderConfirmationEmail({
+    // Fire-and-forget: the order is already committed, so an email failure
+    // (bad API key, Resend outage) must never surface as a checkout failure —
+    // that would make the customer resubmit and place a duplicate order.
+    sendOrderConfirmationEmail({
       to: parsed.data.customer.email,
       orderNumber: order.orderNumber,
       customerName: parsed.data.customer.name,
@@ -44,6 +47,8 @@ export async function POST(request: NextRequest) {
         quantity: i.quantity,
         price: i.price.toString(),
       })),
+    }).catch((err) => {
+      console.error(`Order confirmation email failed for ${order.orderNumber}:`, err);
     });
 
     return NextResponse.json({ data: { orderNumber: order.orderNumber } });
