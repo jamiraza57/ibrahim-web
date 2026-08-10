@@ -26,7 +26,7 @@ export async function FeaturedProductsSection({
         <span className="eyebrow">Signature Pieces</span>
         <h2 className="mb-8 mt-2 font-display text-2xl sm:text-3xl">{config.heading}</h2>
       </RevealOnScroll>
-      <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-4">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(140px,220px))] justify-center gap-4 sm:gap-6">
         {products.map((product, idx) => (
           <RevealOnScroll key={product.id} delay={idx * 0.06}>
             <ProductCard

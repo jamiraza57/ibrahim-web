@@ -3,21 +3,19 @@
 @tailwind utilities;
 
 /*
- * Light grey/white/gold theme tokens. Colors are OKLCH. Tailwind 3.4's
- * color-mix() fallback makes opacity modifiers (e.g. border-gold/10) work on
- * these even though they aren't plain hex/rgb.
+ * Dark Noir & Gold theme tokens. Gold is sampled directly from
+ * public/logo-mark.png's actual gold gradient (F0D89C dominant tone /
+ * FCE4B8 highlight / B08D5A shadow — see tailwind.config.ts comment) rather
+ * than a generic gold hex, so the UI reads as the same metal as the logo.
+ * These are hand-authored (not Tailwind @apply) so they're kept in sync
+ * manually with the tailwind.config.ts color tokens.
  */
 :root {
   --ease-lux: cubic-bezier(0.22, 1, 0.36, 1);
-  --gradient-gold: linear-gradient(
-    100deg,
-    oklch(0.87 0.08 88),
-    oklch(0.7 0.13 85) 45%,
-    oklch(0.52 0.11 80) 100%
-  );
-  --gradient-noir: linear-gradient(180deg, oklch(0.99 0.002 90), oklch(0.94 0.006 85));
-  --shadow-lux: 0 24px 60px -24px oklch(0.7 0.13 85 / 30%);
-  --shadow-deep: 0 30px 70px -30px oklch(0.2 0.006 60 / 18%);
+  --gradient-gold: linear-gradient(100deg, #fce4b8, #f0d89c 45%, #b08d5a 100%);
+  --gradient-noir: linear-gradient(180deg, #0a0a0a, #141210);
+  --shadow-lux: 0 24px 60px -20px rgba(240, 216, 156, 0.22);
+  --shadow-deep: 0 30px 70px -20px rgba(0, 0, 0, 0.7);
 }
 
 @layer base {
@@ -30,8 +28,8 @@
   }
 
   ::selection {
-    background: oklch(0.7 0.13 85);
-    color: oklch(0.18 0.02 70);
+    background: #f0d89c;
+    color: #1a1208;
   }
 }
 
@@ -47,19 +45,19 @@
     font-size: 0.6875rem;
     letter-spacing: 0.32em;
     text-transform: uppercase;
-    color: oklch(0.52 0.11 80);
+    color: #f0d89c;
   }
 
   .hairline {
     height: 1px;
     width: 100%;
-    background: linear-gradient(90deg, transparent, oklch(0.7 0.13 85), transparent);
-    opacity: 0.6;
+    background: linear-gradient(90deg, transparent, #f0d89c, transparent);
+    opacity: 0.5;
   }
 
   .lux-card {
-    background-color: oklch(1 0 0);
-    border: 1px solid oklch(0.82 0.012 80 / 60%);
+    background-color: #141210;
+    border: 1px solid rgba(240, 216, 156, 0.14);
     transition:
       transform 0.5s var(--ease-lux),
       box-shadow 0.5s var(--ease-lux),
@@ -68,8 +66,31 @@
 
   .lux-card:hover {
     transform: translateY(-6px);
-    box-shadow: var(--shadow-lux);
-    border-color: oklch(0.7 0.13 85 / 55%);
+    box-shadow: var(--shadow-lux), var(--shadow-deep);
+    border-color: rgba(240, 216, 156, 0.45);
+  }
+
+  .input-lux {
+    width: 100%;
+    border-radius: 0.25rem;
+    border: 1px solid rgba(240, 216, 156, 0.2);
+    background-color: transparent;
+    padding: 0.5rem 0.75rem;
+    color: #f5f0e6;
+  }
+
+  .input-lux:focus {
+    outline: none;
+    border-color: rgba(240, 216, 156, 0.5);
+    box-shadow: 0 0 0 2px rgba(240, 216, 156, 0.3);
+  }
+
+  .vignette-noir {
+    background-image: radial-gradient(
+      ellipse at center,
+      transparent 40%,
+      rgba(0, 0, 0, 0.55) 100%
+    );
   }
 
   .reveal {
@@ -89,7 +110,7 @@
     background-image: linear-gradient(
       100deg,
       transparent 30%,
-      oklch(0.88 0.085 90 / 60%) 50%,
+      rgba(252, 228, 184, 0.35) 50%,
       transparent 70%
     );
     background-size: 220% 100%;

@@ -23,8 +23,8 @@ export default function AnnouncementBarAdminPage() {
     defaultValues: {
       text: "",
       isActive: false,
-      bgColor: "#D4AF37",
-      textColor: "#050505",
+      bgColor: "#F0D89C",
+      textColor: "#0a0a0a",
       type: "SALE",
     },
   });

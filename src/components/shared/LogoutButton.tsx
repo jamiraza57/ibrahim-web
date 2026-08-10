@@ -1,18 +1,29 @@
 "use client";
 
+import type { Route } from "next";
 import { useRouter } from "next/navigation";
 
-export function LogoutButton() {
+interface LogoutButtonProps {
+  endpoint?: string;
+  redirectTo?: Route;
+  className?: string;
+}
+
+export function LogoutButton({
+  endpoint = "/api/v1/admin/logout",
+  redirectTo = "/admin/login" as Route,
+  className = "text-sm text-secondary-text hover:text-gold",
+}: LogoutButtonProps) {
   const router = useRouter();
 
   async function handleLogout() {
-    await fetch("/api/v1/admin/logout", { method: "POST" });
-    router.push("/admin/login");
+    await fetch(endpoint, { method: "POST" });
+    router.push(redirectTo);
     router.refresh();
   }
 
   return (
-    <button onClick={handleLogout} className="text-sm text-secondary-text hover:text-gold">
+    <button onClick={handleLogout} className={className}>
       Sign Out
     </button>
   );

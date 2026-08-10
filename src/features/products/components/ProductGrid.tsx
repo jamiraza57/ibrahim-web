@@ -29,7 +29,7 @@ export function ProductGrid({ products, page, totalPages, basePath, searchParams
 
   return (
     <>
-      <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {products.map((product, i) => (
           <RevealOnScroll key={product.id} delay={Math.min(i * 0.06, MAX_STAGGER_DELAY)}>
             <ProductCard

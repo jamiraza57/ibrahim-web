@@ -8,6 +8,8 @@ import {
 import { InvalidCouponError } from "@/features/checkout/services/coupon.service";
 import { sendOrderConfirmationEmail } from "@/lib/resend";
 import { checkRateLimit } from "@/lib/rate-limit";
+import { getCustomerSessionToken } from "@/lib/auth/cookies";
+import { verifyCustomerSession } from "@/lib/auth/jwt";
 
 // Cash on Delivery only — this store takes no online payment method.
 export async function POST(request: NextRequest) {
@@ -32,7 +34,10 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const order = await createOrder(parsed.data);
+    const sessionToken = await getCustomerSessionToken();
+    const session = sessionToken ? await verifyCustomerSession(sessionToken) : null;
+
+    const order = await createOrder(parsed.data, session?.sub);
 
     // Fire-and-forget: the order is already committed, so an email failure
     // (bad API key, Resend outage) must never surface as a checkout failure —

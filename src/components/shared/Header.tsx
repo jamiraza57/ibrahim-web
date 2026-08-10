@@ -2,9 +2,10 @@
 
 import type { Route } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
-import { Search, Heart, ShoppingBag } from "lucide-react";
+import { Search, Heart, ShoppingBag, User } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { useCart } from "@/features/cart/context/CartContext";
 import { useWishlist } from "@/features/cart/context/WishlistContext";
@@ -70,7 +71,12 @@ export function Header() {
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
-        <Link href="/" className="font-serif text-lg tracking-wide sm:text-xl" data-cursor="hover">
+        <Link
+          href="/"
+          className="flex items-center gap-2 font-serif text-lg tracking-wide sm:text-xl"
+          data-cursor="hover"
+        >
+          <Image src="/logo-mark.png" alt="" width={36} height={36} className="h-8 w-8 object-contain sm:h-9 sm:w-9" priority />
           <span className="text-gradient-gold">{siteConfig.name}</span>
         </Link>
 
@@ -85,6 +91,9 @@ export function Header() {
         <div className="hidden items-center gap-5 md:flex">
           <Link href="/search" data-cursor="hover" aria-label="Search" className="text-secondary-text hover:text-gold">
             <Search className="h-[18px] w-[18px]" />
+          </Link>
+          <Link href={"/account" as Route} data-cursor="hover" aria-label="Account" className="text-secondary-text hover:text-gold">
+            <User className="h-[18px] w-[18px]" />
           </Link>
           <Link href={"/wishlist" as Route} data-cursor="hover" aria-label="Wishlist" className="relative text-secondary-text hover:text-gold">
             <Heart className="h-[18px] w-[18px]" />

@@ -20,7 +20,7 @@ function GoldRing() {
       <mesh rotation={[Math.PI / 2, 0, 0]} castShadow receiveShadow>
         <torusGeometry args={[1.1, 0.16, 48, 128]} />
         <meshPhysicalMaterial
-          color="#D4AF37"
+          color="#B08D5A"
           metalness={1}
           roughness={0.25}
           reflectivity={1}
@@ -36,7 +36,7 @@ function GoldRing() {
           position={[Math.cos((i / 4) * Math.PI * 2) * 1.05, 0.55, Math.sin((i / 4) * Math.PI * 2) * 1.05]}
         >
           <coneGeometry args={[0.06, 0.3, 8]} />
-          <meshPhysicalMaterial color="#D4AF37" metalness={1} roughness={0.3} />
+          <meshPhysicalMaterial color="#B08D5A" metalness={1} roughness={0.3} />
         </mesh>
       ))}
 
@@ -63,12 +63,12 @@ function Scene() {
     <>
       <ambientLight intensity={0.4} />
       <directionalLight position={[3, 5, 2]} intensity={2} castShadow />
-      <directionalLight position={[-3, -2, -2]} intensity={0.5} color="#D4AF37" />
+      <directionalLight position={[-3, -2, -2]} intensity={0.5} color="#F0D89C" />
       {/* Synthetic light panels instead of Environment's default CDN-hosted HDR
           preset, so reflections never depend on a network fetch. */}
       <Environment background={false}>
         <Lightformer form="rect" intensity={4} color="#fff8e1" position={[0, 3, 2]} scale={[4, 4, 1]} />
-        <Lightformer form="rect" intensity={2} color="#D4AF37" position={[-4, 1, -2]} scale={[3, 3, 1]} />
+        <Lightformer form="rect" intensity={2} color="#F0D89C" position={[-4, 1, -2]} scale={[3, 3, 1]} />
         <Lightformer form="rect" intensity={2} color="#ffffff" position={[4, -1, -2]} scale={[3, 3, 1]} />
       </Environment>
 

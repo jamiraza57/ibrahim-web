@@ -41,7 +41,7 @@ export default async function ProductsPage({ searchParams }: PageProps) {
   const paramsString = new URLSearchParams(sp as Record<string, string>).toString();
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
+    <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 2xl:max-w-[1600px]">
       <div className="mb-8 text-center">
         <span className="eyebrow">Collection</span>
         <h1 className="mt-2 font-display text-3xl sm:text-4xl">Shop All Jewelry</h1>

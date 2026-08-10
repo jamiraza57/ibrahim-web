@@ -1,17 +1,14 @@
 export const siteConfig = {
-  name: "Ibrahim",
-  tagline: "Fine Jewelry",
-  // WhatsApp number is intentionally blank — no confirmed number yet. The
-  // floating WhatsApp button only renders once this is filled in with a real
-  // one (see WhatsAppButton), so nothing fabricated ships in the meantime.
-  whatsappNumber: "" as string,
+  name: "Ibrahim Jewels",
+  tagline: "Premium Non-Tarnish Jewelry",
+  email: "ibrahimjewels13@gmail.com",
+  whatsappNumber: "923012905744",
   navigation: [
     { label: "Shop All", href: "/products" },
-    { label: "Rings", href: "/products?category=rings" },
     { label: "Necklaces", href: "/products?category=necklaces" },
-    { label: "Bracelets", href: "/products?category=bracelets" },
     { label: "Earrings", href: "/products?category=earrings" },
-    { label: "Watches", href: "/products?category=watches" },
+    { label: "Handcuffs", href: "/products?category=handcuffs" },
+    { label: "Zircon Set", href: "/products?category=zircon-set" },
   ],
   footerShopLinks: [
     { label: "Shop All", href: "/products" },
@@ -29,7 +26,9 @@ export const siteConfig = {
     { label: "Shipping Policy", href: "/shipping-policy" },
     { label: "Refund Policy", href: "/refund-policy" },
   ],
-  // No confirmed social profile URLs yet — leave empty rather than guess at
-  // handles. Fill in real profile URLs here to have the footer show icons.
-  socials: [] as { label: string; href: string }[],
+  socials: [
+    { label: "Instagram", href: "https://www.instagram.com/ij_ibrahim_jewels?igsh=aGFkZTg1a3NwYzBk" },
+    { label: "Facebook", href: "https://www.facebook.com/share/1DVsefQEJa/" },
+    { label: "TikTok", href: "https://tiktok.com/@ij_jewels" },
+  ] as { label: string; href: string }[],
 } as const;

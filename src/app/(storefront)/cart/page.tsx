@@ -73,6 +73,7 @@ export default function CartPage() {
             <span className="text-lg text-gold">{formatPrice(subtotal)}</span>
           </div>
           <p className="mt-2 text-xs text-secondary-text">Coupon codes and shipping are applied at checkout.</p>
+          <p className="mt-2 text-xs text-gold">🎁 Free gift on orders above Rs 3,000</p>
 
           <Link href="/checkout" className="mt-6 block">
             <MagneticButton className="w-full">Proceed to Checkout</MagneticButton>

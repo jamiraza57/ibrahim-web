@@ -30,16 +30,16 @@ const ibmPlexMono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(getEnv().NEXT_PUBLIC_SITE_URL),
   title: {
-    default: "Ibrahim — Fine Jewelry",
-    template: "%s | Ibrahim",
+    default: "Ibrahim Jewels — Premium Non-Tarnish Jewelry",
+    template: "%s | Ibrahim Jewels",
   },
-  description: "Luxury jewelry, crafted to last.",
+  description: "Premium non-tarnish jewelry, crafted to last.",
   alternates: { canonical: "/" },
   manifest: "/manifest.webmanifest",
 };
 
 export const viewport: Viewport = {
-  themeColor: "#fcfbf9",
+  themeColor: "#0a0a0a",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

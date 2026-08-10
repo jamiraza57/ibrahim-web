@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { siteConfig } from "@/config/site";
 import { NewsletterForm } from "./NewsletterForm";
 
@@ -7,14 +8,21 @@ export function Footer() {
     <footer className="border-t border-gold/10 bg-secondary-background">
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 sm:grid-cols-2 md:grid-cols-5">
         <div className="sm:col-span-2 md:col-span-2">
-          <h3 className="mb-4 font-serif text-lg text-gradient-gold">{siteConfig.name}</h3>
+          <div className="mb-4 flex items-center gap-2">
+            <Image src="/logo-mark.png" alt="" width={32} height={32} className="h-8 w-8 object-contain" />
+            <h3 className="font-serif text-lg text-gradient-gold">{siteConfig.name}</h3>
+          </div>
           <p className="max-w-xs text-sm text-secondary-text">{siteConfig.tagline}</p>
           <p className="mt-6 max-w-xs text-sm text-secondary-text">
             Each piece is finished by hand and inspected before it ships. Have a question about an
             order or a custom design?{" "}
             <Link href="/contact" className="text-gold hover:underline">
               Reach out
-            </Link>
+            </Link>{" "}
+            or email{" "}
+            <a href={`mailto:${siteConfig.email}`} className="text-gold hover:underline">
+              {siteConfig.email}
+            </a>
             .
           </p>
 

@@ -79,12 +79,21 @@ export async function buildOrder(input: CheckoutInput) {
   return { orderItemsData, subtotal, discount, shipping, total, couponCode };
 }
 
-export async function createOrder(input: CheckoutInput) {
+export async function createOrder(input: CheckoutInput, sessionCustomerId?: string) {
   const { orderItemsData, subtotal, discount, shipping, total, couponCode } = await buildOrder(input);
 
   for (let attempt = 1; attempt <= MAX_ORDER_NUMBER_ATTEMPTS; attempt++) {
     try {
-      return await runOrderTransaction({ input, orderItemsData, subtotal, discount, shipping, total, couponCode });
+      return await runOrderTransaction({
+        input,
+        orderItemsData,
+        subtotal,
+        discount,
+        shipping,
+        total,
+        couponCode,
+        sessionCustomerId,
+      });
     } catch (err) {
       if (isOrderNumberCollision(err) && attempt < MAX_ORDER_NUMBER_ATTEMPTS) continue;
       throw err;
@@ -101,17 +110,22 @@ function runOrderTransaction(params: {
   shipping: number;
   total: number;
   couponCode: string | null;
+  sessionCustomerId?: string;
 }) {
-  const { input, orderItemsData, subtotal, discount, shipping, total, couponCode } = params;
+  const { input, orderItemsData, subtotal, discount, shipping, total, couponCode, sessionCustomerId } = params;
 
   return prisma.$transaction(async (tx) => {
-    // Composite dedup key isn't a real unique constraint (email+phone isn't
-    // declared unique in the schema), so `upsert`'s where clause can't target
-    // it — look the customer up first and create only if absent.
-    const customer =
-      (await tx.customer.findFirst({
-        where: { email: input.customer.email, phone: input.customer.phone },
-      })) ?? (await tx.customer.create({ data: input.customer }));
+    // A logged-in customer's session id is authoritative — use it directly
+    // so their orders reliably land on their account regardless of whether
+    // the checkout form's name/phone matches what they signed up with.
+    // Guest checkout falls back to the email+phone lookup-or-create dance
+    // (no real unique constraint on that pair, so `upsert` can't target it —
+    // look the customer up first and create only if absent).
+    const customer = sessionCustomerId
+      ? await tx.customer.findUniqueOrThrow({ where: { id: sessionCustomerId } })
+      : (await tx.customer.findFirst({
+          where: { email: input.customer.email, phone: input.customer.phone },
+        })) ?? (await tx.customer.create({ data: input.customer }));
 
     const address = await tx.address.create({
       data: { ...input.address, customerId: customer.id },

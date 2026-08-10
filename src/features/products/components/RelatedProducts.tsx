@@ -12,7 +12,7 @@ export async function RelatedProducts({ productId, categoryIds }: { productId: s
         <span className="eyebrow">You May Also Like</span>
         <h2 className="mb-8 mt-2 font-display text-2xl">Complete the Look</h2>
       </RevealOnScroll>
-      <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-4">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(140px,220px))] justify-center gap-4 sm:gap-6">
         {products.map((product, i) => (
           <RevealOnScroll key={product.id} delay={i * 0.06}>
             <ProductCard

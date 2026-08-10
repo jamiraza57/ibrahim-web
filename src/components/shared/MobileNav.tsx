@@ -65,6 +65,9 @@ export function MobileNav() {
                   <Link href="/search" onClick={() => setIsOpen(false)} className="hover:text-gold">
                     Search
                   </Link>
+                  <Link href={"/account" as Route} onClick={() => setIsOpen(false)} className="hover:text-gold">
+                    Account
+                  </Link>
                   <Link href={"/wishlist" as Route} onClick={() => setIsOpen(false)} className="hover:text-gold">
                     Wishlist{productIds.length > 0 ? ` (${productIds.length})` : ""}
                   </Link>
