@@ -5,6 +5,7 @@ import { queryStorefrontProducts, getFilterFacets, type SortOption } from "@/fea
 import { ProductGrid } from "@/features/products/components/ProductGrid";
 import { FilterBar } from "@/features/products/components/FilterBar";
 import { getSiteUrl } from "@/lib/env";
+import { siteConfig } from "@/config/site";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -19,11 +20,21 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { slug } = await params;
   const category = await getCategory(slug);
   if (!category) return {};
+  const title = category.metaTitle ?? category.name;
+  const description = category.metaDescription ?? category.description ?? undefined;
+  const canonical = `${getSiteUrl()}/categories/${slug}`;
   return {
-    title: category.metaTitle ?? category.name,
-    description: category.metaDescription ?? category.description ?? undefined,
-    alternates: { canonical: `${getSiteUrl()}/categories/${slug}` },
-    openGraph: { images: category.bannerUrl ? [category.bannerUrl] : undefined },
+    title,
+    description,
+    alternates: { canonical },
+    openGraph: {
+      title,
+      description,
+      siteName: siteConfig.name,
+      type: "website",
+      url: canonical,
+      images: category.bannerUrl ? [category.bannerUrl] : undefined,
+    },
   };
 }
 

@@ -1,7 +1,13 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
 import { formatPrice } from "@/lib/format";
+
+export const metadata: Metadata = {
+  title: "Order Confirmed",
+  robots: { index: false, follow: false },
+};
 
 interface PageProps {
   params: Promise<{ orderNumber: string }>;

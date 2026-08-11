@@ -9,6 +9,7 @@ import { StickyBuyBar } from "@/features/products/components/StickyBuyBar";
 import { RelatedProducts } from "@/features/products/components/RelatedProducts";
 import { RecentlyViewed } from "@/features/products/components/RecentlyViewed";
 import { getSiteUrl } from "@/lib/env";
+import { siteConfig } from "@/config/site";
 import { LOW_STOCK_THRESHOLD } from "@/config/inventory";
 import { formatPrice } from "@/lib/format";
 
@@ -31,6 +32,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     openGraph: {
       title: product.name,
       description: product.shortDescription ?? undefined,
+      siteName: siteConfig.name,
       images: image ? [image] : undefined,
       type: "website",
       url: canonical,
@@ -48,6 +50,9 @@ export default async function ProductPage({ params }: PageProps) {
   const product = await getStorefrontProductBySlug(slug);
   if (!product) notFound();
 
+  const canonicalUrl = `${getSiteUrl()}/products/${product.slug}`;
+  const primaryCategory = product.categories[0]?.category;
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -55,15 +60,41 @@ export default async function ProductPage({ params }: PageProps) {
     description: product.shortDescription ?? product.description,
     image: product.images.map((i) => i.url),
     sku: product.sku,
+    url: canonicalUrl,
+    brand: { "@type": "Brand", name: siteConfig.name },
     offers: {
       "@type": "Offer",
       priceCurrency: "PKR",
       price: (product.salePrice ?? product.price).toString(),
       availability: product.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+      url: canonicalUrl,
     },
   };
 
-  const primaryCategory = product.categories[0]?.category;
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: getSiteUrl() },
+      ...(primaryCategory
+        ? [
+            {
+              "@type": "ListItem",
+              position: 2,
+              name: primaryCategory.name,
+              item: `${getSiteUrl()}/categories/${primaryCategory.slug}`,
+            },
+          ]
+        : []),
+      {
+        "@type": "ListItem",
+        position: primaryCategory ? 3 : 2,
+        name: product.name,
+        item: canonicalUrl,
+      },
+    ],
+  };
+
   const isOnSale = Boolean(product.salePrice && Number(product.salePrice) < Number(product.price));
   const percentOff = isOnSale ? Math.round((1 - Number(product.salePrice) / Number(product.price)) * 100) : 0;
   const isLowStock = product.stock > 0 && product.stock <= LOW_STOCK_THRESHOLD;
@@ -71,6 +102,7 @@ export default async function ProductPage({ params }: PageProps) {
   return (
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
 
       <nav aria-label="Breadcrumb" className="mb-6 flex flex-wrap items-center gap-2 text-xs text-secondary-text">
         <Link href="/" className="hover:text-gold">

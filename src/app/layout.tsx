@@ -4,6 +4,7 @@ import "./globals.css";
 import { CartProvider } from "@/features/cart/context/CartContext";
 import { WishlistProvider } from "@/features/cart/context/WishlistContext";
 import { getSiteUrl } from "@/lib/env";
+import { siteConfig } from "@/config/site";
 
 const dmSerifDisplay = DM_Serif_Display({
   subsets: ["latin"],
@@ -27,15 +28,33 @@ const ibmPlexMono = IBM_Plex_Mono({
   display: "swap",
 });
 
+const defaultTitle = "Ibrahim Jewels — Premium Non-Tarnish Jewelry";
+const defaultDescription = "Premium non-tarnish jewelry, crafted to last.";
+
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
   title: {
-    default: "Ibrahim Jewels — Premium Non-Tarnish Jewelry",
+    default: defaultTitle,
     template: "%s | Ibrahim Jewels",
   },
-  description: "Premium non-tarnish jewelry, crafted to last.",
+  description: defaultDescription,
   alternates: { canonical: "/" },
   manifest: "/manifest.webmanifest",
+  openGraph: {
+    title: defaultTitle,
+    description: defaultDescription,
+    siteName: siteConfig.name,
+    url: "/",
+    type: "website",
+    locale: "en_US",
+    images: [{ url: "/logo.png", width: 1280, height: 621, alt: siteConfig.name }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: defaultTitle,
+    description: defaultDescription,
+    images: ["/logo.png"],
+  },
 };
 
 export const viewport: Viewport = {
@@ -43,9 +62,34 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const siteUrl = getSiteUrl();
+
+  const organizationJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: siteConfig.name,
+    url: siteUrl,
+    logo: `${siteUrl}/logo.png`,
+    sameAs: siteConfig.socials.map((s) => s.href),
+  };
+
+  const websiteJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: siteConfig.name,
+    url: siteUrl,
+    potentialAction: {
+      "@type": "SearchAction",
+      target: `${siteUrl}/search?q={search_term_string}`,
+      "query-input": "required name=search_term_string",
+    },
+  };
+
   return (
     <html lang="en" className={`${dmSerifDisplay.variable} ${firaSans.variable} ${ibmPlexMono.variable}`}>
       <body className="bg-background text-foreground antialiased">
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }} />
         <CartProvider>
           <WishlistProvider>{children}</WishlistProvider>
         </CartProvider>

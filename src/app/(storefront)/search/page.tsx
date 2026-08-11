@@ -1,6 +1,12 @@
+import type { Metadata } from "next";
 import { queryStorefrontProducts, getFilterFacets, type SortOption } from "@/features/products/services/storefront-product.service";
 import { ProductGrid } from "@/features/products/components/ProductGrid";
 import { FilterBar } from "@/features/products/components/FilterBar";
+
+export const metadata: Metadata = {
+  title: "Search",
+  robots: { index: false, follow: false },
+};
 
 interface PageProps {
   searchParams: Promise<Record<string, string | undefined>>;
