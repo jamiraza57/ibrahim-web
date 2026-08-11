@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { getEnv } from "@/lib/env";
+import { getSiteUrl } from "@/lib/env";
 
 export const metadata: Metadata = {
   title: "Terms of Service",
-  alternates: { canonical: `${getEnv().NEXT_PUBLIC_SITE_URL}/terms` },
+  alternates: { canonical: `${getSiteUrl()}/terms` },
 };
 
 export default function TermsPage() {

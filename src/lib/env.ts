@@ -30,3 +30,32 @@ export function getEnv() {
   if (!cached) cached = loadEnv();
   return cached;
 }
+
+// The root layout only needs the site URL (for `metadataBase`) and renders on
+// every single page — routing it through the full getEnv() would mean an
+// unrelated missing secret (e.g. RESEND_API_KEY, only needed by the contact
+// form) takes down the entire site instead of just the feature that needs it.
+export function getSiteUrl() {
+  return z.string().url().parse(process.env.NEXT_PUBLIC_SITE_URL);
+}
+
+const jwtConfigSchema = z.object({
+  JWT_SECRET: envSchema.shape.JWT_SECRET,
+  JWT_COOKIE_NAME: envSchema.shape.JWT_COOKIE_NAME,
+});
+
+// Auth (session signing + cookie name) runs on every admin/account request via
+// middleware — it must not depend on unrelated secrets like Resend/Blob.
+export function getJwtConfig() {
+  return jwtConfigSchema.parse(process.env);
+}
+
+const resendConfigSchema = z.object({
+  RESEND_API_KEY: envSchema.shape.RESEND_API_KEY,
+  RESEND_FROM_EMAIL: envSchema.shape.RESEND_FROM_EMAIL,
+});
+
+// Only the email-sending features actually need Resend configured.
+export function getResendConfig() {
+  return resendConfigSchema.parse(process.env);
+}

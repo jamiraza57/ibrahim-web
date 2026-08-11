@@ -1,15 +1,15 @@
 import { Resend } from "resend";
-import { getEnv } from "@/lib/env";
+import { getResendConfig } from "@/lib/env";
 
 let client: Resend | null = null;
 
 function getResend() {
-  if (!client) client = new Resend(getEnv().RESEND_API_KEY);
+  if (!client) client = new Resend(getResendConfig().RESEND_API_KEY);
   return client;
 }
 
 export async function sendContactFormEmail(params: { name: string; email: string; message: string }) {
-  const env = getEnv();
+  const env = getResendConfig();
 
   await getResend().emails.send({
     from: env.RESEND_FROM_EMAIL,

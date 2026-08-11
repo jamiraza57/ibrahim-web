@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { getEnv } from "@/lib/env";
+import { getSiteUrl } from "@/lib/env";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  alternates: { canonical: `${getEnv().NEXT_PUBLIC_SITE_URL}/privacy` },
+  alternates: { canonical: `${getSiteUrl()}/privacy` },
 };
 
 export default function PrivacyPage() {

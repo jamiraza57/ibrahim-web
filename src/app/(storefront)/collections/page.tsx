@@ -3,12 +3,12 @@ import Image from "next/image";
 import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
 import { RevealOnScroll } from "@/components/shared/RevealOnScroll";
-import { getEnv } from "@/lib/env";
+import { getSiteUrl } from "@/lib/env";
 
 export const metadata: Metadata = {
   title: "Collections",
   description: "Browse every curated Ibrahim collection.",
-  alternates: { canonical: `${getEnv().NEXT_PUBLIC_SITE_URL}/collections` },
+  alternates: { canonical: `${getSiteUrl()}/collections` },
 };
 
 export default async function CollectionsIndexPage() {

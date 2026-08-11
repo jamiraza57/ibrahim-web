@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { queryStorefrontProducts, getFilterFacets, type SortOption } from "@/features/products/services/storefront-product.service";
 import { ProductGrid } from "@/features/products/components/ProductGrid";
 import { FilterBar } from "@/features/products/components/FilterBar";
-import { getEnv } from "@/lib/env";
+import { getSiteUrl } from "@/lib/env";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: category.metaTitle ?? category.name,
     description: category.metaDescription ?? category.description ?? undefined,
-    alternates: { canonical: `${getEnv().NEXT_PUBLIC_SITE_URL}/categories/${slug}` },
+    alternates: { canonical: `${getSiteUrl()}/categories/${slug}` },
     openGraph: { images: category.bannerUrl ? [category.bannerUrl] : undefined },
   };
 }
@@ -54,13 +54,13 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
     "@type": "CollectionPage",
     name: category.name,
     description: category.description ?? undefined,
-    url: `${getEnv().NEXT_PUBLIC_SITE_URL}/categories/${slug}`,
+    url: `${getSiteUrl()}/categories/${slug}`,
     hasPart: {
       "@type": "ItemList",
       itemListElement: result.items.map((p, i) => ({
         "@type": "ListItem",
         position: i + 1,
-        url: `${getEnv().NEXT_PUBLIC_SITE_URL}/products/${p.slug}`,
+        url: `${getSiteUrl()}/products/${p.slug}`,
         name: p.name,
       })),
     },

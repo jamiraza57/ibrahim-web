@@ -4,11 +4,11 @@ import { queryStorefrontProducts, getFilterFacets, type SortOption } from "@/fea
 import { ProductGrid } from "@/features/products/components/ProductGrid";
 import { FilterBar } from "@/features/products/components/FilterBar";
 import { CategoryTabs } from "@/features/products/components/CategoryTabs";
-import { getEnv } from "@/lib/env";
+import { getSiteUrl } from "@/lib/env";
 
 export const metadata: Metadata = {
   title: "Shop All",
-  alternates: { canonical: `${getEnv().NEXT_PUBLIC_SITE_URL}/products` },
+  alternates: { canonical: `${getSiteUrl()}/products` },
 };
 
 interface PageProps {

@@ -1,9 +1,9 @@
 import type { MetadataRoute } from "next";
 import { prisma } from "@/lib/prisma";
-import { getEnv } from "@/lib/env";
+import { getSiteUrl } from "@/lib/env";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const siteUrl = getEnv().NEXT_PUBLIC_SITE_URL;
+  const siteUrl = getSiteUrl();
 
   const [products, categories, collections] = await Promise.all([
     prisma.product.findMany({

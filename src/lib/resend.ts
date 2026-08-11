@@ -1,11 +1,11 @@
 import { Resend } from "resend";
-import { getEnv } from "@/lib/env";
+import { getResendConfig } from "@/lib/env";
 import { formatPrice } from "@/lib/format";
 
 let client: Resend | null = null;
 
 function getResend() {
-  if (!client) client = new Resend(getEnv().RESEND_API_KEY);
+  if (!client) client = new Resend(getResendConfig().RESEND_API_KEY);
   return client;
 }
 
@@ -16,7 +16,7 @@ export async function sendOrderConfirmationEmail(params: {
   total: string;
   itemLines: { name: string; quantity: number; price: string }[];
 }) {
-  const env = getEnv();
+  const env = getResendConfig();
 
   const itemsHtml = params.itemLines
     .map((i) => `<tr><td>${i.name}</td><td>${i.quantity}</td><td>${formatPrice(Number(i.price))}</td></tr>`)

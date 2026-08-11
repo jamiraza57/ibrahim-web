@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getEnv } from "@/lib/env";
+import { getSiteUrl } from "@/lib/env";
 
 export const metadata: Metadata = {
   title: "Frequently Asked Questions",
   description: "Answers to common questions about ordering, shipping, and caring for your jewelry.",
-  alternates: { canonical: `${getEnv().NEXT_PUBLIC_SITE_URL}/faq` },
+  alternates: { canonical: `${getSiteUrl()}/faq` },
 };
 
 const FAQS = [

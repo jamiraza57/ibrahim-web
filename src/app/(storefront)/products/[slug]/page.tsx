@@ -8,7 +8,7 @@ import { ProductGallery } from "@/features/products/components/ProductGallery";
 import { StickyBuyBar } from "@/features/products/components/StickyBuyBar";
 import { RelatedProducts } from "@/features/products/components/RelatedProducts";
 import { RecentlyViewed } from "@/features/products/components/RecentlyViewed";
-import { getEnv } from "@/lib/env";
+import { getSiteUrl } from "@/lib/env";
 import { LOW_STOCK_THRESHOLD } from "@/config/inventory";
 import { formatPrice } from "@/lib/format";
 
@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!product) return {};
 
   const image = product.images[0]?.url;
-  const canonical = `${getEnv().NEXT_PUBLIC_SITE_URL}/products/${slug}`;
+  const canonical = `${getSiteUrl()}/products/${slug}`;
 
   return {
     title: product.metaTitle ?? product.name,

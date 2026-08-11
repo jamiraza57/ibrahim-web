@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifyAdminSession, verifyCustomerSession } from "@/lib/auth/jwt";
-import { getEnv } from "@/lib/env";
+import { getJwtConfig } from "@/lib/env";
 import { CUSTOMER_SESSION_COOKIE } from "@/lib/auth/cookies";
 
 export async function middleware(request: NextRequest) {
@@ -17,7 +17,7 @@ export async function middleware(request: NextRequest) {
   if (isAdminRoute || isAdminApi) {
     if (isLoginRoute || isLogoutRoute) return NextResponse.next();
 
-    const { JWT_COOKIE_NAME } = getEnv();
+    const { JWT_COOKIE_NAME } = getJwtConfig();
     const token = request.cookies.get(JWT_COOKIE_NAME)?.value;
     const session = token ? await verifyAdminSession(token) : null;
 

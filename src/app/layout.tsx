@@ -3,7 +3,7 @@ import { DM_Serif_Display, Fira_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/features/cart/context/CartContext";
 import { WishlistProvider } from "@/features/cart/context/WishlistContext";
-import { getEnv } from "@/lib/env";
+import { getSiteUrl } from "@/lib/env";
 
 const dmSerifDisplay = DM_Serif_Display({
   subsets: ["latin"],
@@ -28,7 +28,7 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(getEnv().NEXT_PUBLIC_SITE_URL),
+  metadataBase: new URL(getSiteUrl()),
   title: {
     default: "Ibrahim Jewels — Premium Non-Tarnish Jewelry",
     template: "%s | Ibrahim Jewels",

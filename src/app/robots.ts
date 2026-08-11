@@ -1,8 +1,8 @@
 import type { MetadataRoute } from "next";
-import { getEnv } from "@/lib/env";
+import { getSiteUrl } from "@/lib/env";
 
 export default function robots(): MetadataRoute.Robots {
-  const siteUrl = getEnv().NEXT_PUBLIC_SITE_URL;
+  const siteUrl = getSiteUrl();
 
   return {
     rules: {

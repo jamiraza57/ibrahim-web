@@ -3,12 +3,12 @@ import Image from "next/image";
 import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
 import { RevealOnScroll } from "@/components/shared/RevealOnScroll";
-import { getEnv } from "@/lib/env";
+import { getSiteUrl } from "@/lib/env";
 
 export const metadata: Metadata = {
   title: "Categories",
   description: "Browse Ibrahim jewelry by category.",
-  alternates: { canonical: `${getEnv().NEXT_PUBLIC_SITE_URL}/categories` },
+  alternates: { canonical: `${getSiteUrl()}/categories` },
 };
 
 export default async function CategoriesIndexPage() {

@@ -1,5 +1,5 @@
 import { SignJWT, jwtVerify } from "jose";
-import { getEnv } from "@/lib/env";
+import { getJwtConfig } from "@/lib/env";
 
 export interface AdminSessionPayload {
   sub: string; // AdminUser.id
@@ -10,7 +10,7 @@ export interface AdminSessionPayload {
 const ACCESS_TOKEN_TTL = "2h";
 
 function getSecretKey() {
-  const { JWT_SECRET } = getEnv();
+  const { JWT_SECRET } = getJwtConfig();
   return new TextEncoder().encode(JWT_SECRET);
 }
 

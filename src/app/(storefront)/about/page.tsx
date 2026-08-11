@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { getEnv } from "@/lib/env";
+import { getSiteUrl } from "@/lib/env";
 import { RevealOnScroll } from "@/components/shared/RevealOnScroll";
 
 export const metadata: Metadata = {
   title: "About Us",
   description: "The story and craftsmanship behind Ibrahim Fine Jewelry.",
-  alternates: { canonical: `${getEnv().NEXT_PUBLIC_SITE_URL}/about` },
+  alternates: { canonical: `${getSiteUrl()}/about` },
 };
 
 export default function AboutPage() {
