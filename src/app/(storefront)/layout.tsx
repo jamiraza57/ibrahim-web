@@ -3,6 +3,7 @@ import { Header } from "@/components/shared/Header";
 import { Footer } from "@/components/shared/Footer";
 import { LuxuryCursor } from "@/components/shared/LuxuryCursor";
 import { WhatsAppButton } from "@/components/shared/WhatsAppButton";
+import { FixedHeaderStack } from "@/components/shared/FixedHeaderStack";
 
 export default function StorefrontLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -14,9 +15,13 @@ export default function StorefrontLayout({ children }: { children: React.ReactNo
       >
         Skip to content
       </a>
-      <AnnouncementBar />
-      <Header />
-      <main id="main-content">{children}</main>
+      <FixedHeaderStack>
+        <AnnouncementBar />
+        <Header />
+      </FixedHeaderStack>
+      <main id="main-content" className="pt-[var(--header-offset,88px)]">
+        {children}
+      </main>
       <Footer />
       <WhatsAppButton />
     </>

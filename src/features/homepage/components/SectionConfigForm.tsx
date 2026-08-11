@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { ImageUploader } from "@/components/shared/ImageUploader";
 import type { HomepageSectionType } from "../schemas/homepage-section.schema";
 
@@ -50,19 +51,13 @@ export function SectionConfigForm({ type, initialConfig, onChange }: SectionConf
 
   if (type === "HERO") {
     return (
-      <div className="space-y-3">
-        <input placeholder="Heading" defaultValue={config.heading as string} onChange={(e) => set("heading", e.target.value)} className={inputClass} />
-        <input placeholder="Subheading (optional)" defaultValue={config.subheading as string} onChange={(e) => set("subheading", e.target.value)} className={inputClass} />
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-          <input placeholder="CTA Label (optional)" defaultValue={config.ctaLabel as string} onChange={(e) => set("ctaLabel", e.target.value)} className={inputClass} />
-          <input placeholder="CTA Link (optional)" defaultValue={config.ctaHref as string} onChange={(e) => set("ctaHref", e.target.value)} className={inputClass} />
-        </div>
-        <div>
-          <label className="mb-1 block text-sm text-secondary-text">Background Image</label>
-          {config.backgroundImageUrl ? <p className="mb-2 truncate text-xs text-secondary-text">{config.backgroundImageUrl as string}</p> : null}
-          <ImageUploader folder="ibrahim/homepage" onUploaded={(img) => set("backgroundImageUrl", img.url)} />
-        </div>
-      </div>
+      <p className="text-sm text-secondary-text">
+        The hero is now a 3-slide carousel managed on its own page —{" "}
+        <Link href="/admin/header-images" className="text-gold hover:underline">
+          Header Images
+        </Link>
+        . Editing it here is no longer supported.
+      </p>
     );
   }
 

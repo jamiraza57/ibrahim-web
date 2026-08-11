@@ -8,8 +8,12 @@ import type { featuredProductsConfigSchema } from "../schemas/homepage-section.s
 
 export async function FeaturedProductsSection({
   config,
+  variant = "grid",
 }: {
   config: z.infer<typeof featuredProductsConfigSchema>;
+  /** "rail" gives a horizontal-scroll browsing feel so a second grid section
+   * (e.g. Best Sellers right after New Arrivals) doesn't read as a repeat. */
+  variant?: "grid" | "rail";
 }) {
   const products = await prisma.product.findMany({
     where: { status: "PUBLISHED", [config.tag]: true },
@@ -26,9 +30,19 @@ export async function FeaturedProductsSection({
         <span className="eyebrow">Signature Pieces</span>
         <h2 className="mb-8 mt-2 font-display text-2xl sm:text-3xl">{config.heading}</h2>
       </RevealOnScroll>
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(140px,220px))] justify-center gap-4 sm:gap-6">
+      <div
+        className={
+          variant === "rail"
+            ? "flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 sm:gap-6"
+            : "grid grid-cols-[repeat(auto-fit,minmax(140px,220px))] justify-center gap-4 sm:gap-6"
+        }
+      >
         {products.map((product, idx) => (
-          <RevealOnScroll key={product.id} delay={idx * 0.06}>
+          <RevealOnScroll
+            key={product.id}
+            delay={idx * 0.06}
+            className={variant === "rail" ? "w-[70%] shrink-0 snap-start sm:w-[38%] lg:w-[23%]" : undefined}
+          >
             <ProductCard
               id={product.id}
               slug={product.slug}

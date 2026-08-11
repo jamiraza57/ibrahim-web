@@ -1,13 +1,21 @@
 import { z } from "zod";
 import { objectIdSchema } from "@/lib/validation";
 
-export const heroConfigSchema = z.object({
+export const heroSlideSchema = z.object({
+  imageUrl: z.string().url().optional(),
   heading: z.string().min(1),
   subheading: z.string().optional(),
   ctaLabel: z.string().optional(),
   ctaHref: z.string().optional(),
-  backgroundImageUrl: z.string().url().optional(),
+  badge: z.string().optional(),
+  isActive: z.boolean().default(true),
 });
+
+export const heroConfigSchema = z.object({
+  slides: z.array(heroSlideSchema).length(3),
+});
+
+export type HeroSlide = z.infer<typeof heroSlideSchema>;
 
 // `variant` distinguishes the fixed homepage's two BANNER-type uses: a single
 // promo banner (imageUrl) vs. the 3-image triptych strip (images). Kept as one

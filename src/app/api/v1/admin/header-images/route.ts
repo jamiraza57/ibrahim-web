@@ -3,6 +3,7 @@ import {
   getHeroSection,
   getPromoBannerSection,
   getTriptychSection,
+  normalizeHeroConfig,
 } from "@/features/homepage/services/homepage-section.service";
 
 export async function GET() {
@@ -14,7 +15,7 @@ export async function GET() {
 
   return NextResponse.json({
     data: {
-      hero: hero?.config ?? null,
+      hero: hero ? normalizeHeroConfig(hero.config) : null,
       promo: promo?.config ?? null,
       triptych: triptych?.config ?? null,
     },

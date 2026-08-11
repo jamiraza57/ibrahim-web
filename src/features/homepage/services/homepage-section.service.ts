@@ -61,6 +61,39 @@ export async function getHeroSection() {
   return prisma.homepageSection.findFirst({ where: { type: "HERO" } });
 }
 
+/**
+ * Older rows were saved with the pre-carousel flat shape
+ * (`{ heading, subheading, ctaLabel, ctaHref, backgroundImageUrl }`) instead of
+ * `{ slides: [...3] }`. Wrap those into slide 1 (padded with 2 inactive slides)
+ * so an admin's existing hero content survives the upgrade to a 3-slide carousel
+ * instead of failing to parse and silently disappearing.
+ */
+export function normalizeHeroConfig(raw: unknown): z.infer<typeof heroConfigSchema> {
+  const parsedAsSlides = heroConfigSchema.safeParse(raw);
+  if (parsedAsSlides.success) return parsedAsSlides.data;
+
+  const legacy = raw as {
+    heading?: string;
+    subheading?: string;
+    ctaLabel?: string;
+    ctaHref?: string;
+    backgroundImageUrl?: string;
+  } | null;
+
+  const firstSlide = {
+    imageUrl: legacy?.backgroundImageUrl,
+    heading: legacy?.heading ?? "Timeless Elegance",
+    subheading: legacy?.subheading,
+    ctaLabel: legacy?.ctaLabel,
+    ctaHref: legacy?.ctaHref,
+    isActive: true,
+  };
+
+  return heroConfigSchema.parse({
+    slides: [firstSlide, { heading: "Slide 2", isActive: false }, { heading: "Slide 3", isActive: false }],
+  });
+}
+
 export async function upsertHeroSection(config: z.infer<typeof heroConfigSchema>) {
   const validated = heroConfigSchema.parse(config);
   const existing = await getHeroSection();

@@ -21,7 +21,12 @@ function NavLink({ href, label }: { href: string; label: string }) {
     (hrefCategory ? searchParams.get("category") === hrefCategory : !searchParams.get("category"));
 
   return (
-    <Link href={href as Route} data-cursor="hover" className="group relative text-sm tracking-wide text-secondary-text transition-colors hover:text-gold">
+    <Link
+      href={href as Route}
+      data-cursor="hover"
+      aria-current={isActive ? "page" : undefined}
+      className="group relative text-sm tracking-wide text-secondary-text transition-colors hover:text-gold"
+    >
       {label}
       <span
         className={`absolute -bottom-1 left-0 h-px bg-gold transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
@@ -66,17 +71,30 @@ export function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 border-b transition-colors duration-500 ${
+      className={`border-b transition-[background-color,backdrop-filter,border-color,padding] duration-500 ${
         scrolled ? "border-gold/10 bg-background/85 backdrop-blur-xl" : "border-transparent bg-transparent"
       }`}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
+      <div
+        className={`mx-auto flex max-w-7xl items-center justify-between px-4 transition-[padding] duration-500 sm:px-6 ${
+          scrolled ? "py-3" : "py-4"
+        }`}
+      >
         <Link
           href="/"
           className="flex items-center gap-2 font-serif text-lg tracking-wide sm:text-xl"
           data-cursor="hover"
         >
-          <Image src="/logo-mark.png" alt="" width={36} height={36} className="h-8 w-8 object-contain sm:h-9 sm:w-9" priority />
+          <Image
+            src="/logo-mark.png"
+            alt=""
+            width={36}
+            height={36}
+            className={`object-contain transition-[width,height] duration-500 ${
+              scrolled ? "h-7 w-7 sm:h-8 sm:w-8" : "h-8 w-8 sm:h-9 sm:w-9"
+            }`}
+            priority
+          />
           <span className="text-gradient-gold">{siteConfig.name}</span>
         </Link>
 

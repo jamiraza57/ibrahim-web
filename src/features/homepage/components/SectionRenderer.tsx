@@ -1,5 +1,5 @@
 import type { HomepageSection } from "@prisma/client";
-import { HeroSection } from "./HeroSection";
+import { HeroCarousel } from "./HeroCarousel";
 import { BannerSection } from "./BannerSection";
 import { StatsSection } from "./StatsSection";
 import { BrandStorySection } from "./BrandStorySection";
@@ -10,7 +10,6 @@ import { TestimonialsSection } from "./TestimonialsSection";
 import { NewsletterSection } from "./NewsletterSection";
 import { InstagramSection } from "./InstagramSection";
 import {
-  heroConfigSchema,
   bannerConfigSchema,
   statsConfigSchema,
   brandStoryConfigSchema,
@@ -19,11 +18,12 @@ import {
   featuredProductsConfigSchema,
   instagramConfigSchema,
 } from "../schemas/homepage-section.schema";
+import { normalizeHeroConfig } from "../services/homepage-section.service";
 
 export function SectionRenderer({ section }: { section: HomepageSection }) {
   switch (section.type) {
     case "HERO":
-      return <HeroSection config={heroConfigSchema.parse(section.config)} />;
+      return <HeroCarousel slides={normalizeHeroConfig(section.config).slides} />;
     case "BANNER":
       return <BannerSection config={bannerConfigSchema.parse(section.config)} />;
     case "STATS":

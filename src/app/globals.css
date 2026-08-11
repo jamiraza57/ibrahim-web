@@ -16,6 +16,10 @@
   --gradient-noir: linear-gradient(180deg, #0a0a0a, #141210);
   --shadow-lux: 0 24px 60px -20px rgba(240, 216, 156, 0.22);
   --shadow-deep: 0 30px 70px -20px rgba(0, 0, 0, 0.7);
+  /* Real height of the fixed announcement-bar+header stack, measured and kept
+     in sync by FixedHeaderStack's ResizeObserver. This default avoids a
+     layout flash before that JS runs on first paint. */
+  --header-offset: 88px;
 }
 
 @layer base {

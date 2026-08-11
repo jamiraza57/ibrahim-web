@@ -8,6 +8,16 @@ import { siteConfig } from "@/config/site";
 import { useCart } from "@/features/cart/context/CartContext";
 import { useWishlist } from "@/features/cart/context/WishlistContext";
 
+const navListVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.06, delayChildren: 0.15 } },
+};
+
+const navItemVariants = {
+  hidden: { opacity: 0, x: 16 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] as const } },
+};
+
 export function MobileNav() {
   const [isOpen, setIsOpen] = useState(false);
   const { itemCount } = useCart();
@@ -33,14 +43,14 @@ export function MobileNav() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              className="fixed inset-0 z-40 bg-black/60 md:hidden"
+              className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm md:hidden"
             />
             <motion.div
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              className="fixed right-0 top-0 z-50 h-full w-72 max-w-[80vw] border-l border-gold/10 bg-secondary-background p-6 md:hidden"
+              className="fixed right-0 top-0 z-50 h-full w-72 max-w-[80vw] border-l border-gold/10 bg-secondary-background/95 p-6 backdrop-blur-xl md:hidden"
             >
               <button
                 onClick={() => setIsOpen(false)}
@@ -50,18 +60,22 @@ export function MobileNav() {
                 ×
               </button>
 
-              <nav className="flex flex-col gap-5">
+              <motion.nav variants={navListVariants} initial="hidden" animate="visible" className="flex flex-col gap-5">
                 {siteConfig.navigation.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href as Route}
-                    onClick={() => setIsOpen(false)}
-                    className="font-serif text-lg hover:text-gold"
-                  >
-                    {item.label}
-                  </Link>
+                  <motion.div key={item.href} variants={navItemVariants}>
+                    <Link
+                      href={item.href as Route}
+                      onClick={() => setIsOpen(false)}
+                      className="font-serif text-lg hover:text-gold"
+                    >
+                      {item.label}
+                    </Link>
+                  </motion.div>
                 ))}
-                <div className="mt-4 flex flex-col gap-3 border-t border-gold/10 pt-4 text-sm text-secondary-text">
+                <motion.div
+                  variants={navItemVariants}
+                  className="mt-4 flex flex-col gap-3 border-t border-gold/10 pt-4 text-sm text-secondary-text"
+                >
                   <Link href="/search" onClick={() => setIsOpen(false)} className="hover:text-gold">
                     Search
                   </Link>
@@ -74,8 +88,8 @@ export function MobileNav() {
                   <Link href="/cart" onClick={() => setIsOpen(false)} className="hover:text-gold">
                     Cart{itemCount > 0 ? ` (${itemCount})` : ""}
                   </Link>
-                </div>
-              </nav>
+                </motion.div>
+              </motion.nav>
             </motion.div>
           </>
         )}
