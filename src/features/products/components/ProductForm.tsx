@@ -287,6 +287,7 @@ export function ProductForm({ defaultValues, onSubmit, submitLabel }: ProductFor
             {...register("publishAt")}
             className="w-full rounded border border-gold/20 bg-transparent px-3 py-2 text-foreground"
           />
+          {errors.publishAt && <p className="mt-1 text-sm text-destructive">{errors.publishAt.message}</p>}
         </div>
       </section>
 

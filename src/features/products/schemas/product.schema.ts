@@ -26,7 +26,10 @@ export const productSchema = z.object({
   color: z.string().optional().nullable(),
   videoUrl: z.string().url().optional().nullable(),
   status: z.enum(["DRAFT", "PUBLISHED", "SCHEDULED", "HIDDEN"]).default("DRAFT"),
-  publishAt: z.string().datetime().optional().nullable(),
+  publishAt: z.preprocess(
+    (val) => (val === "" ? undefined : val),
+    z.coerce.date().optional().nullable()
+  ),
   isFeatured: z.boolean().default(false),
   isNewArrival: z.boolean().default(false),
   isBestSeller: z.boolean().default(false),
@@ -40,6 +43,9 @@ export const productSchema = z.object({
 }).refine(
   (data) => !data.salePrice || data.salePrice < data.price,
   { message: "Sale price must be lower than regular price", path: ["salePrice"] }
+).refine(
+  (data) => data.status !== "SCHEDULED" || !!data.publishAt,
+  { message: "Publish date/time is required when status is Scheduled", path: ["publishAt"] }
 );
 
 export type ProductInput = z.infer<typeof productSchema>;
